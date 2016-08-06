@@ -42,7 +42,9 @@
   <ItemGroup>
     <Compile Include="Damerau.cs" />
     <Compile Include="Interfaces\IMetricStringDistance.cs" />
+    <Compile Include="Interfaces\INormalizedStringDistance.cs" />
     <Compile Include="Interfaces\IStringDistance.cs" />
+    <Compile Include="NGram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
