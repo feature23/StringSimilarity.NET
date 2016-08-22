@@ -52,14 +52,23 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DamerauTests.cs" />
+    <Compile Include="DamerauTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CosineTest.cs" />
+    <Compile Include="StringProfileTest.cs" />
+    <Compile Include="Utils\SparseIntegerVectorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StringSimilarity\StringSimilarity.csproj">
       <Project>{fa27327b-bccc-46c7-8eed-bbd1ecf4bf53}</Project>
       <Name>StringSimilarity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="11328-1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="71816-2.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
