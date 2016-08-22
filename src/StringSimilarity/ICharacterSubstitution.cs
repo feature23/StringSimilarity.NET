@@ -22,29 +22,22 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace StringSimilarity.Tests
+namespace StringSimilarity
 {
-    [TestClass]
-    public class JaroWinklerTest
+    /// Used to indicate the cost of character substitution.
+    ///
+    /// Cost should always be in [0.0 .. 1.0]
+    /// For example, in an OCR application, cost('o', 'a') could be 0.4
+    /// In a checkspelling application, cost('u', 'i') could be 0.4 because these are
+    /// next to each other on the keyboard...
+    public interface ICharacterSubstitution
     {
-        [TestMethod]
-        public void TestSimilarity()
-        {
-            var instance = new JaroWinkler();
-
-            Assert.AreEqual(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
-            );
-
-            Assert.AreEqual(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
-            );
-        }
+        /// <summary>
+        /// Indicate the cost of substitution c1 and c2.
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
+        double Cost(char c1, char c2);
     }
 }

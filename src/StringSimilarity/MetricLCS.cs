@@ -22,29 +22,32 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using StringSimilarity.Interfaces;
 
-namespace StringSimilarity.Tests
+namespace StringSimilarity
 {
-    [TestClass]
-    public class JaroWinklerTest
+    /// <summary>
+    /// Distance metric based on Longest Common Subsequence, from the notes "An
+    /// LCS-based string metric" by Daniel Bakkelund.
+    /// </summary>
+    public class MetricLCS : IMetricStringDistance, INormalizedStringDistance
     {
-        [TestMethod]
-        public void TestSimilarity()
+        private readonly LongestCommonSubsequence lcs = new LongestCommonSubsequence();
+
+        /// <summary>
+        /// Distance metric based on Longest Common Subsequence, computed as
+        /// 1 - |LCS(s1, s2)| / max(|s1|, |s2|).
+        /// </summary>
+        /// <param name="s1">The first string</param>
+        /// <param name="s2">The second string</param>
+        /// <returns>LCS distance metric</returns>
+        public double Distance(string s1, string s2)
         {
-            var instance = new JaroWinkler();
+            return 1.0
+                    - (1.0 * lcs.Length(s1, s2))
+                    / Math.Max(s1.Length, s2.Length);
 
-            Assert.AreEqual(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
-            );
-
-            Assert.AreEqual(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
-            );
         }
     }
 }

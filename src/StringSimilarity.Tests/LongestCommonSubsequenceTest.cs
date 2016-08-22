@@ -27,24 +27,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace StringSimilarity.Tests
 {
     [TestClass]
-    public class JaroWinklerTest
+    public class LongestCommonSubsequenceTest
     {
         [TestMethod]
-        public void TestSimilarity()
+        public void TestDistance()
         {
-            var instance = new JaroWinkler();
+            var instance = new LongestCommonSubsequence();
 
-            Assert.AreEqual(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
-            );
+            // LCS = GA or GC => distance = 4 (remove 3 letters and add 1)
 
-            Assert.AreEqual(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
-            );
+            Assert.AreEqual(4, instance.Distance("AGCAT", "GAC"), 0.0);
+            Assert.AreEqual(1, instance.Distance("AGCAT", "AGCT"), 0.0);
         }
     }
 }

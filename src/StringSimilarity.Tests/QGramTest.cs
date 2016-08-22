@@ -27,24 +27,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace StringSimilarity.Tests
 {
     [TestClass]
-    public class JaroWinklerTest
+    public class QGramTest
     {
         [TestMethod]
-        public void TestSimilarity()
+        public void TestDistance()
         {
-            var instance = new JaroWinkler();
+            var instance = new QGram(k: 2);
 
-            Assert.AreEqual(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
-            );
+            // AB BC CD CE
+            // 1  1  1  0
+            // 1  1  0  1
+            // Total: 2
 
-            Assert.AreEqual(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
-            );
+            double result = instance.Distance("ABCD", "ABCE");
+
+            Assert.AreEqual(2.0, result, 0.0);
         }
     }
 }

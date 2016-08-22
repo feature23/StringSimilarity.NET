@@ -59,6 +59,10 @@
     <Compile Include="Support\ArrayExtensionsTest.cs" />
     <Compile Include="JaccardTest.cs" />
     <Compile Include="JaroWinklerTest.cs" />
+    <Compile Include="LevenshteinTest.cs" />
+    <Compile Include="LongestCommonSubsequenceTest.cs" />
+    <Compile Include="SorensenDiceTest.cs" />
+    <Compile Include="QGramTest.cs" />
     <Compile Include="Utils\SparseIntegerVectorTest.cs" />
   </ItemGroup>
   <ItemGroup>

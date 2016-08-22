@@ -27,24 +27,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace StringSimilarity.Tests
 {
     [TestClass]
-    public class JaroWinklerTest
+    public class SorensenDiceTest
     {
         [TestMethod]
         public void TestSimilarity()
         {
-            var instance = new JaroWinkler();
+            var instance = new SorensenDice(2);
 
-            Assert.AreEqual(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
-            );
+            // AB BC CD DE DF FG
+            // 1  1  1  1  0  0
+            // 1  1  1  0  1  1
+            // => 2 x 3 / (4 + 5) = 6/9 = 0.6666
 
-            Assert.AreEqual(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
-            );
+            double result = instance.Similarity("ABCDE", "ABCDFG");
+
+            Assert.AreEqual(0.6666, result, 0.0001);
         }
     }
 }

@@ -27,24 +27,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace StringSimilarity.Tests
 {
     [TestClass]
-    public class JaroWinklerTest
+    public class LevenshteinTest
     {
         [TestMethod]
-        public void TestSimilarity()
+        public void TestDistance()
         {
-            var instance = new JaroWinkler();
+            var instance = new Levenshtein();
 
-            Assert.AreEqual(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
-            );
-
-            Assert.AreEqual(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
-            );
+            Assert.AreEqual(1.0, instance.Distance("My string", "My tring"), 0.0);
+            Assert.AreEqual(2.0, instance.Distance("My string", "M string2"), 0.0);
+            Assert.AreEqual(1.0, instance.Distance("My string", "My $tring"), 0.0);
         }
     }
 }

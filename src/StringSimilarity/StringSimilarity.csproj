@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Cosine.cs" />
     <Compile Include="Damerau.cs" />
+    <Compile Include="ICharacterSubstitution.cs" />
     <Compile Include="Interfaces\IMetricStringDistance.cs" />
     <Compile Include="Interfaces\INormalizedStringDistance.cs" />
     <Compile Include="Interfaces\INormalizedStringSimilarity.cs" />
@@ -50,14 +51,21 @@
     <Compile Include="Jaccard.cs" />
     <Compile Include="JaroWinkler.cs" />
     <Compile Include="KShingling.cs" />
+    <Compile Include="Levenshtein.cs" />
+    <Compile Include="LongestCommonSubsequence.cs" />
+    <Compile Include="MetricLCS.cs" />
     <Compile Include="NGram.cs" />
+    <Compile Include="NormalizedLevenshtein.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QGram.cs" />
     <Compile Include="ShingleBased.cs" />
+    <Compile Include="SorensenDice.cs" />
     <Compile Include="StringProfile.cs" />
     <Compile Include="StringSet.cs" />
     <Compile Include="Support\ArrayExtensions.cs" />
     <Compile Include="Utils\SparseBooleanVector.cs" />
     <Compile Include="Utils\SparseIntegerVector.cs" />
+    <Compile Include="WeightedLevenshtein.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
