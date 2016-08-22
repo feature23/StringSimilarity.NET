@@ -47,12 +47,15 @@
     <Compile Include="Interfaces\INormalizedStringSimilarity.cs" />
     <Compile Include="Interfaces\IStringDistance.cs" />
     <Compile Include="Interfaces\IStringSimilarity.cs" />
+    <Compile Include="Jaccard.cs" />
+    <Compile Include="JaroWinkler.cs" />
     <Compile Include="KShingling.cs" />
     <Compile Include="NGram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShingleBased.cs" />
     <Compile Include="StringProfile.cs" />
     <Compile Include="StringSet.cs" />
+    <Compile Include="Support\ArrayExtensions.cs" />
     <Compile Include="Utils\SparseBooleanVector.cs" />
     <Compile Include="Utils\SparseIntegerVector.cs" />
   </ItemGroup>

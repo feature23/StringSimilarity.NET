@@ -56,6 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CosineTest.cs" />
     <Compile Include="StringProfileTest.cs" />
+    <Compile Include="Support\ArrayExtensionsTest.cs" />
+    <Compile Include="JaccardTest.cs" />
+    <Compile Include="JaroWinklerTest.cs" />
     <Compile Include="Utils\SparseIntegerVectorTest.cs" />
   </ItemGroup>
   <ItemGroup>

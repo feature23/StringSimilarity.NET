@@ -39,7 +39,12 @@ namespace StringSimilarity
         public Cosine(int k) : base(k) { }
 
         /// <summary>
+        /// Implements Cosine Similarity between strings.The strings are first
+        /// transformed in vectors of occurrences of k-shingles(sequences of k
+        /// characters). In this n-dimensional space, the similarity between the two
+        /// strings is the cosine of their respective vectors.
         /// 
+        /// Default k is 3.
         /// </summary>
         public Cosine() { }
         
