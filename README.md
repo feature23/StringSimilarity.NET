@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/feature23/StringSimilarity.NET.svg?branch=master)
+
 # String Similarity .NET
 
 A .NET port of java-string-similarity:
