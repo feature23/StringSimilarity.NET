@@ -22,37 +22,48 @@
  * THE SOFTWARE.
  */
 
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class CosineTest
     {
-        [TestMethod]
+        [Fact]
         public void TestSimilarity()
         {
             var instance = new Cosine();
 
-            double result = instance.Similarity("ABC", "ABCE");
+            var result = instance.Similarity("ABC", "ABCE");
 
-            Assert.AreEqual(0.71, result, 0.01);
+            Assert.Equal(
+                expected: 0.71, 
+                actual: result, 
+                precision: 2 // 0.01
+            );
         }
 
-        [TestMethod]
+        [Fact]
         public void TestSmallString()
         {
             var instance = new Cosine(3);
 
-            double result = instance.Similarity("AB", "ABCE");
+            var result = instance.Similarity("AB", "ABCE");
 
-            Assert.AreEqual(0.0, result, 0.00001);
+            Assert.Equal(
+                expected: 0.0, 
+                actual: result, 
+                precision: 5 //0.00001
+            );
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLargeString()
         {
             var instance = new Cosine();
@@ -61,9 +72,13 @@ namespace F23.StringSimilarity.Tests
             var string1 = await ReadResourceFileAsync("71816-2.txt");
             var string2 = await ReadResourceFileAsync("11328-1.txt");
 
-            double result = instance.Similarity(string1, string2);
+            var result = instance.Similarity(string1, string2);
 
-            Assert.AreEqual(0.8115, result, 0.001);
+            Assert.Equal(
+                expected: 0.8115, 
+                actual: result,
+                precision: 3 //0.001
+            );
         }
 
         private static async Task<string> ReadResourceFileAsync(string file)
@@ -72,9 +87,12 @@ namespace F23.StringSimilarity.Tests
             var resourceName = $"{typeof(CosineTest).Namespace}.{file}";
 
             using (var stream = assembly.GetManifestResourceStream(resourceName))
-            using (var reader = new StreamReader(stream))
             {
-                return await reader.ReadToEndAsync();
+                Debug.Assert(stream != null, "stream != null");
+                using (var reader = new StreamReader(stream))
+                {
+                    return await reader.ReadToEndAsync();
+                }
             }
         }
     }

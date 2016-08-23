@@ -22,22 +22,25 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class LongestCommonSubsequenceTest
     {
-        [TestMethod]
+        [Fact]
         public void TestDistance()
         {
             var instance = new LongestCommonSubsequence();
 
             // LCS = GA or GC => distance = 4 (remove 3 letters and add 1)
 
-            Assert.AreEqual(4, instance.Distance("AGCAT", "GAC"), 0.0);
-            Assert.AreEqual(1, instance.Distance("AGCAT", "AGCT"), 0.0);
+            Assert.Equal(expected: 4, actual: instance.Distance("AGCAT", "GAC"));
+            Assert.Equal(expected: 1, actual: instance.Distance("AGCAT", "AGCT"));
         }
     }
 }

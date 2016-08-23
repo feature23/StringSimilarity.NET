@@ -22,28 +22,31 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class JaroWinklerTest
     {
-        [TestMethod]
+        [Fact]
         public void TestSimilarity()
         {
             var instance = new JaroWinkler();
 
-            Assert.AreEqual(
+            Assert.Equal(
                 expected: 0.974074,
                 actual: instance.Similarity("My string", "My tsring"),
-                delta: 0.000001
+                precision: 6 // 0.000001
             );
 
-            Assert.AreEqual(
+            Assert.Equal(
                 expected: 0.896296,
                 actual: instance.Similarity("My string", "My ntrisg"),
-                delta: 0.000001
+                precision: 6 // 0.000001
             );
         }
     }

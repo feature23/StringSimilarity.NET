@@ -22,27 +22,35 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class StringProfileTest
     {
-        [TestMethod]
+        [Fact]
         public void TestCosineSimilarity()
         {
-            string s1 = "My first string";
-            string s2 = "My other string...";
+            const string s1 = "My first string";
+            const string s2 = "My other string...";
 
             // Let's work with sequences of 2 characters...
             var ks = new KShingling(2);
 
             // Pre-compute the profile of strings
-            StringProfile profile1 = ks.GetProfile(s1);
-            StringProfile profile2 = ks.GetProfile(s2);
+            var profile1 = ks.GetProfile(s1);
+            var profile2 = ks.GetProfile(s2);
 
-            Assert.AreEqual(0.516185, profile1.CosineSimilarity(profile2), 0.0001);
+            var result = profile1.CosineSimilarity(profile2);
+
+            Assert.Equal(
+                expected: 0.516185, 
+                actual: result, 
+                precision: 4 // 0.0001
+            );
         }
     }
 }

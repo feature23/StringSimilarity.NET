@@ -22,59 +22,58 @@
  * THE SOFTWARE.
  */
 
+using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests.Utils
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class SparseIntegerVectorTest
     {
-        [TestMethod]
+        [Fact]
         public void TestDotProduct()
         {
-            var other = new SparseIntegerVector(new int[] { 0, 2, 0, 1 });
-            var instance = new SparseIntegerVector(new int[] { 1, 2, 1, 0 });
+            var other = new SparseIntegerVector(new[] { 0, 2, 0, 1 });
+            var instance = new SparseIntegerVector(new[] { 1, 2, 1, 0 });
 
-            double expResult = 4.0;
-            double result = instance.DotProduct(other);
+            var result = instance.DotProduct(other);
 
-            Assert.AreEqual(expResult, result, 0.0);
+            Assert.Equal(expected: 4.0, actual: result);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDotProduct_DoubleArray()
         {
-            double[] other = new double[] { 0, 1.5, 2.0, 3.0 };
-            var instance = new SparseIntegerVector(new int[] { 1, 2, 0, 0 });
+            var other = new[] { 0, 1.5, 2.0, 3.0 };
+            var instance = new SparseIntegerVector(new[] { 1, 2, 0, 0 });
+            
+            var result = instance.DotProduct(other);
 
-            double expResult = 3.0;
-            double result = instance.DotProduct(other);
-
-            Assert.AreEqual(expResult, result, 0.0);
+            Assert.Equal(expected: 3.0, actual: result);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestCosineSimilarity()
         {
-            var other = new SparseIntegerVector(new int[] { 0, 1, 2, 3 });
-            var instance = new SparseIntegerVector(new int[] { 1, 2, 0, 0 });
+            var other = new SparseIntegerVector(new[] { 0, 1, 2, 3 });
+            var instance = new SparseIntegerVector(new[] { 1, 2, 0, 0 });
 
-            double expResult = instance.DotProduct(other) / (instance.Norm() * other.Norm());
-            double result = instance.CosineSimilarity(other);
+            var expectedResult = instance.DotProduct(other) / (instance.Norm() * other.Norm());
+            var result = instance.CosineSimilarity(other);
 
-            Assert.AreEqual(expResult, result, 0.0);
+            Assert.Equal(expected: expectedResult, actual: result);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestNorm()
         {
-            var instance = new SparseIntegerVector(new int[] { 0, 0, 2 });
+            var instance = new SparseIntegerVector(new[] { 0, 0, 2 });
+            
+            var result = instance.Norm();
 
-            double expResult = 2.0;
-            double result = instance.Norm();
-
-            Assert.AreEqual(expResult, result, 0.0);
+            Assert.Equal(expected: 2.0, actual: result);
         }
     }
 }

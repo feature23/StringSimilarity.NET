@@ -22,21 +22,24 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class LevenshteinTest
     {
-        [TestMethod]
+        [Fact]
         public void TestDistance()
         {
             var instance = new Levenshtein();
 
-            Assert.AreEqual(1.0, instance.Distance("My string", "My tring"), 0.0);
-            Assert.AreEqual(2.0, instance.Distance("My string", "M string2"), 0.0);
-            Assert.AreEqual(1.0, instance.Distance("My string", "My $tring"), 0.0);
+            Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My tring"));
+            Assert.Equal(expected: 2.0, actual: instance.Distance("My string", "M string2"));
+            Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My $tring"));
         }
     }
 }

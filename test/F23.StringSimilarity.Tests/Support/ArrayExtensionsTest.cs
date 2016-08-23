@@ -22,25 +22,28 @@
  * THE SOFTWARE.
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using F23.StringSimilarity.Support;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests.Support
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class ArrayExtensionsTest
     {
-        [TestMethod]
+        [Fact]
         public void TestWithPadding()
         {
             var source = Enumerable.Repeat(42, 1000).ToArray();
 
             var padded = source.WithPadding(1200);
 
-            Assert.AreEqual(1200, padded.Length);
-            Assert.IsTrue(padded.Take(1000).All(x => x == 42));
-            Assert.IsTrue(padded.Skip(1000).Take(200).All(x => x == 0));
+            Assert.Equal(actual: 1200, expected: padded.Length);
+            
+            Assert.True(padded.Take(1000).All(x => x == 42));
+            Assert.True(padded.Skip(1000).Take(200).All(x => x == 0));
         }
     }
 }

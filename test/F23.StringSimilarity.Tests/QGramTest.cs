@@ -22,14 +22,17 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class QGramTest
     {
-        [TestMethod]
+        [Fact]
         public void TestDistance()
         {
             var instance = new QGram(k: 2);
@@ -39,9 +42,9 @@ namespace F23.StringSimilarity.Tests
             // 1  1  0  1
             // Total: 2
 
-            double result = instance.Distance("ABCD", "ABCE");
+            var result = instance.Distance("ABCD", "ABCE");
 
-            Assert.AreEqual(2.0, result, 0.0);
+            Assert.Equal(expected: 2.0, actual: result);
         }
     }
 }

@@ -22,14 +22,16 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class SorensenDiceTest
     {
-        [TestMethod]
+        [Fact]
         public void TestSimilarity()
         {
             var instance = new SorensenDice(2);
@@ -38,10 +40,13 @@ namespace F23.StringSimilarity.Tests
             // 1  1  1  1  0  0
             // 1  1  1  0  1  1
             // => 2 x 3 / (4 + 5) = 6/9 = 0.6666
+            var result = instance.Similarity("ABCDE", "ABCDFG");
 
-            double result = instance.Similarity("ABCDE", "ABCDFG");
-
-            Assert.AreEqual(0.6666, result, 0.0001);
+            Assert.Equal(
+                expected: 0.6667, // last digit should be 7 because of rounding
+                actual: result,
+                precision: 4 //0.0001
+            );
         }
     }
 }

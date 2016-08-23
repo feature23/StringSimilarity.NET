@@ -21,15 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+ 
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class JaccardTest
     {
-        [TestMethod]
+        [Fact]
         public void TestSimilarity()
         {
             var instance = new Jaccard(k: 2);
@@ -38,19 +40,19 @@ namespace F23.StringSimilarity.Tests
             // 1  1  1  1  0
             // 1  1  1  0  1
             // => 3 / 5 = 0.6
-            double result = instance.Similarity("ABCDE", "ABCDF");
+            var result = instance.Similarity("ABCDE", "ABCDF");
 
-            Assert.AreEqual(expected: 0.6, actual: result, delta: 0.0);
+            Assert.Equal(expected: 0.6, actual: result);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDistance()
         {
             var instance = new Jaccard(k: 2);
 
-            double result = instance.Distance("ABCDE", "ABCDF");
+            var result = instance.Distance("ABCDE", "ABCDF");
 
-            Assert.AreEqual(expected: 0.4, actual: result, delta: 0.0);
+            Assert.Equal(expected: 0.4, actual: result);
         }
     }
 }

@@ -22,21 +22,24 @@
  * THE SOFTWARE.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [TestClass]
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
+    [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class DamerauTest
     {
-        [TestMethod]
+        [Fact]
         public void TestDistance()
         {
             var damerau = new Damerau();
 
-            Assert.AreEqual(1.0, damerau.Distance("ABCDEF", "ABDCEF"), 0.0);
-            Assert.AreEqual(2.0, damerau.Distance("ABCDEF", "BACDFE"), 0.0);
-            Assert.AreEqual(1.0, damerau.Distance("ABCDEF", "ABCDE"), 0.0);
+            Assert.Equal(expected: 1.0, actual: damerau.Distance("ABCDEF", "ABDCEF"));
+            Assert.Equal(expected: 2.0, actual: damerau.Distance("ABCDEF", "BACDFE"));
+            Assert.Equal(expected: 1.0, actual: damerau.Distance("ABCDEF", "ABCDE"));
         }
     }
 }
