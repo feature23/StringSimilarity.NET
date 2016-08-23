@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/feature23/StringSimilarity.NET.svg?branch=master)
+[![Build Status](https://travis-ci.org/feature23/StringSimilarity.NET.svg?branch=master)](https://travis-ci.org/feature23/StringSimilarity.NET)
 
 # String Similarity .NET
 
