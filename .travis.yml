@@ -1,2 +1,8 @@
 language: csharp
 solution: F23.StringSimilarity.sln
+install:
+  - nuget restore F23.StringSimilarity.sln
+  - nuget install xunit.runners -Version 2.1.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release solution-name.sln
+  - mono ./testrunner/xunit.runners.2.1.0/tools/xunit.console.clr4.exe ./F23.StringSimilarity.Tests/bin/Release/F23.StringSimilarity.Tests.dll
