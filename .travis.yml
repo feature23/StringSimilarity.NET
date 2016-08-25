@@ -6,3 +6,5 @@ install:
 script:
   - xbuild /p:Configuration=Release F23.StringSimilarity.sln
   - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./test/F23.StringSimilarity.Tests/bin/Release/F23.StringSimilarity.Tests.dll
+after_success:
+  - coveralls
