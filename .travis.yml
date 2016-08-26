@@ -5,6 +5,7 @@ install:
   - nuget install xunit.runner.console -Version 2.1.0 -OutputDirectory testrunner
   #- nuget install coveralls.io -Version 1.3.4 -OutputDirectory coveralls
   
+  - sudo apt-get install gtk-sharp2
   - curl -sS https://api.nuget.org/packages/mono.cecil.0.9.5.4.nupkg > /tmp/mono.cecil.0.9.5.4.nupkg.zip
   - unzip /tmp/mono.cecil.0.9.5.4.nupkg.zip -d /tmp/cecil
   - cp /tmp/cecil/lib/net40/Mono.Cecil.dll .
