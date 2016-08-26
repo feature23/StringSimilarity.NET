@@ -3,7 +3,7 @@ solution: F23.StringSimilarity.sln
 install:
   - nuget restore F23.StringSimilarity.sln
   - nuget install xunit.runner.console -Version 2.1.0 -OutputDirectory testrunner
-  #- nuget install coveralls.io -Version 1.3.4 -OutputDirectory coveralls
+  - nuget install coveralls.io -Version 1.3.4 -OutputDirectory coveralls
   
   - CURRENT_WORKING_DIR=$(pwd)
   
@@ -22,10 +22,10 @@ install:
   
 script:
   - xbuild /p:Configuration=Release F23.StringSimilarity.sln
-  - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./test/F23.StringSimilarity.Tests/bin/Release/F23.StringSimilarity.Tests.dll
+  #- mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./test/F23.StringSimilarity.Tests/bin/Release/F23.StringSimilarity.Tests.dll
   
   - export LD_LIBRARY_PATH=/usr/local/lib
-  - mono --debug --profile=monocov:outfile=monocovCoverage.cov,+[F23.StringSimilarity],+[F23.StringSimilarity.Tests] ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./test/F23.StringSimilarity.Tests/bin/Release/F23.StringSimilarity.Tests.dll  /noshadow
+  - mono --verbose --debug --profile=monocov:outfile=monocovCoverage.cov,+[F23.StringSimilarity],+[F23.StringSimilarity.Tests] ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./test/F23.StringSimilarity.Tests/bin/Release/F23.StringSimilarity.Tests.dll
   - monocov --export-xml=monocovCoverage monocovCoverage.cov
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
@@ -36,6 +36,4 @@ script:
   - echo $REPO_COMMIT_AUTHOR_EMAIL
   - echo $REPO_COMMIT_MESSAGE
   - echo $TRAVIS_JOB_ID
-  #- mono ./coveralls/coveralls.1.3.4/tools/csmacnz.Coveralls.exe --monocov -i ./monocovCoverage --repoToken $COVERALLS_REPO_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName "travis-ci"  --useRelativePaths
-after_success:
-  coveralls
+  - mono ./coveralls/coveralls.1.3.4/tools/csmacnz.Coveralls.exe --monocov -i ./monocovCoverage --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName "travis-ci"  --useRelativePaths
