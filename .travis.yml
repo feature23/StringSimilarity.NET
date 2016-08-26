@@ -36,4 +36,4 @@ script:
   - echo $REPO_COMMIT_AUTHOR_EMAIL
   - echo $REPO_COMMIT_MESSAGE
   - echo $TRAVIS_JOB_ID
-  - mono ./coveralls/coveralls.1.3.4/tools/coveralls.net.exe --monocov -i ./monocovCoverage --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName "travis-ci"  --useRelativePaths
+  - mono ./coveralls/coveralls.io.1.3.4/tools/coveralls.net.exe --monocov -i ./monocovCoverage --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName "travis-ci"  --useRelativePaths
