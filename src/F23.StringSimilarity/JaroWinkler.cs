@@ -73,6 +73,11 @@ namespace F23.StringSimilarity
          */
         public double Similarity(string s1, string s2)
         {
+            if (s1 == null) s1 = string.Empty;
+            if (s2 == null) s2 = string.Empty;
+
+            if (string.Equals(s1, s2)) return 1f;
+
             int[] mtp = Matches(s1, s2);
             float m = mtp[0];
             if (m == 0)
