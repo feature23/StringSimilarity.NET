@@ -49,5 +49,17 @@ namespace F23.StringSimilarity.Tests
                 precision: 6 // 0.000001
             );
         }
+
+        [Fact]
+        public void TestSimilarityBothEmpty()
+        {
+            var instance = new JaroWinkler();
+
+            Assert.Equal(
+                expected: 1,
+                actual: instance.Similarity(string.Empty, string.Empty),
+                precision: 6 // 0.000001
+            );
+        }
     }
 }
