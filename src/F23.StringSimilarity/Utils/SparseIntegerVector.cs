@@ -31,11 +31,13 @@ namespace F23.StringSimilarity.Utils
 {
     public class SparseIntegerVector
     {
-        public int[] Keys { get; protected set; }
-        public int[] Values { get; protected set; }
-        public int Size { get; protected set; } = 0;
+        public int[] Keys { get; }
+        public int[] Values { get; }
+        public int Size { get; }
 
-        public SparseIntegerVector() : this(20) { }
+        private const int DEFAULT_SIZE = 20;
+
+        public SparseIntegerVector() : this(DEFAULT_SIZE) { }
 
         public SparseIntegerVector(int size)
         {
@@ -59,7 +61,7 @@ namespace F23.StringSimilarity.Utils
 
             Keys = new int[Size];
             Values = new int[Size];
-            
+
             int j = 0;
             for (int i = 0; i < array.Length; i++)
             {
@@ -85,7 +87,7 @@ namespace F23.StringSimilarity.Utils
 
                 if (k1 == k2)
                 {
-                    agg += Values[i] * other.Values[j] / den;
+                    agg += 1.0 * Values[i] * other.Values[j] / den;
                     i++;
                     j++;
 
@@ -114,7 +116,7 @@ namespace F23.StringSimilarity.Utils
 
                 if (k1 == k2)
                 {
-                    agg += this.Values[i] * other.Values[j];
+                    agg += 1.0 * Values[i] * other.Values[j];
                     i++;
                     j++;
 
@@ -136,7 +138,7 @@ namespace F23.StringSimilarity.Utils
             double agg = 0;
             for (int i = 0; i < Keys.Length; i++)
             {
-                agg += other[Keys[i]] * Values[i];
+                agg += 1.0 * other[Keys[i]] * Values[i];
             }
             return agg;
         }
@@ -146,7 +148,7 @@ namespace F23.StringSimilarity.Utils
             double agg = 0;
             for (int i = 0; i < Values.Length; i++)
             {
-                agg += Values[i] * Values[i];
+                agg += 1.0 * Values[i] * Values[i];
             }
             return Math.Sqrt(agg);
         }
@@ -177,12 +179,10 @@ namespace F23.StringSimilarity.Utils
                     agg++;
                     i++;
                     j++;
-
                 }
                 else if (k1 < k2)
                 {
                     i++;
-
                 }
                 else
                 {
@@ -208,13 +208,11 @@ namespace F23.StringSimilarity.Utils
                     agg += Math.Abs(Values[i] - other.Values[j]);
                     i++;
                     j++;
-
                 }
                 else if (k1 < k2)
                 {
                     agg += Math.Abs(Values[i]);
                     i++;
-
                 }
                 else
                 {

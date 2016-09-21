@@ -43,7 +43,13 @@ namespace F23.StringSimilarity
         /// <returns>The normalized Levenshtein distance</returns>
         ////
         public double Distance(string s1, string s2)
-            => l.Distance(s1, s2) / Math.Max(s1.Length, s2.Length);
+        {
+            int mLen = Math.Max(s1.Length, s2.Length);
+
+            if (mLen == 0) return 0.0;
+
+            return l.Distance(s1, s2) / mLen;
+        }
 
         /// <summary>
         /// Return 1 - distance.

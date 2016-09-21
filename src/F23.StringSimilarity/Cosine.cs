@@ -68,7 +68,7 @@ namespace F23.StringSimilarity
          * @param profile
          * @return L2 norm
          */
-        protected static double Norm(int[] profile)
+        private static double Norm(int[] profile)
         {
             double agg = 0;
 
@@ -80,14 +80,14 @@ namespace F23.StringSimilarity
             return Math.Sqrt(agg);
         }
 
-        protected static double DotProduct(int[] profile1, int[] profile2)
+        private static double DotProduct(int[] profile1, int[] profile2)
         {
             int length = Math.Min(profile1.Length, profile2.Length);
 
             double agg = 0;
             for (int i = 0; i < length; i++)
             {
-                agg += profile1[i] * profile2[i];
+                agg += (double)profile1[i] * profile2[i];
             }
             return agg;
         }

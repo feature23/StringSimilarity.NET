@@ -56,6 +56,7 @@
     <Compile Include="MetricLCS.cs" />
     <Compile Include="NGram.cs" />
     <Compile Include="NormalizedLevenshtein.cs" />
+    <Compile Include="OptimalStringAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QGram.cs" />
     <Compile Include="ShingleBased.cs" />

@@ -40,9 +40,10 @@ namespace F23.StringSimilarity
     /// </summary>
     public class NGram : INormalizedStringDistance
     {
+        private const int DEFAULT_N = 2;
         private readonly int n;
 
-        public NGram() : this(2) { }
+        public NGram() : this(DEFAULT_N) { }
 
         public NGram(int n)
         {
@@ -83,7 +84,7 @@ namespace F23.StringSimilarity
             char[] sa = new char[sl + n - 1];
             float[] p; // 'previous' cost array, horizontally
             float[] d; // Cost array, horizontally
-            float[] _d; // Placeholder to assist in swapping p and d
+            float[] d2; // Placeholder to assist in swapping p and d
 
             // Construct sa with prefix
             for (int i1 = 0; i1 < sa.Length; i1++)
@@ -152,9 +153,9 @@ namespace F23.StringSimilarity
                     d[i] = Math.Min(Math.Min(d[i - 1] + 1, p[i] + 1), p[i - 1] + ec);
                 }
                 // Copy current distance counts to 'previous row' distance counts
-                _d = p;
+                d2 = p;
                 p = d;
-                d = _d;
+                d = d2;
             }
 
             // Our last action in the above loop was to switch d and p, so p now
