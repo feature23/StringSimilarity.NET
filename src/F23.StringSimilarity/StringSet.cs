@@ -55,7 +55,7 @@ namespace F23.StringSimilarity
                 throw new Exception("Profiles were not created using the same kshingling object!");
             }
 
-            return 2 * _vector.Intersection(other._vector) / (_vector.Size + other._vector.Size);
+            return 2.0 * _vector.Intersection(other._vector) / (_vector.Size + other._vector.Size);
         }
     }
 }

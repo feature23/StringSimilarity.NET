@@ -26,13 +26,18 @@ namespace F23.StringSimilarity
 {
     public abstract class ShingleBased
     {
-        public int k { get; }
+        private const int DEFAULT_K = 3;
+
+        /// <summary>
+        /// Return k, the length of k-shingles (aka n-grams).
+        /// </summary>
+        protected int k { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="k"></param>
-        public ShingleBased(int k)
+        protected ShingleBased(int k)
         {
             this.k = k;
         }
@@ -40,6 +45,6 @@ namespace F23.StringSimilarity
         /// <summary>
         /// 
         /// </summary>
-        public ShingleBased() : this(3) { }
+        protected ShingleBased() : this(DEFAULT_K) { }
     }
 }

@@ -44,10 +44,13 @@ namespace F23.StringSimilarity
         /// <returns>LCS distance metric</returns>
         public double Distance(string s1, string s2)
         {
+            int mLen = Math.Max(s1.Length, s2.Length);
+
+            if (mLen == 0) return 0.0;
+
             return 1.0
                     - (1.0 * lcs.Length(s1, s2))
-                    / Math.Max(s1.Length, s2.Length);
-
+                    / mLen;
         }
     }
 }

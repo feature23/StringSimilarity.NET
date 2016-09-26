@@ -45,7 +45,7 @@ namespace F23.StringSimilarity
         /// <summary>
         /// The current value of the threshold used for adding the Winkler bonus. The default value is 0.7.
         /// </summary>
-        public double Threshold { get; private set; }
+        private double Threshold { get; }
         
         /// <summary>
         /// Creates a new instance with default threshold (0.7)

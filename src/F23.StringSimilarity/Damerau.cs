@@ -40,82 +40,82 @@ namespace F23.StringSimilarity
     /// This is not to be confused with the optimal string alignment distance, which
     /// is an extension where no substring can be edited more than once.
     /// </summary>
-    public class Damerau : IMetricStringDistance, IStringDistance
+    public class Damerau : IMetricStringDistance
     {
         public double Distance(string s1, string s2)
         {
             // Infinite distance is the max possible distance
-            int INFINITE = s1.Length + s2.Length;
+            int inf = s1.Length + s2.Length;
 
             // Create and initialize the character array indices
-            var DA = new Dictionary<char, int>();
+            var da = new Dictionary<char, int>();
 
             for (int d = 0; d < s1.Length; d++)
             {
-                if (!DA.ContainsKey(s1[d]))
+                if (!da.ContainsKey(s1[d]))
                 {
-                    DA[s1[d]] = 0;
+                    da[s1[d]] = 0;
                 }
             }
 
             for (int d = 0; d < s2.Length; d++)
             {
-                if (!DA.ContainsKey(s2[d]))
+                if (!da.ContainsKey(s2[d]))
                 {
-                    DA[s2[d]] = 0;
+                    da[s2[d]] = 0;
                 }
             }
 
             // Create the distance matrix H[0 .. s1.length+1][0 .. s2.length+1]
-            int[,] H = new int[s1.Length + 2, s2.Length + 2];
+            int[,] h = new int[s1.Length + 2, s2.Length + 2];
 
             // Initialize the left and top edges of H
             for (int i = 0; i <= s1.Length; i++)
             {
-                H[i + 1, 0] = INFINITE;
-                H[i + 1, 1] = i;
+                h[i + 1, 0] = inf;
+                h[i + 1, 1] = i;
             }
 
             for (int j = 0; j <= s2.Length; j++)
             {
-                H[0, j + 1] = INFINITE;
-                H[1, j + 1] = j;
+                h[0, j + 1] = inf;
+                h[1, j + 1] = j;
             }
 
             // Fill in the distance matrix H
             // Look at each character in s1
             for (int i = 1; i <= s1.Length; i++)
             {
-                int DB = 0;
+                int db = 0;
 
                 // Look at each character in b
                 for (int j = 1; j <= s2.Length; j++)
                 {
-                    int i1 = DA[s2[j - 1]];
-                    int j1 = DB;
+                    int i1 = da[s2[j - 1]];
+                    int j1 = db;
 
                     int cost = 1;
                     if (s1[i - 1] == s2[j - 1])
                     {
                         cost = 0;
-                        DB = j;
+                        db = j;
                     }
 
-                    H[i + 1, j + 1] = Min(
-                        H[i, j] + cost,  // Substitution
-                        H[i + 1, j] + 1, // Insertion
-                        H[i, j + 1] + 1, // Deletion
-                        H[i1, j1] + (i - i1 - 1) + 1 + (j - j1 - 1)
+                    h[i + 1, j + 1] = Min(
+                        h[i, j] + cost,  // Substitution
+                        h[i + 1, j] + 1, // Insertion
+                        h[i, j + 1] + 1, // Deletion
+                        h[i1, j1] + (i - i1 - 1) + 1 + (j - j1 - 1)
                     );
                 }
 
-                DA[s1[i - 1]] = i;
+                da[s1[i - 1]] = i;
             }
 
-            return H[s1.Length + 1, s2.Length + 1];
+            return h[s1.Length + 1, s2.Length + 1];
         }
 
-        protected static int Min(int a, int b, int c, int d)
+        private static int Min(int a, int b, int c, int d)
              => Math.Min(a, Math.Min(b, Math.Min(c, d)));
     }
 }
