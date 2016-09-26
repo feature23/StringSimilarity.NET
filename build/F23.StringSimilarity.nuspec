@@ -2,7 +2,7 @@
 <package>
     <metadata>
         <id>F23.StringSimilarity</id>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <title>StringSimilarity.NET</title>
         <authors>James Blair</authors>
         <owners>feature[23]</owners>
