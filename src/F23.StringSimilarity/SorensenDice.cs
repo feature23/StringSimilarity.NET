@@ -23,8 +23,10 @@
  */
 
 using System;
+using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
 using F23.StringSimilarity.Support;
+// ReSharper disable LoopCanBeConvertedToQuery
 
 namespace F23.StringSimilarity
 {
@@ -64,38 +66,22 @@ namespace F23.StringSimilarity
         /// <returns></returns>
         public double Similarity(string s1, string s2)
         {
-            KShingling ks = new KShingling(k);
-            int[] profile1 = ks.GetArrayProfile(s1);
-            int[] profile2 = ks.GetArrayProfile(s2);
+            var profile1 = GetProfile(s1);
+            var profile2 = GetProfile(s2);
 
-            int length = Math.Max(profile1.Length, profile2.Length);
-
-            //profile1 = java.util.Arrays.copyOf(profile1, length);
-            //profile2 = java.util.Arrays.copyOf(profile2, length);
-            profile1 = profile1.WithPadding(length);
-            profile2 = profile2.WithPadding(length);
-
+            var union = new HashSet<string>();
+            union.UnionWith(profile1.Keys);
+            union.UnionWith(profile2.Keys);
+            
             int inter = 0;
-            int sum = 0;
-            for (int i = 0; i < length; i++)
+
+            foreach (var key in union)
             {
-                if (profile1[i] > 0 && profile2[i] > 0)
-                {
+                if (profile1.ContainsKey(key) && profile2.ContainsKey(key))
                     inter++;
-                }
-
-                if (profile1[i] > 0)
-                {
-                    sum++;
-                }
-
-                if (profile2[i] > 0)
-                {
-                    sum++;
-                }
             }
 
-            return 2.0 * inter / sum;
+            return 2.0 * inter / (profile1.Count + profile2.Count);
         }
 
         public double Distance(string s1, string s2)

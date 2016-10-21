@@ -23,7 +23,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable LoopCanBeConvertedToQuery
 
 namespace F23.StringSimilarity
 {
@@ -47,7 +49,7 @@ namespace F23.StringSimilarity
         /// Default k is 3.
         /// </summary>
         public Cosine() { }
-        
+
         public double Similarity(string s1, string s2)
         {
             if (s1.Length < k || s2.Length < k)
@@ -55,9 +57,8 @@ namespace F23.StringSimilarity
                 return 0;
             }
 
-            KShingling ks = new KShingling(k);
-            int[] profile1 = ks.GetArrayProfile(s1);
-            int[] profile2 = ks.GetArrayProfile(s2);
+            var profile1 = GetProfile(s1);
+            var profile2 = GetProfile(s2);
 
             return DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
         }
@@ -68,31 +69,47 @@ namespace F23.StringSimilarity
          * @param profile
          * @return L2 norm
          */
-        private static double Norm(int[] profile)
+        private static double Norm(IDictionary<string, int> profile)
         {
             double agg = 0;
 
-            foreach (var v in profile)
+            foreach (var entry in profile)
             {
-                agg += (double)v * v;
+                agg += 1.0 * entry.Value * entry.Value;
             }
 
             return Math.Sqrt(agg);
         }
 
-        private static double DotProduct(int[] profile1, int[] profile2)
+        private static double DotProduct(IDictionary<string, int> profile1,
+            IDictionary<string, int> profile2)
         {
-            int length = Math.Min(profile1.Length, profile2.Length);
+            // Loop over the smallest map
+            var small_profile = profile2;
+            var large_profile = profile1;
+
+            if (profile1.Count < profile2.Count)
+            {
+                small_profile = profile1;
+                large_profile = profile2;
+            }
 
             double agg = 0;
-            for (int i = 0; i < length; i++)
+            foreach (var entry in small_profile)
             {
-                agg += (double)profile1[i] * profile2[i];
+                if (!large_profile.ContainsKey(entry.Key)) continue;
+
+                agg += 1.0 * entry.Value * large_profile[entry.Key];
             }
+
             return agg;
         }
 
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
+
+        public double Similarity(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
+            => DotProduct(profile1, profile2)
+            / (Norm(profile1) * Norm(profile2));
     }
 }
