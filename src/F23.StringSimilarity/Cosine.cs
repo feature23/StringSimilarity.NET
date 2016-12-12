@@ -97,9 +97,11 @@ namespace F23.StringSimilarity
             double agg = 0;
             foreach (var entry in small_profile)
             {
-                if (!large_profile.ContainsKey(entry.Key)) continue;
+                int i;
+                
+                if (!large_profile.TryGetValue(entry.Key, out i)) continue;
 
-                agg += 1.0 * entry.Value * large_profile[entry.Key];
+                agg += 1.0 * entry.Value * i;
             }
 
             return agg;

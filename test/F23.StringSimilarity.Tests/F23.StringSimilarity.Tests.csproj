@@ -65,6 +65,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DamerauTest.cs" />
+    <Compile Include="Experimental\Sift4Test.cs" />
     <Compile Include="NGramTest.cs" />
     <Compile Include="OptimalStringAlignmentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

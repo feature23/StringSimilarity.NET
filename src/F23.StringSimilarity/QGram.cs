@@ -83,14 +83,18 @@ namespace F23.StringSimilarity
                 int v1 = 0;
                 int v2 = 0;
 
-                if (profile1.ContainsKey(key))
+                int iv1;
+
+                if (profile1.TryGetValue(key, out iv1))
                 {
-                    v1 = profile1[key];
+                    v1 = iv1;
                 }
 
-                if (profile2.ContainsKey(key))
+                int iv2;
+
+                if (profile2.TryGetValue(key, out iv2))
                 {
-                    v2 = profile2[key];
+                    v2 = iv2;
                 }
 
                 agg += Math.Abs(v1 - v2);

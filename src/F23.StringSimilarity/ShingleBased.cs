@@ -72,9 +72,11 @@ namespace F23.StringSimilarity
             {
                 var shingle = string_no_space.Substring(i, k);
 
-                if (shingles.ContainsKey(shingle))
+                int old;
+
+                if (shingles.TryGetValue(shingle, out old))
                 {
-                    shingles[shingle] += 1;
+                    shingles[shingle] = old + 1;
                 }
                 else
                 {

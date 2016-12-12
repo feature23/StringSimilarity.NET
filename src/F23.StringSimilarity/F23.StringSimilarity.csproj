@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Cosine.cs" />
     <Compile Include="Damerau.cs" />
+    <Compile Include="Experimental\Sift4.cs" />
     <Compile Include="ICharacterSubstitution.cs" />
     <Compile Include="Interfaces\IMetricStringDistance.cs" />
     <Compile Include="Interfaces\INormalizedStringDistance.cs" />

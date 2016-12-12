@@ -52,18 +52,12 @@ namespace F23.StringSimilarity
 
             for (int d = 0; d < s1.Length; d++)
             {
-                if (!da.ContainsKey(s1[d]))
-                {
-                    da[s1[d]] = 0;
-                }
+                da[s1[d]] = 0;
             }
 
             for (int d = 0; d < s2.Length; d++)
             {
-                if (!da.ContainsKey(s2[d]))
-                {
-                    da[s2[d]] = 0;
-                }
+                da[s2[d]] = 0;
             }
 
             // Create the distance matrix H[0 .. s1.length+1][0 .. s2.length+1]
