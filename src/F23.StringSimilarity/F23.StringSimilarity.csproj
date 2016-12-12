@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Cosine.cs" />
     <Compile Include="Damerau.cs" />
+    <Compile Include="Experimental\Sift4.cs" />
     <Compile Include="ICharacterSubstitution.cs" />
     <Compile Include="Interfaces\IMetricStringDistance.cs" />
     <Compile Include="Interfaces\INormalizedStringDistance.cs" />
@@ -50,7 +51,6 @@
     <Compile Include="Interfaces\IStringSimilarity.cs" />
     <Compile Include="Jaccard.cs" />
     <Compile Include="JaroWinkler.cs" />
-    <Compile Include="KShingling.cs" />
     <Compile Include="Levenshtein.cs" />
     <Compile Include="LongestCommonSubsequence.cs" />
     <Compile Include="MetricLCS.cs" />
@@ -61,8 +61,6 @@
     <Compile Include="QGram.cs" />
     <Compile Include="ShingleBased.cs" />
     <Compile Include="SorensenDice.cs" />
-    <Compile Include="StringProfile.cs" />
-    <Compile Include="StringSet.cs" />
     <Compile Include="Support\ArrayExtensions.cs" />
     <Compile Include="Utils\SparseBooleanVector.cs" />
     <Compile Include="Utils\SparseIntegerVector.cs" />

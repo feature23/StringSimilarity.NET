@@ -23,6 +23,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
 using F23.StringSimilarity.Support;
 
@@ -41,7 +42,7 @@ namespace F23.StringSimilarity
         /// string-matching with q-grams and maximal matches",
         /// http://www.sciencedirect.com/science/article/pii/0304397592901434 The
         /// distance between two strings is defined as the L1 norm of the difference
-        /// of their profiles (the number of occurence of each k-shingle). Q-gram
+        /// of their profiles (the number of occurences of each k-shingle). Q-gram
         /// distance is a lower bound on Levenshtein distance, but can be computed in
         /// O(|A| + |B|), where Levenshtein requires O(|A|.|B|)
         /// </summary>
@@ -69,25 +70,37 @@ namespace F23.StringSimilarity
         /// <returns></returns>
         public double Distance(string s1, string s2)
         {
-            var ks = new KShingling(k);
+            var profile1 = GetProfile(s1);
+            var profile2 = GetProfile(s2);
 
-            int[] profile1 = ks.GetArrayProfile(s1);
-            int[] profile2 = ks.GetArrayProfile(s2);
+            var union = new HashSet<string>();
+            union.UnionWith(profile1.Keys);
+            union.UnionWith(profile2.Keys);
 
-            int length = Math.Max(profile1.Length, profile2.Length);
-
-            //profile1 = java.util.Arrays.copyOf(profile1, length);
-            //profile2 = java.util.Arrays.copyOf(profile2, length);
-            profile1 = profile1.WithPadding(length);
-            profile2 = profile2.WithPadding(length);
-
-            int d = 0;
-            for (int i = 0; i < length; i++)
+            int agg = 0;
+            foreach (var key in union)
             {
-                d += Math.Abs(profile1[i] - profile2[i]);
+                int v1 = 0;
+                int v2 = 0;
+
+                int iv1;
+
+                if (profile1.TryGetValue(key, out iv1))
+                {
+                    v1 = iv1;
+                }
+
+                int iv2;
+
+                if (profile2.TryGetValue(key, out iv2))
+                {
+                    v2 = iv2;
+                }
+
+                agg += Math.Abs(v1 - v2);
             }
 
-            return d;
+            return agg;
         }
     }
 }

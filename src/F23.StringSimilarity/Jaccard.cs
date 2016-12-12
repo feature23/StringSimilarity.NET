@@ -23,8 +23,10 @@
  */
 
 using System;
+using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
 using F23.StringSimilarity.Support;
+// ReSharper disable LoopCanBeConvertedToQuery
 
 namespace F23.StringSimilarity
 {
@@ -42,32 +44,22 @@ namespace F23.StringSimilarity
         /// <returns>Similarity</returns>
         public double Similarity(string s1, string s2)
         {
-            KShingling ks = new KShingling(k);
-            int[] profile1 = ks.GetArrayProfile(s1);
-            int[] profile2 = ks.GetArrayProfile(s2);
+            var profile1 = GetProfile(s1);
+            var profile2 = GetProfile(s2);
 
-            int length = Math.Max(profile1.Length, profile2.Length);
-
-            profile1 = profile1.WithPadding(length);
-            profile2 = profile2.WithPadding(length);
+            var union = new HashSet<string>();
+            union.UnionWith(profile1.Keys);
+            union.UnionWith(profile2.Keys);
 
             int inter = 0;
-            int union = 0;
 
-            for (int i = 0; i < length; i++)
+            foreach (var key in union)
             {
-                if (profile1[i] > 0 || profile2[i] > 0)
-                {
-                    union++;
-
-                    if (profile1[i] > 0 && profile2[i] > 0)
-                    {
-                        inter++;
-                    }
-                }
+                if (profile1.ContainsKey(key) && profile2.ContainsKey(key))
+                    inter++;
             }
 
-            return 1.0 * inter / union;
+            return 1.0 * inter / union.Count;
         }
 
 

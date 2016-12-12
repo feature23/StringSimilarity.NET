@@ -22,6 +22,11 @@
  * THE SOFTWARE.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
+
 namespace F23.StringSimilarity
 {
     public abstract class ShingleBased
@@ -34,11 +39,21 @@ namespace F23.StringSimilarity
         protected int k { get; }
 
         /// <summary>
+        /// Pattern for finding multiple following spaces
+        /// </summary>
+        private static readonly Regex SPACE_REG = new Regex("\\s+", RegexOptions.Compiled);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="k"></param>
         protected ShingleBased(int k)
         {
+            if (k <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(k), "k should be positive!");
+            }
+
             this.k = k;
         }
 
@@ -46,5 +61,30 @@ namespace F23.StringSimilarity
         /// 
         /// </summary>
         protected ShingleBased() : this(DEFAULT_K) { }
+
+        protected IDictionary<string, int> GetProfile(string s)
+        {
+            var shingles = new Dictionary<string, int>();
+
+            var string_no_space = SPACE_REG.Replace(s, " ");
+
+            for (int i = 0; i < (string_no_space.Length - k + 1); i++)
+            {
+                var shingle = string_no_space.Substring(i, k);
+
+                int old;
+
+                if (shingles.TryGetValue(shingle, out old))
+                {
+                    shingles[shingle] = old + 1;
+                }
+                else
+                {
+                    shingles[shingle] = 1;
+                }
+            }
+
+            return new ReadOnlyDictionary<string, int>(shingles);
+        }
     }
 }

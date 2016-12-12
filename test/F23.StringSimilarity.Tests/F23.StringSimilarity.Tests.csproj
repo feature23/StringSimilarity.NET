@@ -65,10 +65,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DamerauTest.cs" />
+    <Compile Include="Experimental\Sift4Test.cs" />
+    <Compile Include="NGramTest.cs" />
     <Compile Include="OptimalStringAlignmentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CosineTest.cs" />
-    <Compile Include="StringProfileTest.cs" />
     <Compile Include="Support\ArrayExtensionsTest.cs" />
     <Compile Include="JaccardTest.cs" />
     <Compile Include="JaroWinklerTest.cs" />
@@ -92,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

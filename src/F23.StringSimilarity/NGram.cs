@@ -60,11 +60,11 @@ namespace F23.StringSimilarity
             {
                 if (sl == tl)
                 {
-                    return 1;
+                    return 0;
                 }
                 else
                 {
-                    return 0;
+                    return 1;
                 }
             }
 
@@ -128,7 +128,7 @@ namespace F23.StringSimilarity
                 }
                 else
                 {
-                    t_j = s1.Substring(j - n, j).ToCharArray();
+                    t_j = s1.Substring(j - n, n).ToCharArray();
                 }
                 d[0] = j;
                 for (i = 1; i <= sl; i++)
@@ -160,7 +160,7 @@ namespace F23.StringSimilarity
 
             // Our last action in the above loop was to switch d and p, so p now
             // actually has the most recent cost counts
-            return 1.0 - (p[sl] / Math.Max(tl, sl));
+            return p[sl] / Math.Max(tl, sl);
         }
     }
 }
