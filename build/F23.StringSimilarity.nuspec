@@ -2,7 +2,7 @@
 <package>
     <metadata>
         <id>F23.StringSimilarity</id>
-        <version>1.1.1</version>
+        <version>1.2.0</version>
         <title>StringSimilarity.NET</title>
         <authors>James Blair</authors>
         <owners>feature[23]</owners>
@@ -14,7 +14,7 @@
 	<licenseUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/LICENSE</licenseUrl>
         <iconUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <tags>string similarity distance cosine damerau jaccard jaro-winkler levenshtein ngram qgram shingle</tags>
+        <tags>string similarity distance cosine damerau jaccard jaro-winkler levenshtein ngram qgram shingle sift4</tags>
     </metadata>
     <files>
         <file src="..\src\F23.StringSimilarity\bin\release\F23.StringSimilarity.dll" target="lib" />
