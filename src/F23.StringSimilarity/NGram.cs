@@ -56,6 +56,11 @@ namespace F23.StringSimilarity
             int sl = s0.Length;
             int tl = s1.Length;
 
+            if (s0.Equals(s1))
+            {
+                return 0;
+            }
+
             if (sl == 0 || tl == 0)
             {
                 if (sl == tl)

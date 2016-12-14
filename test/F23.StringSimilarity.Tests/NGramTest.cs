@@ -14,6 +14,26 @@ namespace F23.StringSimilarity.Tests
             var ngram = new NGram();
 
             Assert.True(ngram.Distance(s0, s1) < ngram.Distance(s0, s2));
+
+            Assert.Equal(
+                expected: 0.0,
+                actual: ngram.Distance("SIJK", "SIJK"),
+                precision: 1); // 0.0
+
+            Assert.Equal(
+                expected: 0.0,
+                actual: ngram.Distance("S", "S"),
+                precision: 1); // 0.0
+
+            Assert.Equal(
+                expected: 1.0,
+                actual: ngram.Distance("", "S"),
+                precision: 1); // 0.0
+
+            Assert.Equal(
+                expected: 1.0,
+                actual: ngram.Distance("", "SIJK"),
+                precision: 1); // 0.0
         }
     }
 }

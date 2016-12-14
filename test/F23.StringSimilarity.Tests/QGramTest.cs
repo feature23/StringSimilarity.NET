@@ -23,6 +23,7 @@
  */
 
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
@@ -45,6 +46,16 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Distance("ABCD", "ABCE");
 
             Assert.Equal(expected: 2.0, actual: result);
+
+            Assert.Equal(
+                expected: 0.0,
+                actual: instance.Distance("S", "S"),
+                precision: 1); // 0.0
+
+            Assert.Equal(
+                expected: 0.0,
+                actual: instance.Distance("012345", "012345"),
+                precision: 1); // 0.0
         }
     }
 }
