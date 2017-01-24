@@ -24,6 +24,7 @@
 
 using System;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable SuggestVarOrType_Elsewhere
 
 namespace F23.StringSimilarity
 {
@@ -49,14 +50,30 @@ namespace F23.StringSimilarity
         /// Return the LCS distance between strings s1 and s2, computed as |s1| +
         /// |s2| - 2 * |LCS(s1, s2)|.
         /// </summary>
-        /// <param name="s1">The first string</param>
-        /// <param name="s2">The second string</param>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
         /// <returns>
         /// The LCS distance between strings s1 and s2, computed as |s1| +
         /// |s2| - 2 * |LCS(s1, s2)|
         /// </returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 0;
+            }
+
             return s1.Length + s2.Length - 2 * Length(s1, s2);
         }
 
@@ -64,9 +81,10 @@ namespace F23.StringSimilarity
         ///  Return the length of Longest Common Subsequence (LCS) between strings s1
         ///  and s2.
         /// </summary>
-        /// <param name="s1">The first string</param>
-        /// <param name="s2">The second string</param>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
         /// <returns>The length of LCS(s2, s2)</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public int Length(string s1, string s2)
         {
             /* function LCSLength(X[1..m], Y[1..n])

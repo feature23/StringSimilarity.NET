@@ -1,7 +1,7 @@
 ﻿/*
  * The MIT License
  *
- * Copyright 2016 feature[23]
+ * Copyright 2017 feature[23]
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,20 @@
  * THE SOFTWARE.
  */
 
-using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
-    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
-    [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
-    public class DamerauTest
+    public class MetricLCSTest
     {
         [Fact]
         public void TestDistance()
         {
-            var instance = new Damerau();
-
-            Assert.Equal(expected: 1.0, actual: instance.Distance("ABCDEF", "ABDCEF"));
-            Assert.Equal(expected: 2.0, actual: instance.Distance("ABCDEF", "BACDFE"));
-            Assert.Equal(expected: 1.0, actual: instance.Distance("ABCDEF", "ABCDE"));
-
+            var instance = new MetricLCS();
             NullEmptyTests.TestDistance(instance);
+
+            // TODO: regular (non-null/empty) distance tests
         }
     }
 }

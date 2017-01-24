@@ -25,6 +25,8 @@
 using System;
 using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable ForCanBeConvertedToForeach
+// ReSharper disable SuggestVarOrType_Elsewhere
 
 namespace F23.StringSimilarity
 {
@@ -42,8 +44,33 @@ namespace F23.StringSimilarity
     /// </summary>
     public class Damerau : IMetricStringDistance
     {
+        /// <summary>
+        /// Compute the distance between strings: the minimum number of operations
+        /// needed to transform one string into the other(insertion, deletion,
+        /// substitution of a single character, or a transposition of two adjacent
+        /// characters).
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The computed distance.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 0;
+            }
+
             // Infinite distance is the max possible distance
             int inf = s1.Length + s2.Length;
 

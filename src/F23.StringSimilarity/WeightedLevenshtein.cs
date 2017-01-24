@@ -24,6 +24,8 @@
 
 using System;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable SuggestVarOrType_Elsewhere
+// ReSharper disable TooWideLocalVariableScope
 
 namespace F23.StringSimilarity
 {
@@ -36,7 +38,7 @@ namespace F23.StringSimilarity
         /// <summary>
         /// Create a new instance with provided character substitution.
         /// </summary>
-        /// <param name="characterSubstitution"></param>
+        /// <param name="characterSubstitution">The strategy to determine character substitution weights.</param>
         public WeightedLevenshtein(ICharacterSubstitution characterSubstitution)
         {
             _characterSubstitution = characterSubstitution;
@@ -45,11 +47,22 @@ namespace F23.StringSimilarity
         /// <summary>
         /// Compute Levenshtein distance using provided weights for substitution.
         /// </summary>
-        /// <param name="s1">The first string</param>
-        /// <param name="s2">The second string</param>
-        /// <returns>The weighted Levenshtein distance</returns>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The computed weighted Levenshtein distance.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
             if (s1.Equals(s2))
             {
                 return 0;

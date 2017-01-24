@@ -39,11 +39,27 @@ namespace F23.StringSimilarity
         /// Distance metric based on Longest Common Subsequence, computed as
         /// 1 - |LCS(s1, s2)| / max(|s1|, |s2|).
         /// </summary>
-        /// <param name="s1">The first string</param>
-        /// <param name="s2">The second string</param>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
         /// <returns>LCS distance metric</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 0;
+            }
+
             int mLen = Math.Max(s1.Length, s2.Length);
 
             if (mLen == 0) return 0.0;

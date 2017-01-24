@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using F23.StringSimilarity.Tests.TestUtil;
+using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
@@ -34,6 +35,8 @@ namespace F23.StringSimilarity.Tests
                 expected: 1.0,
                 actual: ngram.Distance("", "SIJK"),
                 precision: 1); // 0.0
+
+            NullEmptyTests.TestDistance(ngram);
         }
     }
 }

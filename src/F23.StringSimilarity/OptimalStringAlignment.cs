@@ -24,6 +24,8 @@
 
 using System;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable SuggestVarOrType_Elsewhere
+// ReSharper disable TooWideLocalVariableScope
 
 namespace F23.StringSimilarity
 {
@@ -35,17 +37,36 @@ namespace F23.StringSimilarity
         /// substitution of a single character, or a transposition of two adjacent
         /// characters) while no substring is edited more than once.
         /// </summary>
-        /// <param name="s1">the first input string</param>
-        /// <param name="s2">the second input string</param>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
         /// <returns>the OSA distance</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
             int n = s1.Length, m = s2.Length;
-            if (n == 0) return m;
-            if (m == 0) return n;
+
+            if (n == 0)
+            {
+                return m;
+            }
+
+            if (m == 0)
+            {
+                return n;
+            }
 
             // Create the distance matrix H[0 .. s1.length+1][0 .. s2.length+1]
-            int[,] d = new int[s1.Length + 2, s2.Length + 2];
+            int[,] d = new int[n + 2, m + 2];
 
             //initialize top row and leftmost column
             for (int i = 0; i <= n; i++)

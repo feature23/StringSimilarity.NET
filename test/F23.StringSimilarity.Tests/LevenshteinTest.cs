@@ -23,6 +23,7 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -40,6 +41,8 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My tring"));
             Assert.Equal(expected: 2.0, actual: instance.Distance("My string", "M string2"));
             Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My $tring"));
+
+            NullEmptyTests.TestDistance(instance);
         }
     }
 }

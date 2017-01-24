@@ -23,6 +23,7 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -47,6 +48,15 @@ namespace F23.StringSimilarity.Tests
                 actual: result,
                 precision: 4 //0.0001
             );
+
+            NullEmptyTests.TestSimilarity(instance);
+        }
+
+        [Fact]
+        public void TestDistance()
+        {
+            var instance = new SorensenDice();
+            NullEmptyTests.TestDistance(instance);
         }
     }
 }

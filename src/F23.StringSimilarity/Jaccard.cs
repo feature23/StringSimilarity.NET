@@ -25,7 +25,7 @@
 using System;
 using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
-using F23.StringSimilarity.Support;
+
 // ReSharper disable LoopCanBeConvertedToQuery
 
 namespace F23.StringSimilarity
@@ -39,11 +39,27 @@ namespace F23.StringSimilarity
         /// <summary>
         /// Compute jaccard index: |A inter B| / |A union B|.
         /// </summary>
-        /// <param name="s1">First string</param>
-        /// <param name="s2">Second string</param>
-        /// <returns>Similarity</returns>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The Jaccard index in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 1;
+            }
+
             var profile1 = GetProfile(s1);
             var profile2 = GetProfile(s2);
 
@@ -66,9 +82,10 @@ namespace F23.StringSimilarity
         /// <summary>
         /// Distance is computed as 1 - similarity.
         /// </summary>
-        /// <param name="s1">First string</param>
-        /// <param name="s2">Second string</param>
-        /// <returns>Distance</returns>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>1 - the Jaccard similarity.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
     }

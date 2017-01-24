@@ -22,11 +22,13 @@
  * THE SOFTWARE.
  */
 
+using System.CodeDom;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -47,6 +49,8 @@ namespace F23.StringSimilarity.Tests
                 actual: result, 
                 precision: 2 // 0.01
             );
+
+            NullEmptyTests.TestSimilarity(instance);
         }
 
         [Fact]
@@ -79,6 +83,15 @@ namespace F23.StringSimilarity.Tests
                 actual: result,
                 precision: 3 //0.001
             );
+        }
+
+        [Fact]
+        public void TestDistance()
+        {
+            var instance = new Cosine();
+            NullEmptyTests.TestDistance(instance);
+
+            // TODO: regular (non-null/empty) distance tests
         }
 
         private static async Task<string> ReadResourceFileAsync(string file)

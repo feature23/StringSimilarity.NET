@@ -43,10 +43,10 @@ namespace F23.StringSimilarity
         /// </summary>
         private static readonly Regex SPACE_REG = new Regex("\\s+", RegexOptions.Compiled);
 
-        /// <summary>
-        /// 
+        /// <summary> 
         /// </summary>
         /// <param name="k"></param>
+        /// <exception cref="ArgumentOutOfRangeException">If k is less than or equal to 0.</exception>
         protected ShingleBased(int k)
         {
             if (k <= 0)
@@ -56,10 +56,7 @@ namespace F23.StringSimilarity
 
             this.k = k;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         protected ShingleBased() : this(DEFAULT_K) { }
 
         protected IDictionary<string, int> GetProfile(string s)

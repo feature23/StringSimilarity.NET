@@ -25,6 +25,8 @@
 using System;
 using System.Linq;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable SuggestVarOrType_Elsewhere
+// ReSharper disable LoopCanBeConvertedToQuery
 
 namespace F23.StringSimilarity
 {
@@ -38,9 +40,9 @@ namespace F23.StringSimilarity
     /// The distance is computed as 1 - Jaro-Winkler similarity.
     public class JaroWinkler : INormalizedStringSimilarity, INormalizedStringDistance
     {
-        private static readonly double DEFAULT_THRESHOLD = 0.7;
-        private static readonly int THREE = 3;
-        private static readonly double JW_COEF = 0.1;
+        private const double DEFAULT_THRESHOLD = 0.7;
+        private const int THREE = 3;
+        private const double JW_COEF = 0.1;
 
         /// <summary>
         /// The current value of the threshold used for adding the Winkler bonus. The default value is 0.7.
@@ -64,19 +66,30 @@ namespace F23.StringSimilarity
         {
             Threshold = threshold;
         }
-        
-        /**
-         * Compute JW similarity.
-         * @param s1
-         * @param s2
-         * @return
-         */
+
+        /// <summary>
+        /// Compute Jaro-Winkler similarity.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The Jaro-Winkler similarity in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
         {
-            if (s1 == null) s1 = string.Empty;
-            if (s2 == null) s2 = string.Empty;
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));    
+            }
 
-            if (string.Equals(s1, s2)) return 1f;
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 1f;
+            }
 
             int[] mtp = Matches(s1, s2);
             float m = mtp[0];
@@ -94,19 +107,20 @@ namespace F23.StringSimilarity
             }
             return jw;
         }
-        
+
         /// <summary>
         /// Return 1 - similarity.
         /// </summary>
-        /// <param name="s1"></param>
-        /// <param name="s2"></param>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
         /// <returns>1 - similarity</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
 
         private int[] Matches(string s1, string s2)
         {
-            String max, min;
+            string max, min;
             if (s1.Length > s2.Length)
             {
                 max = s1;

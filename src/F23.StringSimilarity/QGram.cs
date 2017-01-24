@@ -25,7 +25,6 @@
 using System;
 using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
-using F23.StringSimilarity.Support;
 
 namespace F23.StringSimilarity
 {
@@ -65,11 +64,27 @@ namespace F23.StringSimilarity
         /// The distance between two strings is defined as the L1 norm of the
         /// difference of their profiles (the number of occurence of each k-shingle).
         /// </summary>
-        /// <param name="s1">The first string</param>
-        /// <param name="s2">The second string</param>
-        /// <returns></returns>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The computed Q-gram distance.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 0;
+            }
+
             var profile1 = GetProfile(s1);
             var profile2 = GetProfile(s2);
 

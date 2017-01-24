@@ -23,6 +23,7 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -41,6 +42,8 @@ namespace F23.StringSimilarity.Tests
 
             Assert.Equal(expected: 4, actual: instance.Distance("AGCAT", "GAC"));
             Assert.Equal(expected: 1, actual: instance.Distance("AGCAT", "AGCT"));
+
+            NullEmptyTests.TestDistance(instance);
         }
     }
 }

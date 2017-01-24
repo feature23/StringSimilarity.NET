@@ -23,6 +23,7 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -104,6 +105,8 @@ namespace F23.StringSimilarity.Tests
                 actual: instance.Distance("abcde", "vwxyz"),
                 precision: 0 // 0.0
             );
+
+            NullEmptyTests.TestDistance(instance);
         }
     }
 }
