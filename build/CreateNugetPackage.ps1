@@ -1,0 +1,1 @@
+dotnet pack -c Release ..\src\F23.StringSimilarity\F23.StringSimilarity.csproj
