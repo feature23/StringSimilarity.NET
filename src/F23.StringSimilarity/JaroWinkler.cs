@@ -118,7 +118,7 @@ namespace F23.StringSimilarity
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
 
-        private int[] Matches(string s1, string s2)
+        private static int[] Matches(string s1, string s2)
         {
             string max, min;
             if (s1.Length > s2.Length)
@@ -135,9 +135,9 @@ namespace F23.StringSimilarity
 
             //int[] matchIndexes = new int[min.Length];
             //Arrays.fill(matchIndexes, -1);
-            int[] matchIndexes = Enumerable.Repeat(-1, min.Length).ToArray();
+            int[] match_indexes = Enumerable.Repeat(-1, min.Length).ToArray();
 
-            bool[] matchFlags = new bool[max.Length];
+            bool[] match_flags = new bool[max.Length];
             int matches = 0;
             for (int mi = 0; mi < min.Length; mi++)
             {
@@ -145,10 +145,10 @@ namespace F23.StringSimilarity
                 for (int xi = Math.Max(mi - range, 0),
                         xn = Math.Min(mi + range + 1, max.Length); xi < xn; xi++)
                 {
-                    if (!matchFlags[xi] && c1 == max[xi])
+                    if (!match_flags[xi] && c1 == max[xi])
                     {
-                        matchIndexes[mi] = xi;
-                        matchFlags[xi] = true;
+                        match_indexes[mi] = xi;
+                        match_flags[xi] = true;
                         matches++;
                         break;
                     }
@@ -158,7 +158,7 @@ namespace F23.StringSimilarity
             char[] ms2 = new char[matches];
             for (int i = 0, si = 0; i < min.Length; i++)
             {
-                if (matchIndexes[i] != -1)
+                if (match_indexes[i] != -1)
                 {
                     ms1[si] = min[i];
                     si++;
@@ -166,7 +166,7 @@ namespace F23.StringSimilarity
             }
             for (int i = 0, si = 0; i < max.Length; i++)
             {
-                if (matchFlags[i])
+                if (match_flags[i])
                 {
                     ms2[si] = max[i];
                     si++;
@@ -192,7 +192,7 @@ namespace F23.StringSimilarity
                     break;
                 }
             }
-            return new int[] { matches, transpositions / 2, prefix, max.Length };
+            return new[] { matches, transpositions / 2, prefix, max.Length };
         }
     }
 }

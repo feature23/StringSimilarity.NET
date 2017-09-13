@@ -87,6 +87,16 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public int Length(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
             /* function LCSLength(X[1..m], Y[1..n])
              C = array(0..m, 0..n)
              for i := 0..m
@@ -101,40 +111,40 @@ namespace F23.StringSimilarity
              C[i,j] := max(C[i,j-1], C[i-1,j])
              return C[m,n]
              */
-            int m = s1.Length;
-            int n = s2.Length;
+            int s1_length = s1.Length;
+            int s2_length = s2.Length;
             char[] x = s1.ToCharArray();
             char[] y = s2.ToCharArray();
 
-            int[,] c = new int[m + 1, n + 1];
+            int[,] c = new int[s1_length + 1, s2_length + 1];
 
-            for (int i = 0; i <= m; i++)
+            for (int i = 0; i <= s1_length; i++)
             {
-                c[i,0] = 0;
+                c[i, 0] = 0;
             }
 
-            for (int j = 0; j <= n; j++)
+            for (int j = 0; j <= s2_length; j++)
             {
-                c[0,j] = 0;
+                c[0, j] = 0;
             }
 
-            for (int i = 1; i <= m; i++)
+            for (int i = 1; i <= s1_length; i++)
             {
-                for (int j = 1; j <= n; j++)
+                for (int j = 1; j <= s2_length; j++)
                 {
                     if (x[i - 1] == y[j - 1])
                     {
-                        c[i,j] = c[i - 1,j - 1] + 1;
+                        c[i, j] = c[i - 1, j - 1] + 1;
 
                     }
                     else
                     {
-                        c[i,j] = Math.Max(c[i,j - 1], c[i - 1,j]);
+                        c[i, j] = Math.Max(c[i, j - 1], c[i - 1, j]);
                     }
                 }
             }
 
-            return c[m,n];
+            return c[s1_length, s2_length];
         }
     }
 }

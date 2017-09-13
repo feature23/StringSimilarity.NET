@@ -60,13 +60,13 @@ namespace F23.StringSimilarity
                 return 0;
             }
 
-            int mLen = Math.Max(s1.Length, s2.Length);
+            int m_len = Math.Max(s1.Length, s2.Length);
 
-            if (mLen == 0) return 0.0;
+            if (m_len == 0) return 0.0;
 
             return 1.0
                     - (1.0 * lcs.Length(s1, s2))
-                    / mLen;
+                    / m_len;
         }
     }
 }

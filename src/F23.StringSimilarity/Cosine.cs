@@ -49,14 +49,14 @@ namespace F23.StringSimilarity
         /// Default k is 3.
         /// </summary>
         public Cosine() { }
-
+        
         /// <summary>
         /// Compute the cosine similarity between strings.
         /// </summary>
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
         /// <returns>The cosine similarity in the range [0, 1]</returns>
-        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
         {
             if (s1 == null)
@@ -118,9 +118,7 @@ namespace F23.StringSimilarity
             double agg = 0;
             foreach (var entry in small_profile)
             {
-                int i;
-                
-                if (!large_profile.TryGetValue(entry.Key, out i)) continue;
+                if (!large_profile.TryGetValue(entry.Key, out var i)) continue;
 
                 agg += 1.0 * entry.Value * i;
             }
@@ -137,7 +135,13 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile1"></param>
+        /// <param name="profile2"></param>
+        /// <returns></returns>
         public double Similarity(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
             => DotProduct(profile1, profile2)
             / (Norm(profile1) * Norm(profile2));
