@@ -24,6 +24,8 @@
 
 using System;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable SuggestVarOrType_Elsewhere
+// ReSharper disable TooWideLocalVariableScope
 
 namespace F23.StringSimilarity
 {
@@ -52,11 +54,22 @@ namespace F23.StringSimilarity
         /// only 2 rows of data. The space requirement is thus O(m) and the algorithm
         /// runs in O(mn).
         /// </summary>
-        /// <param name="s1">The first string</param>
-        /// <param name="s2">The second string</param>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
         /// <returns>The Levenshtein distance between strings</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
             if (s1.Equals(s2))
             {
                 return 0;

@@ -35,9 +35,9 @@ namespace F23.StringSimilarity
         /// <summary>
         /// Indicate the cost of substitution c1 and c2.
         /// </summary>
-        /// <param name="c1"></param>
-        /// <param name="c2"></param>
-        /// <returns></returns>
+        /// <param name="c1">The first character of the substitution.</param>
+        /// <param name="c2">The second character of the substitution.</param>
+        /// <returns>The cost in the range [0, 1].</returns>
         double Cost(char c1, char c2);
     }
 }

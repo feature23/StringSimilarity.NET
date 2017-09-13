@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -45,6 +45,23 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Distance("ABCD", "ABCE");
 
             Assert.Equal(expected: 2.0, actual: result);
+
+            Assert.Equal(
+                expected: 0.0,
+                actual: instance.Distance("S", "S"),
+                precision: 1); // 0.0
+
+            Assert.Equal(
+                expected: 0.0,
+                actual: instance.Distance("012345", "012345"),
+                precision: 1); // 0.0
+
+            // NOTE: not using null/empty tests in NullEmptyTests because QGram is different
+            Assert.Equal(0.0, instance.Distance("", ""), 1);
+            Assert.Equal(2.0, instance.Distance("", "foo"), 1);
+            Assert.Equal(2.0, instance.Distance("foo", ""), 1);
+
+            NullEmptyTests.AssertArgumentNullExceptions(instance);
         }
     }
 }

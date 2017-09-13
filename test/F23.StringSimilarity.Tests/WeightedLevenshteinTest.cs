@@ -1,7 +1,7 @@
 ﻿/*
  * The MIT License
  *
- * Copyright 2016 feature[23]
+ * Copyright 2017 feature[23]
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,41 @@
  * THE SOFTWARE.
  */
 
-using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
 {
-    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
-    [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
-    [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
-    public class DamerauTest
+    public class WeightedLevenshteinTest
     {
         [Fact]
         public void TestDistance()
         {
-            var instance = new Damerau();
+            var instance = new WeightedLevenshtein(new ExampleCharSub());
 
-            Assert.Equal(expected: 1.0, actual: instance.Distance("ABCDEF", "ABDCEF"));
-            Assert.Equal(expected: 2.0, actual: instance.Distance("ABCDEF", "BACDFE"));
-            Assert.Equal(expected: 1.0, actual: instance.Distance("ABCDEF", "ABCDE"));
+            Assert.Equal(0.0, instance.Distance("String1", "String1"), 1);
+            Assert.Equal(0.5, instance.Distance("String1", "Srring1"), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2"), 1);
 
             NullEmptyTests.TestDistance(instance);
+        }
+
+        private class ExampleCharSub : ICharacterSubstitution
+        {
+            public double Cost(char c1, char c2)
+            {
+                // The cost for substituting 't' and 'r' is considered
+                // smaller as these 2 are located next to each other
+                // on a keyboard
+                if (c1 == 't' && c2 == 'r')
+                {
+                    return 0.5;
+                }
+
+                // For most cases, the cost of substituting 2 characters
+                // is 1.0
+                return 1.0;
+            }
         }
     }
 }

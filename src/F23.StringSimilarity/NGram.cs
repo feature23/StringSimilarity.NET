@@ -24,6 +24,10 @@
 
 using System;
 using F23.StringSimilarity.Interfaces;
+// ReSharper disable ConvertIfStatementToReturnStatement
+// ReSharper disable SuggestVarOrType_Elsewhere
+// ReSharper disable JoinDeclarationAndInitializer
+// ReSharper disable TooWideLocalVariableScope
 
 namespace F23.StringSimilarity
 {
@@ -50,22 +54,37 @@ namespace F23.StringSimilarity
             this.n = n;
         }
 
+        /// <summary>
+        /// Compute n-gram distance.
+        /// </summary>
+        /// <param name="s0">The first string to compare.</param>
+        /// <param name="s1">The second string to compare.</param>
+        /// <returns>The computed n-gram distance in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s0 or s1 is null.</exception>
         public double Distance(string s0, string s1)
         {
+            if (s0 == null)
+            {
+                throw new ArgumentNullException(nameof(s0));
+            }
+
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
             const char special = '\n';
             int sl = s0.Length;
             int tl = s1.Length;
 
+            if (s0.Equals(s1))
+            {
+                return 0;
+            }
+
             if (sl == 0 || tl == 0)
             {
-                if (sl == tl)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return 1;
-                }
+                return 1;
             }
 
             int cost = 0;

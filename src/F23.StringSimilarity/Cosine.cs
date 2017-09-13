@@ -50,8 +50,30 @@ namespace F23.StringSimilarity
         /// </summary>
         public Cosine() { }
 
+        /// <summary>
+        /// Compute the cosine similarity between strings.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The cosine similarity in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            if (s1.Equals(s2))
+            {
+                return 1;
+            }
+
             if (s1.Length < k || s2.Length < k)
             {
                 return 0;
@@ -63,12 +85,11 @@ namespace F23.StringSimilarity
             return DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
         }
 
-        /**
-         * Compute the norm L2 : sqrt(Sum_i( v_i²)).
-         *
-         * @param profile
-         * @return L2 norm
-         */
+        /// <summary>
+        /// Compute the norm L2 : sqrt(Sum_i( v_i²)).
+        /// </summary>
+        /// <param name="profile"></param>
+        /// <returns></returns>
         private static double Norm(IDictionary<string, int> profile)
         {
             double agg = 0;
@@ -107,6 +128,13 @@ namespace F23.StringSimilarity
             return agg;
         }
 
+        /// <summary>
+        /// Returns 1.0 - similarity.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>1.0 - the cosine similarity in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
 

@@ -23,6 +23,7 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -48,18 +49,17 @@ namespace F23.StringSimilarity.Tests
                 actual: instance.Similarity("My string", "My ntrisg"),
                 precision: 6 // 0.000001
             );
+
+            NullEmptyTests.TestSimilarity(instance);
         }
 
         [Fact]
-        public void TestSimilarityBothEmpty()
+        public void TestDistance()
         {
             var instance = new JaroWinkler();
+            NullEmptyTests.TestDistance(instance);
 
-            Assert.Equal(
-                expected: 1,
-                actual: instance.Similarity(string.Empty, string.Empty),
-                precision: 6 // 0.000001
-            );
+            // TODO: regular (non-null/empty) distance tests
         }
     }
 }

@@ -23,6 +23,7 @@
  */
  
 using System.Diagnostics.CodeAnalysis;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests
@@ -43,6 +44,8 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity("ABCDE", "ABCDF");
 
             Assert.Equal(expected: 0.6, actual: result);
+
+            NullEmptyTests.TestSimilarity(instance);
         }
 
         [Fact]
@@ -53,6 +56,8 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Distance("ABCDE", "ABCDF");
 
             Assert.Equal(expected: 0.4, actual: result);
+
+            NullEmptyTests.TestDistance(instance);
         }
     }
 }
