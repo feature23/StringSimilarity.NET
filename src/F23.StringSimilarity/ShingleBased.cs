@@ -41,7 +41,7 @@ namespace F23.StringSimilarity
         /// <summary>
         /// Pattern for finding multiple following spaces
         /// </summary>
-        private static readonly Regex SPACE_REG = new Regex("\\s+", RegexOptions.Compiled);
+        private static readonly Regex SPACE_REG = new Regex("\\s+");
 
         /// <summary> 
         /// </summary>
@@ -69,9 +69,7 @@ namespace F23.StringSimilarity
             {
                 var shingle = string_no_space.Substring(i, k);
 
-                int old;
-
-                if (shingles.TryGetValue(shingle, out old))
+                if (shingles.TryGetValue(shingle, out var old))
                 {
                     shingles[shingle] = old + 1;
                 }

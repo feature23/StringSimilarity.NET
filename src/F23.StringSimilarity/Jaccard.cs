@@ -30,10 +30,30 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
+    /// Each input string is converted into a set of n-grams, the Jaccard index is
+    /// then computed as |V1 inter V2| / |V1 union V2|.
+    /// Like Q-Gram distance, the input strings are first converted into sets of
+    /// n-grams (sequences of n characters, also called k-shingles), but this time
+    /// the cardinality of each n-gram is not taken into account.
+    /// Distance is computed as 1 - cosine similarity.
+    /// Jaccard index is a metric distance.
+    /// </summary>
     public class Jaccard : ShingleBased, IMetricStringDistance, INormalizedStringDistance, INormalizedStringSimilarity
     {
+        /// <summary>
+        /// The strings are first transformed into sets of k-shingles (sequences of k
+        /// characters), then Jaccard index is computed as |A inter B| / |A union B|.
+        /// The default value of k is 3.
+        /// </summary>
+        /// <param name="k"></param>
         public Jaccard(int k) : base(k) { }
 
+        /// <summary>
+        /// The strings are first transformed into sets of k-shingles (sequences of k
+        /// characters), then Jaccard index is computed as |A inter B| / |A union B|.
+        /// The default value of k is 3.
+        /// </summary>
         public Jaccard() { }
 
         /// <summary>
@@ -67,13 +87,8 @@ namespace F23.StringSimilarity
             union.UnionWith(profile1.Keys);
             union.UnionWith(profile2.Keys);
 
-            int inter = 0;
-
-            foreach (var key in union)
-            {
-                if (profile1.ContainsKey(key) && profile2.ContainsKey(key))
-                    inter++;
-            }
+            int inter = profile1.Keys.Count + profile2.Keys.Count
+                        - union.Count;
 
             return 1.0 * inter / union.Count;
         }
