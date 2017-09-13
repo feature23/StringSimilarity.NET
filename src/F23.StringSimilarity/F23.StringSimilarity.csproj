@@ -1,77 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA27327B-BCCC-46C7-8EED-BBD1ECF4BF53}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>F23.StringSimilarity</RootNamespace>
-    <AssemblyName>F23.StringSimilarity</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <PackageId>F23.StringSimilarity</PackageId>
+    <PackageVersion>3.0.0</PackageVersion>
+    <Title>StringSimilarity.NET</Title>
+    <Authors>James Blair, Paul Irwin</Authors>
+    <Copyright>Copyright 2016 feature[23]</Copyright>
+    <Description>A .NET port of java-string-similarity.</Description>
+    <Summary>A .NET port of java-string-similarity (https://github.com/tdebatty/java-string-similarity). A library implementing different string similarity and distance measures. Several algorithms (including Levenshtein edit distance and sibblings, Jaro-Winkler, Longest Common Subsequence, cosine similarity etc.) are currently implemented.</Summary>
+    <PackageProjectUrl>https://github.com/feature23/StringSimilarity.NET</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/logo.png</PackageIconUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>string similarity distance cosine damerau jaccard jaro-winkler levenshtein ngram qgram shingle sift4</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.0\F23.StringSimilarity.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Cosine.cs" />
-    <Compile Include="Damerau.cs" />
-    <Compile Include="Experimental\Sift4.cs" />
-    <Compile Include="ICharacterSubstitution.cs" />
-    <Compile Include="Interfaces\IMetricStringDistance.cs" />
-    <Compile Include="Interfaces\INormalizedStringDistance.cs" />
-    <Compile Include="Interfaces\INormalizedStringSimilarity.cs" />
-    <Compile Include="Interfaces\IStringDistance.cs" />
-    <Compile Include="Interfaces\IStringSimilarity.cs" />
-    <Compile Include="Jaccard.cs" />
-    <Compile Include="JaroWinkler.cs" />
-    <Compile Include="Levenshtein.cs" />
-    <Compile Include="LongestCommonSubsequence.cs" />
-    <Compile Include="MetricLCS.cs" />
-    <Compile Include="NGram.cs" />
-    <Compile Include="NormalizedLevenshtein.cs" />
-    <Compile Include="OptimalStringAlignment.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QGram.cs" />
-    <Compile Include="ShingleBased.cs" />
-    <Compile Include="SorensenDice.cs" />
-    <Compile Include="Support\ArrayExtensions.cs" />
-    <Compile Include="Utils\SparseBooleanVector.cs" />
-    <Compile Include="Utils\SparseIntegerVector.cs" />
-    <Compile Include="WeightedLevenshtein.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

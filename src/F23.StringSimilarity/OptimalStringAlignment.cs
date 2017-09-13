@@ -53,6 +53,11 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
+            if (s1.Equals(s2))
+            {
+                return 0;
+            }
+
             int n = s1.Length, m = s2.Length;
 
             if (n == 0)
@@ -85,9 +90,13 @@ namespace F23.StringSimilarity
             {
                 for (int j = 1; j <= m; j++)
                 {
-
                     //if s1[i - 1] = s2[j - 1] then cost = 0, else cost = 1
-                    cost = (s1[i - 1] == s2[j - 1]) ? 0 : 1;
+                    cost = 1;
+
+                    if (s1[i - 1] == s2[j - 1])
+                    {
+                        cost = 0;
+                    }
 
                     d[i, j] = Min(
                             d[i - 1, j - 1] + cost, // substitution
@@ -109,7 +118,7 @@ namespace F23.StringSimilarity
             return d[n, m];
         }
 
-        private static int Min(int a, int b, int c) 
+        private static int Min(int a, int b, int c)
             => Math.Min(a, Math.Min(b, c));
     }
 }

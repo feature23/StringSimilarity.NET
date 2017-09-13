@@ -88,6 +88,17 @@ namespace F23.StringSimilarity
             var profile1 = GetProfile(s1);
             var profile2 = GetProfile(s2);
 
+            return Distance(profile1, profile2);
+        }
+
+        /// <summary>
+        /// Compute QGram distance using precomputed profiles.
+        /// </summary>
+        /// <param name="profile1"></param>
+        /// <param name="profile2"></param>
+        /// <returns></returns>
+        public double Distance(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
+        {
             var union = new HashSet<string>();
             union.UnionWith(profile1.Keys);
             union.UnionWith(profile2.Keys);
@@ -98,16 +109,12 @@ namespace F23.StringSimilarity
                 int v1 = 0;
                 int v2 = 0;
 
-                int iv1;
-
-                if (profile1.TryGetValue(key, out iv1))
+                if (profile1.TryGetValue(key, out var iv1))
                 {
                     v1 = iv1;
                 }
 
-                int iv2;
-
-                if (profile2.TryGetValue(key, out iv2))
+                if (profile2.TryGetValue(key, out var iv2))
                 {
                     v2 = iv2;
                 }

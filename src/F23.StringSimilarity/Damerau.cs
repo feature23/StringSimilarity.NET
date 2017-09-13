@@ -38,7 +38,6 @@ namespace F23.StringSimilarity
     /// substitution of a single character, or a transposition of two adjacent
     /// characters.
     /// It does respect triangle inequality, and is thus a metric distance.
-    /// 
     /// This is not to be confused with the optimal string alignment distance, which
     /// is an extension where no substring can be edited more than once.
     /// </summary>
