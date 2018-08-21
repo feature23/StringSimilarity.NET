@@ -102,14 +102,19 @@ namespace F23.StringSimilarity
                 for (int j = 0; j < s2.Length; j++)
                 {
                     double cost = 0;
+                    double insertioncost = 0;
+                    double deletioncost = 0;
                     if (s1[i] != s2[j])
                     {
                         cost = _characterSubstitution.Cost(s1[i], s2[j]);
+                        insertioncost=_characterSubstitution.InsertionCost(s2[j]);
+                        deletioncost=_characterSubstitution.DeletionCost(s1[i]);
                     }
+
                     v1[j + 1] = Math.Min(
-                            v1[j] + 1, // Cost of insertion
+                            v1[j] + insertioncost, // Cost of insertion
                             Math.Min(
-                                    v0[j + 1] + 1, // Cost of remove
+                                    v0[j + 1] + deletioncost, // Cost of remove
                                     v0[j] + cost)); // Cost of substitution
                 }
 
