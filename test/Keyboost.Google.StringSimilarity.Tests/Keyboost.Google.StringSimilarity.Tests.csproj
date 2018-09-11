@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\F23.StringSimilarity\Keyboost.Google.StringSimilarity.csproj" />
+    <ProjectReference Include="..\..\src\Keyboost.Google.StringSimilarity\Keyboost.Google.StringSimilarity.csproj" />
   </ItemGroup>
 
 </Project>
