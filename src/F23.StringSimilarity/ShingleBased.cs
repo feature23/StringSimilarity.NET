@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
-namespace F23.StringSimilarity
+namespace Keyboost.Google.StringSimilarity
 {
     public abstract class ShingleBased
     {

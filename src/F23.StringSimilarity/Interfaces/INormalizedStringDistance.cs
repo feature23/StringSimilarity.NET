@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-namespace F23.StringSimilarity.Interfaces
+namespace Keyboost.Google.StringSimilarity.Interfaces
 {
     public interface INormalizedStringDistance : IStringDistance
     {

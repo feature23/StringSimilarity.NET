@@ -25,7 +25,7 @@
 using System;
 using System.Linq;
 
-namespace F23.StringSimilarity.Support
+namespace Keyboost.Google.StringSimilarity.Support
 {
     internal static class ArrayExtensions
     {

@@ -23,10 +23,10 @@
  */
 
 using System;
-using F23.StringSimilarity.Interfaces;
+using Keyboost.Google.StringSimilarity.Interfaces;
 using Xunit;
 
-namespace F23.StringSimilarity.Tests.TestUtil
+namespace Keyboost.Google.StringSimilarity.Tests.TestUtil
 {
     public static class NullEmptyTests
     {

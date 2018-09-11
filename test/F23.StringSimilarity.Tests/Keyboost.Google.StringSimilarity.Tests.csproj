@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Keyboost.Google.StringSimilarity.Tests</AssemblyName>
+    <RootNamespace>Keyboost.Google.StringSimilarity.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\F23.StringSimilarity\F23.StringSimilarity.csproj" />
+    <ProjectReference Include="..\..\src\F23.StringSimilarity\Keyboost.Google.StringSimilarity.csproj" />
   </ItemGroup>
 
 </Project>

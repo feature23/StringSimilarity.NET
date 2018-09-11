@@ -24,11 +24,11 @@
 
 using System;
 using System.Collections.Generic;
-using F23.StringSimilarity.Interfaces;
+using Keyboost.Google.StringSimilarity.Interfaces;
 // ReSharper disable ForCanBeConvertedToForeach
 // ReSharper disable SuggestVarOrType_Elsewhere
 
-namespace F23.StringSimilarity
+namespace Keyboost.Google.StringSimilarity
 {
     /// <summary>
     /// Implementation of Damerau-Levenshtein distance with transposition (also 

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F23.StringSimilarity", "src\F23.StringSimilarity\F23.StringSimilarity.csproj", "{FA27327B-BCCC-46C7-8EED-BBD1ECF4BF53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keyboost.Google.StringSimilarity", "src\F23.StringSimilarity\Keyboost.Google.StringSimilarity.csproj", "{FA27327B-BCCC-46C7-8EED-BBD1ECF4BF53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F23.StringSimilarity.Tests", "test\F23.StringSimilarity.Tests\F23.StringSimilarity.Tests.csproj", "{68F339E6-278F-4B04-A6ED-422AAD30591F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keyboost.Google.StringSimilarity.Tests", "test\F23.StringSimilarity.Tests\Keyboost.Google.StringSimilarity.Tests.csproj", "{68F339E6-278F-4B04-A6ED-422AAD30591F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

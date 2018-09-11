@@ -23,11 +23,11 @@
  */
 
 using System;
-using F23.StringSimilarity.Interfaces;
+using Keyboost.Google.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable TooWideLocalVariableScope
 
-namespace F23.StringSimilarity
+namespace Keyboost.Google.StringSimilarity
 {
     public sealed class OptimalStringAlignment : IStringDistance
     {

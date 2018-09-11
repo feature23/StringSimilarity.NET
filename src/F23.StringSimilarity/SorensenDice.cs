@@ -24,11 +24,11 @@
 
 using System;
 using System.Collections.Generic;
-using F23.StringSimilarity.Interfaces;
+using Keyboost.Google.StringSimilarity.Interfaces;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 
-namespace F23.StringSimilarity
+namespace Keyboost.Google.StringSimilarity
 {
     /// Similar to Jaccard index, but this time the similarity is computed as 2 * |V1
     /// inter V2| / (|V1| + |V2|). Distance is computed as 1 - cosine similarity.

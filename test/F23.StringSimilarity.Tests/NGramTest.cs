@@ -1,7 +1,7 @@
-﻿using F23.StringSimilarity.Tests.TestUtil;
+﻿using Keyboost.Google.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
-namespace F23.StringSimilarity.Tests
+namespace Keyboost.Google.StringSimilarity.Tests
 {
     public class NGramTest
     {

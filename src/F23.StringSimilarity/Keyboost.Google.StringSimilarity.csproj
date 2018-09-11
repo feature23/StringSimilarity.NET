@@ -14,6 +14,8 @@
     <PackageIconUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/logo.png</PackageIconUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>string similarity distance cosine damerau jaccard jaro-winkler levenshtein ngram qgram shingle sift4</PackageTags>
+    <AssemblyName>Keyboost.Google.StringSimilarity</AssemblyName>
+    <RootNamespace>Keyboost.Google.StringSimilarity</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

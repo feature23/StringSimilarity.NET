@@ -24,9 +24,9 @@
 
 using System;
 using System.Collections.Generic;
-using F23.StringSimilarity.Interfaces;
+using Keyboost.Google.StringSimilarity.Interfaces;
 
-namespace F23.StringSimilarity
+namespace Keyboost.Google.StringSimilarity
 {
     /// Q-gram distance, as defined by Ukkonen in "Approximate string-matching with
     /// q-grams and maximal matches". The distance between two strings is defined as

@@ -23,10 +23,10 @@
  */
 
 using System;
-using F23.StringSimilarity.Interfaces;
+using Keyboost.Google.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 
-namespace F23.StringSimilarity
+namespace Keyboost.Google.StringSimilarity
 {
     /// The longest common subsequence (LCS) problem consists in finding the longest
     /// subsequence common to two (or more) sequences. It differs from problems of

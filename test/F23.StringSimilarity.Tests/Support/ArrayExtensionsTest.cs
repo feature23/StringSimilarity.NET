@@ -24,10 +24,10 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using F23.StringSimilarity.Support;
+using Keyboost.Google.StringSimilarity.Support;
 using Xunit;
 
-namespace F23.StringSimilarity.Tests.Support
+namespace Keyboost.Google.StringSimilarity.Tests.Support
 {
     [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
     [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
