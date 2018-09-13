@@ -60,13 +60,29 @@ namespace F23.StringSimilarity
         }
 
         /// <summary>
-        /// Compute Levenshtein distance using provided weights for substitution.
+        /// Equivalent to Distance(s1, s2, Double.MaxValue).
         /// </summary>
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
         /// <returns>The computed weighted Levenshtein distance.</returns>
-        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+        {
+            return Distance(s1, s2, double.MaxValue);
+        }
+
+        /// <summary>
+        /// Compute Levenshtein distance using provided weights for substitution.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="limit">The maximum result to compute before stopping. This
+        /// means that the calculation can terminate early if you
+        /// only care about strings with a certain similarity.
+        /// Set this to Double.MaxValue if you want to run the
+        /// calculation to completion in every case.</param>
+        /// <returns>The computed weighted Levenshtein distance.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public double Distance(string s1, string s2, double limit)
         {
             if (s1 == null)
             {
@@ -93,7 +109,7 @@ namespace F23.StringSimilarity
                 return s1.Length;
             }
 
-            // create two work vectors of integer distances
+            // create two work vectors of floating point (i.e. weighted) distances
             double[] v0 = new double[s2.Length + 1];
             double[] v1 = new double[s2.Length + 1];
             double[] vtemp;
@@ -118,6 +134,8 @@ namespace F23.StringSimilarity
                 // to match empty t.
                 v1[0] = v0[0] + deletionCost;
 
+                double minv1 = v1[0];
+
                 // use formula to fill in the rest of the row
                 for (int j = 0; j < s2.Length; j++)
                 {
@@ -136,6 +154,13 @@ namespace F23.StringSimilarity
                             Math.Min(
                                     v0[j + 1] + deletionCost, // Cost of deletion
                                     v0[j] + cost)); // Cost of substitution
+
+                    minv1 = Math.Min(minv1, v1[j + 1]);
+                }
+
+                if (minv1 >= limit)
+                {
+                    return limit;
                 }
 
                 // copy v1 (current row) to v0 (previous row) for next iteration

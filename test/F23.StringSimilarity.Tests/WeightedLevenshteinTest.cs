@@ -42,6 +42,15 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(1.0, instance.Distance("Strng", "String"), 1);
             Assert.Equal(1.0, instance.Distance("String", "Strng"), 1);
 
+            // With limits.
+            Assert.Equal(0.0, instance.Distance("String1", "String1", double.MaxValue), 1);
+            Assert.Equal(0.0, instance.Distance("String1", "String1", 2.0), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2", double.MaxValue), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2", 2.0), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2", 1.5), 1);
+            Assert.Equal(1.0, instance.Distance("String1", "Srring2", 1.0), 1);
+            Assert.Equal(4.0, instance.Distance("String1", "Potato", 4.0), 1);
+
             NullEmptyTests.TestDistance(instance);
         }
 
@@ -54,6 +63,7 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(0.0, instance.Distance("String1", "String1"), 1);
             Assert.Equal(0.5, instance.Distance("String1", "Srring1"), 1);
             Assert.Equal(1.5, instance.Distance("String1", "Srring2"), 1);
+
             // Cost of insert of 'i' is less than normal, so these scores are
             // different than testDistance above.  Note that the cost of delete
             // has been set differently than the cost of insert, so the distance
@@ -62,6 +72,15 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(0.8, instance.Distance("String", "Strng"), 1);
             Assert.Equal(1.0, instance.Distance("Strig", "String"), 1);
             Assert.Equal(1.0, instance.Distance("String", "Strig"), 1);
+
+            // Same as above with limits.
+            Assert.Equal(0.0, instance.Distance("String1", "String1", double.MaxValue), 1);
+            Assert.Equal(0.0, instance.Distance("String1", "String1", 2.0), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2", double.MaxValue), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2", 2.0), 1);
+            Assert.Equal(1.5, instance.Distance("String1", "Srring2", 1.5), 1);
+            Assert.Equal(1.0, instance.Distance("String1", "Srring2", 1.0), 1);
+            Assert.Equal(4.0, instance.Distance("String1", "Potato", 4.0), 1);
 
             NullEmptyTests.TestDistance(instance);
         }
