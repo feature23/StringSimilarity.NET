@@ -40,7 +40,7 @@ namespace F23.StringSimilarity.Tests.Support
 
             var padded = source.WithPadding(1200);
 
-            Assert.Equal(actual: 1200, expected: padded.Length);
+            Assert.Equal(expected: 1200, actual: padded.Length);
             
             Assert.True(padded.Take(1000).All(x => x == 42));
             Assert.True(padded.Skip(1000).Take(200).All(x => x == 0));

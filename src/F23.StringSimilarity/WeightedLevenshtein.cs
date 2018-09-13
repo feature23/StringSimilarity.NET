@@ -26,6 +26,7 @@ using System;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable TooWideLocalVariableScope
+// ReSharper disable IntroduceOptionalParameters.Global
 
 namespace F23.StringSimilarity
 {
@@ -34,14 +35,28 @@ namespace F23.StringSimilarity
     public class WeightedLevenshtein : IStringDistance
     {
         private readonly ICharacterSubstitution _characterSubstitution;
+        private readonly ICharacterInsDel _characterInsDel;
 
         /// <summary>
-        /// Create a new instance with provided character substitution.
+        /// Instantiate with provided character substitution.
         /// </summary>
         /// <param name="characterSubstitution">The strategy to determine character substitution weights.</param>
         public WeightedLevenshtein(ICharacterSubstitution characterSubstitution)
+            : this(characterSubstitution, null)
+        {
+        }
+
+        /// <summary>
+        /// Instantiate with provided character substitution, insertion, and
+        /// deletion weights.
+        /// </summary>
+        /// <param name="characterSubstitution">The strategy to determine character substitution weights.</param>
+        /// <param name="characterInsDel">The strategy to determine character insertion/deletion weights.</param>
+        public WeightedLevenshtein(ICharacterSubstitution characterSubstitution,
+            ICharacterInsDel characterInsDel)
         {
             _characterSubstitution = characterSubstitution;
+            _characterInsDel = characterInsDel;
         }
 
         /// <summary>
@@ -84,45 +99,64 @@ namespace F23.StringSimilarity
             double[] vtemp;
 
             // initialize v0 (the previous row of distances)
-            // this row is A[0][i]: edit distance for an empty s
-            // the distance is just the number of characters to delete from t
-            for (int i = 0; i < v0.Length; i++)
+            // this row is A[0][i]: edit distance for an empty s1
+            // the distance is the cost of inserting each character of s2
+            v0[0] = 0;
+            for (int i = 1; i < v0.Length; i++)
             {
-                v0[i] = i;
+                v0[i] = v0[i - 1] + InsertionCost(s2[i - 1]);
             }
 
             for (int i = 0; i < s1.Length; i++)
             {
+                char s1i = s1[i];
+                double deletionCost = DeletionCost(s1i);
+
                 // calculate v1 (current row distances) from the previous row v0
                 // first element of v1 is A[i+1][0]
-                //   edit distance is delete (i+1) chars from s to match empty t
-                v1[0] = i + 1;
+                // Edit distance is the cost of deleting characters from s1
+                // to match empty t.
+                v1[0] = v0[0] + deletionCost;
 
                 // use formula to fill in the rest of the row
                 for (int j = 0; j < s2.Length; j++)
                 {
+                    char s2j = s2[j];
                     double cost = 0;
-                    if (s1[i] != s2[j])
+                    
+                    if (s1i != s2j)
                     {
-                        cost = _characterSubstitution.Cost(s1[i], s2[j]);
+                        cost = _characterSubstitution.Cost(s1i, s2j);
                     }
+
+                    double insertionCost = InsertionCost(s2j);
+
                     v1[j + 1] = Math.Min(
-                            v1[j] + 1, // Cost of insertion
+                            v1[j] + insertionCost, // Cost of insertion
                             Math.Min(
-                                    v0[j + 1] + 1, // Cost of remove
+                                    v0[j + 1] + deletionCost, // Cost of deletion
                                     v0[j] + cost)); // Cost of substitution
                 }
 
                 // copy v1 (current row) to v0 (previous row) for next iteration
-                //System.arraycopy(v1, 0, v0, 0, v0.length);
+                // System.arraycopy(v1, 0, v0, 0, v0.length);
                 // Flip references to current and previous row
                 vtemp = v0;
                 v0 = v1;
                 v1 = vtemp;
-
             }
 
             return v0[s2.Length];
+        }
+
+        private double InsertionCost(char c)
+        {
+            return _characterInsDel?.InsertionCost(c) ?? 1.0;
+        }
+
+        private double DeletionCost(char c)
+        {
+            return _characterInsDel?.DeletionCost(c) ?? 1.0;
         }
     }
 }
