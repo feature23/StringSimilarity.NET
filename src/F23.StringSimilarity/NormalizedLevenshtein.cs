@@ -23,9 +23,9 @@
  */
 
 using System;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     /// This distance is computed as levenshtein distance divided by the length of
     /// the longest string. The resulting value is always in the interval [0.0 1.0]

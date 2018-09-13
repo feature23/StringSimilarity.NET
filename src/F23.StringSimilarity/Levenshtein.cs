@@ -23,11 +23,11 @@
  */
 
 using System;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable TooWideLocalVariableScope
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     /// The Levenshtein distance between two words is the Minimum number of
     /// single-character edits (insertions, deletions or substitutions) required to

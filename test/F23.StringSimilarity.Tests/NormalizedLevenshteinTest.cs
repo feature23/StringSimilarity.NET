@@ -22,10 +22,10 @@
  * THE SOFTWARE.
  */
 
-using Keyboost.Google.StringSimilarity.Tests.TestUtil;
+using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
-namespace Keyboost.Google.StringSimilarity.Tests
+namespace F23.StringSimilarity.Tests
 {
     public class NormalizedLevenshteinTest
     {

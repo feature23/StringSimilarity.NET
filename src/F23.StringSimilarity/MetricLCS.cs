@@ -23,9 +23,9 @@
  */
 
 using System;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     /// <summary>
     /// Distance metric based on Longest Common Subsequence, from the notes "An

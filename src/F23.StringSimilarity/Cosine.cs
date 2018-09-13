@@ -24,10 +24,10 @@
 
 using System;
 using System.Collections.Generic;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 // ReSharper disable LoopCanBeConvertedToQuery
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     public class Cosine : ShingleBased, INormalizedStringSimilarity, INormalizedStringDistance
     {

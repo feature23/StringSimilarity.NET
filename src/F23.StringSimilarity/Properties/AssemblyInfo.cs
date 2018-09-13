@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Keyboost.Google.StringSimilarity.Tests")]
+[assembly: InternalsVisibleTo("F23.StringSimilarity.Tests")]

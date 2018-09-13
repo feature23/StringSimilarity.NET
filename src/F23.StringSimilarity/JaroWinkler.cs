@@ -24,11 +24,11 @@
 
 using System;
 using System.Linq;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable LoopCanBeConvertedToQuery
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     /// The Jaro–Winkler distance metric is designed and best suited for short
     /// strings such as person names, and to detect typos; it is (roughly) a

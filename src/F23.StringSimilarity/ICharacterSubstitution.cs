@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     /// Used to indicate the cost of character substitution.
     ///

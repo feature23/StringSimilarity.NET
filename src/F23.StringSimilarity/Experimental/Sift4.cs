@@ -24,9 +24,9 @@
 
 using System;
 using System.Collections.Generic;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 
-namespace Keyboost.Google.StringSimilarity.Experimental
+namespace F23.StringSimilarity.Experimental
 {
     /// <summary>
     /// Sift4 - a general purpose string distance algorithm inspired by JaroWinkler

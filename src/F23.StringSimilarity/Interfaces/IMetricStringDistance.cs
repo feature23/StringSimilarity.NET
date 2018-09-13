@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-namespace Keyboost.Google.StringSimilarity.Interfaces
+namespace F23.StringSimilarity.Interfaces
 {
     /// <summary>
     /// String distances that implement this interface are metrics, which means:

@@ -23,13 +23,13 @@
  */
 
 using System;
-using Keyboost.Google.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Interfaces;
 // ReSharper disable ConvertIfStatementToReturnStatement
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable JoinDeclarationAndInitializer
 // ReSharper disable TooWideLocalVariableScope
 
-namespace Keyboost.Google.StringSimilarity
+namespace F23.StringSimilarity
 {
     /// <summary>
     /// N-Gram Similarity as defined by Kondrak, "N-Gram Similarity and Distance",

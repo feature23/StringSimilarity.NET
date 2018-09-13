@@ -1,8 +1,8 @@
 ﻿using System;
-using Keyboost.Google.StringSimilarity.Experimental;
+using F23.StringSimilarity.Experimental;
 using Xunit;
 
-namespace Keyboost.Google.StringSimilarity.Tests.Experimental
+namespace F23.StringSimilarity.Tests.Experimental
 {
     public class Sift4Test
     {
