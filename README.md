@@ -362,11 +362,11 @@ public class Program
         string s2 = "My other string...";
         
         // Let's work with sequences of 2 characters...
-        var ks = new KShingling(2);
+        var cosine = new Cosine(2);
         
         // For cosine similarity I need the profile of strings
-        StringProfile profile1 = ks.GetProfile(s1);
-        StringProfile profile2 = ks.GetProfile(s2);
+        StringProfile profile1 = cosine.GetProfile(s1);
+        StringProfile profile2 = cosine.GetProfile(s2);
         
         // Prints 0.516185
         Console.WriteLine(profile1.CosineSimilarity(profile2));
@@ -374,7 +374,7 @@ public class Program
 }
 ```
 
-Pay attention, this only works if the same KShingling object is used to parse all input strings!
+Pay attention, this only works if the same Cosine object is used to parse all input strings!
 
 
 ### Q-Gram
