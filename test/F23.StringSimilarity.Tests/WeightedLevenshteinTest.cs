@@ -37,6 +37,12 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(0.0, instance.Distance("String1", "String1"), 1);
             Assert.Equal(0.5, instance.Distance("String1", "Srring1"), 1);
             Assert.Equal(1.5, instance.Distance("String1", "Srring2"), 1);
+            Assert.Equal(0.5, instance.Distance("Str ing1", "String1"), 1);
+            Assert.Equal(0.5, instance.Distance("String1", "Stri ng1"), 1);
+            Assert.Equal(0.5, instance.Distance("Str.ing1", "String1"), 1);
+            Assert.Equal(0.5, instance.Distance("String1", "Stri.ng1"), 1);
+            Assert.Equal(1.0, instance.Distance("String1", "Strixng1"), 1);
+            Assert.Equal(1.0, instance.Distance("String1", "Strig1"), 1);
 
             NullEmptyTests.TestDistance(instance);
         }
@@ -55,6 +61,28 @@ namespace F23.StringSimilarity.Tests
 
                 // For most cases, the cost of substituting 2 characters
                 // is 1.0
+                return 1.0;
+            }
+            public double InsertionCost (char c1)
+            {
+                switch (c1)
+                {
+                    case ' ':
+                        return 0.5;
+                    case '.':
+                        return 0.5;
+                }
+                return 1.0;
+            }
+            public double DeletionCost (char c1)
+            {
+                switch (c1)
+                {
+                    case ' ':
+                        return 0.5;
+                    case '.':
+                        return 0.5;
+                }
                 return 1.0;
             }
         }

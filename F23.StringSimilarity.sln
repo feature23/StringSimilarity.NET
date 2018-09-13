@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F23.StringSimilarity", "src\F23.StringSimilarity\F23.StringSimilarity.csproj", "{FA27327B-BCCC-46C7-8EED-BBD1ECF4BF53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F23.StringSimilarity", "src\F23.StringSimilarity\F23.StringSimilarity.csproj", "{FA27327B-BCCC-46C7-8EED-BBD1ECF4BF53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F23.StringSimilarity.Tests", "test\F23.StringSimilarity.Tests\F23.StringSimilarity.Tests.csproj", "{68F339E6-278F-4B04-A6ED-422AAD30591F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F23.StringSimilarity.Tests", "test\F23.StringSimilarity.Tests\F23.StringSimilarity.Tests.csproj", "{68F339E6-278F-4B04-A6ED-422AAD30591F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F6BC36B-E79D-4E9C-89C0-034EB6AF7809}
 	EndGlobalSection
 EndGlobal

@@ -30,6 +30,9 @@ namespace F23.StringSimilarity
     /// For example, in an OCR application, cost('o', 'a') could be 0.4
     /// In a checkspelling application, cost('u', 'i') could be 0.4 because these are
     /// next to each other on the keyboard...
+    /// In search engine keyword usage the . is mostly ignored, so deletion of a . within a string is not that costly. eg a search in Google on K.E.Y.B.O.O.S.T will return Keyboost.
+    /// In search engine keyword usage the space is often forgotten, so insertion of space within a string is not that costly. eg a search in Google on seopageoptimizer will return SEO Page Optimizer
+
     public interface ICharacterSubstitution
     {
         /// <summary>
@@ -39,5 +42,20 @@ namespace F23.StringSimilarity
         /// <param name="c2">The second character of the substitution.</param>
         /// <returns>The cost in the range [0, 1].</returns>
         double Cost(char c1, char c2);
+
+
+        /// <summary>
+        /// Indicate the cost of deleting c1.
+        /// </summary>
+        /// <param name="c1">The character to be deleted.</param>
+        /// <returns>The cost in the range [0, 1].</returns>
+        double DeletionCost(char c1);
+
+        /// <summary>
+        /// Indicate the cost of inserting c1.
+        /// </summary>
+        /// <param name="c1">The character to be inserted.</param>
+        /// <returns>The cost in the range [0, 1].</returns>
+        double InsertionCost(char c1);
     }
 }
