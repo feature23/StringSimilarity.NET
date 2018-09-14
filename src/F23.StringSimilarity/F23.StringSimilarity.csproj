@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
     <PackageId>F23.StringSimilarity</PackageId>
-    <PackageVersion>3.0.0</PackageVersion>
+    <PackageVersion>3.1.0</PackageVersion>
     <Title>StringSimilarity.NET</Title>
     <Authors>James Blair, Paul Irwin</Authors>
-    <Copyright>Copyright 2016 feature[23]</Copyright>
+    <Copyright>Copyright 2018 feature[23]</Copyright>
     <Description>A .NET port of java-string-similarity.</Description>
     <Summary>A .NET port of java-string-similarity (https://github.com/tdebatty/java-string-similarity). A library implementing different string similarity and distance measures. Several algorithms (including Levenshtein edit distance and sibblings, Jaro-Winkler, Longest Common Subsequence, cosine similarity etc.) are currently implemented.</Summary>
     <PackageProjectUrl>https://github.com/feature23/StringSimilarity.NET</PackageProjectUrl>
