@@ -35,6 +35,17 @@ namespace F23.StringSimilarity
     public class Levenshtein : IMetricStringDistance
     {
         /// <summary>
+        /// Equivalent to Distance(s1, s2, Int32.MaxValue).
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <returns>The Levenshtein distance between strings</returns>
+        public double Distance(string s1, string s2)
+        {
+            return Distance(s1, s2, int.MaxValue);
+        }
+
+        /// <summary>
         /// The Levenshtein distance, or edit distance, between two words is the
         /// Minimum number of single-character edits (insertions, deletions or
         /// substitutions) required to change one word into the other.
@@ -56,9 +67,14 @@ namespace F23.StringSimilarity
         /// </summary>
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
+        /// <param name="limit">The maximum result to compute before stopping. This
+        /// means that the calculation can terminate early if you
+        /// only care about strings with a certain similarity.
+        /// Set this to Int32.MaxValue if you want to run the
+        /// calculation to completion in every case.</param>
         /// <returns>The Levenshtein distance between strings</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
-        public double Distance(string s1, string s2)
+        public double Distance(string s1, string s2, int limit)
         {
             if (s1 == null)
             {
@@ -105,6 +121,8 @@ namespace F23.StringSimilarity
                 //   edit distance is delete (i+1) chars from s to match empty t
                 v1[0] = i + 1;
 
+                int minv1 = v1[0];
+
                 // use formula to fill in the rest of the row
                 for (int j = 0; j < s2.Length; j++)
                 {
@@ -118,10 +136,17 @@ namespace F23.StringSimilarity
                             Math.Min(
                                     v0[j + 1] + 1,  // Cost of remove
                                     v0[j] + cost)); // Cost of substitution
+
+                    minv1 = Math.Min(minv1, v1[j + 1]);
+                }
+
+                if (minv1 >= limit)
+                {
+                    return limit;
                 }
 
                 // copy v1 (current row) to v0 (previous row) for next iteration
-                //System.arraycopy(v1, 0, v0, 0, v0.length);
+                // System.arraycopy(v1, 0, v0, 0, v0.length);
 
                 // Flip references to current and previous row
                 vtemp = v0;

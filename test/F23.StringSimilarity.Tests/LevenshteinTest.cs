@@ -42,6 +42,11 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(expected: 2.0, actual: instance.Distance("My string", "M string2"));
             Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My $tring"));
 
+            // With limits.
+            Assert.Equal(2.0, instance.Distance("My string", "M string2", 4));
+            Assert.Equal(2.0, instance.Distance("My string", "M string2", 2));
+            Assert.Equal(1.0, instance.Distance("My string", "M string2", 1));
+
             NullEmptyTests.TestDistance(instance);
         }
     }
