@@ -38,9 +38,9 @@ namespace F23.StringSimilarity
     /// common subsequence plus, recursively, matching characters in the unmatched
     /// region on either side of the longest common subsequence.
     /// The Ratcliff/Obershelp distance is computed as 1 - Ratcliff/Obershelp similarity.
-    /// 
+    ///
     /// @author Ligi https://github.com/dxpux (as a patch for fuzzystring)
-    /// Adapted to StringSimilarity.Net by denmase	
+    /// Adapted to StringSimilarity.Net by denmase https://github.com/denmase
     public class RatcliffObershelp : INormalizedStringSimilarity, INormalizedStringDistance
     {
 
@@ -51,11 +51,11 @@ namespace F23.StringSimilarity
         /// <param name="s2">The second string to compare.</param>
         /// <returns>The Ratcliff/Obershelp similarity in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
-		public double Similarity(string s1, string s2)
-		{
+        public double Similarity(string s1, string s2)
+        {
             if (s1 == null)
             {
-                throw new ArgumentNullException(nameof(s1));    
+                throw new ArgumentNullException(nameof(s1));
             }
 
             if (s2 == null)
@@ -68,15 +68,13 @@ namespace F23.StringSimilarity
                 return 1d;
             }
 
-            int m_len = Math.Max(s1.Length, s2.Length);
+            List<string> matches = GetMatchList(s1, s2);
 
-            if (m_len == 0) return 0.0;			
-			
-			var matches = GetMatchQueue(s1, s2);
-			
-			return 2.0d * matches.Sum(match => match.Length) / (s1.Length + s2.Length);
-		}
-		
+            int sum_of_matches = matches.Sum(match => match.Length);
+
+            return 2.0d * sum_of_matches / (s1.Length + s2.Length);
+        }
+
         /// <summary>
         /// Return 1 - similarity.
         /// </summary>
@@ -87,42 +85,44 @@ namespace F23.StringSimilarity
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
 
-		private static List<string> GetMatchQueue(string source, string target)
-		{
-			var list = new List<string>();
-			var match = FrontMaxMatch(source, target);
-			if (match.Length > 0) {
-				var frontSource = source.Substring(0, source.IndexOf(match, StringComparison.CurrentCulture));
-				var frontTarget = target.Substring(0, target.IndexOf(match, StringComparison.CurrentCulture));
-				var frontQueue = GetMatchQueue(frontSource, frontTarget);
+        private static List<string> GetMatchList(string s1, string s2)
+        {
+            List<string> list = new List<string>();
+            string match = FrontMaxMatch(s1, s2);
 
-				var endSource = source.Substring(source.IndexOf(match, StringComparison.CurrentCulture) + match.Length);
-				var endTarget = target.Substring(target.IndexOf(match, StringComparison.CurrentCulture) + match.Length);
-				var endQueue = GetMatchQueue(endSource, endTarget);
+            if (match.Length > 0) {
+                string frontsource = s1.Substring(0, s1.IndexOf(match, StringComparison.CurrentCulture));
+                string fronttarget = s2.Substring(0, s2.IndexOf(match, StringComparison.CurrentCulture));
+                List<string> frontqueue = GetMatchList(frontsource, fronttarget);
 
-				list.Add(match);
-				list.AddRange(frontQueue);
-				list.AddRange(endQueue);			
-			}
-			return list;
-		}
+                string endsource = s1.Substring(s1.IndexOf(match, StringComparison.CurrentCulture) + match.Length);
+                string endtarget = s2.Substring(s2.IndexOf(match, StringComparison.CurrentCulture) + match.Length);
+                List<string> endqueue = GetMatchList(endsource, endtarget);
 
-		private static string FrontMaxMatch(string a, string b)
-		{
-			var index = 0;
-			var length = 0;
+                list.Add(match);
+                list.AddRange(frontqueue);
+                list.AddRange(endqueue);
+            }
 
-			for (int i = 0; i < a.Length; i++) {
-				var lengths = Enumerable.Range(1, a.Length - i).ToList();
+            return list;
+        }
+
+        private static string FrontMaxMatch(string s1, string s2)
+        {
+            int index = 0;
+            int length = 0;
+
+            for (int i = 0; i < s1.Length; i++) {
+                var lengths = Enumerable.Range(1, s1.Length - i).ToList();
                 foreach(var len in lengths) {
-					if (len > length && b.Contains(a.Substring(i, len))) {
-						index = i;
-						length = len;
-					}
-				}
-			}
+                    if (len > length && s2.Contains(s1.Substring(i, len))) {
+                        index = i;
+                        length = len;
+                    }
+                }
+            }
 
-			return a.Substring(index, length);
-		}
+            return s1.Substring(index, length);
+        }
     }
 }
