@@ -141,7 +141,34 @@ This algorithm is usually used for optical character recognition (OCR) applicati
 
 It can also be used for keyboard typing auto-correction. Here the cost of substituting E and R is lower for example because these are located next to each other on an AZERTY or QWERTY keyboard. Hence the probability that the user mistyped the characters is higher.
 
-<!-- TODO.JB - port Java example code -->
+```cs
+using System;
+using F23.StringSimilarity;
+
+public class Program
+{    
+    public static void Main(string[] args)
+    {
+        var l = new WeightedLevenshtein(new ExampleCharSub());
+
+        Console.WriteLine(l.Distance("String1", "String1"));
+        Console.WriteLine(l.Distance("String1", "Srring1"));
+        Console.WriteLine(l.Distance("String1", "Srring2"));
+    }
+}
+
+private class ExampleCharSub : ICharacterSubstitution
+{
+    public double Cost(char c1, char c2)
+    {
+        // The cost for substituting 't' and 'r' is considered smaller as these 2 are located next to each other on a keyboard
+        if (c1 == 't' && c2 == 'r') return 0.5; 
+
+        // For most cases, the cost of substituting 2 characters is 1.0
+        return 1.0;
+    }
+}
+```
 
 ## Damerau-Levenshtein
 Similar to Levenshtein, Damerau-Levenshtein distance with transposition (also sometimes calls unrestricted Damerau-Levenshtein distance) is the minimum number of operations needed to transform one string into the other, where an operation is defined as an insertion, deletion, or substitution of a single character, or a **transposition of two adjacent characters**.
