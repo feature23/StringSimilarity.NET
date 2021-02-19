@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageId>F23.StringSimilarity</PackageId>
-    <PackageVersion>3.1.0</PackageVersion>
+    <PackageVersion>3.2.0</PackageVersion>
+    <PackageTags>string;similarity;distance;levenshtein;jaro-winkler;lcs;cosine</PackageTags>
     <Title>StringSimilarity.NET</Title>
     <Authors>James Blair, Paul Irwin</Authors>
     <Copyright>Copyright 2018 feature[23]</Copyright>
@@ -17,7 +18,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.0\F23.StringSimilarity.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\F23.StringSimilarity.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
