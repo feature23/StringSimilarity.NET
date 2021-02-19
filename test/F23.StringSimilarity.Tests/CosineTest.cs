@@ -22,14 +22,17 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.CodeDom;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace F23.StringSimilarity.Tests
 {
@@ -37,6 +40,13 @@ namespace F23.StringSimilarity.Tests
     [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
     public class CosineTest
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public CosineTest(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         [Fact]
         public void TestSimilarity()
         {
@@ -92,6 +102,23 @@ namespace F23.StringSimilarity.Tests
             NullEmptyTests.TestDistance(instance);
 
             // TODO: regular (non-null/empty) distance tests
+        }
+
+        [Fact]
+        public void DocumentationExampleTest()
+        {
+            string s1 = "My first string";
+            string s2 = "My other string...";
+
+            // Let's work with sequences of 2 characters...
+            var cosine = new Cosine(2);
+
+            // For cosine similarity I need the profile of strings
+            var profile1 = cosine.GetProfile(s1);
+            var profile2 = cosine.GetProfile(s2);
+
+            // Prints 0.516185
+            Assert.Equal(0.516185, cosine.Similarity(profile1, profile2), 6);
         }
 
         private static async Task<string> ReadResourceFileAsync(string file)

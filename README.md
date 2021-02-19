@@ -365,11 +365,11 @@ public class Program
         var cosine = new Cosine(2);
         
         // For cosine similarity I need the profile of strings
-        StringProfile profile1 = cosine.GetProfile(s1);
-        StringProfile profile2 = cosine.GetProfile(s2);
+        var profile1 = cosine.GetProfile(s1);
+        var profile2 = cosine.GetProfile(s2);
         
         // Prints 0.516185
-        Console.WriteLine(profile1.CosineSimilarity(profile2));
+        Console.WriteLine(cosine.Similarity(profile1, profile2));
     }
 }
 ```

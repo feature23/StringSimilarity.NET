@@ -59,7 +59,7 @@ namespace F23.StringSimilarity
         
         protected ShingleBased() : this(DEFAULT_K) { }
 
-        protected IDictionary<string, int> GetProfile(string s)
+        public IDictionary<string, int> GetProfile(string s)
         {
             var shingles = new Dictionary<string, int>();
 
