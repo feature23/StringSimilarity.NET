@@ -1,23 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageId>F23.StringSimilarity</PackageId>
-    <PackageVersion>3.1.0</PackageVersion>
+    <PackageVersion>4.0.0</PackageVersion>
+    <PackageTags>string;similarity;distance;levenshtein;jaro-winkler;lcs;cosine</PackageTags>
     <Title>StringSimilarity.NET</Title>
     <Authors>James Blair, Paul Irwin</Authors>
     <Copyright>Copyright 2018 feature[23]</Copyright>
     <Description>A .NET port of java-string-similarity.</Description>
     <Summary>A .NET port of java-string-similarity (https://github.com/tdebatty/java-string-similarity). A library implementing different string similarity and distance measures. Several algorithms (including Levenshtein edit distance and sibblings, Jaro-Winkler, Longest Common Subsequence, cosine similarity etc.) are currently implemented.</Summary>
     <PackageProjectUrl>https://github.com/feature23/StringSimilarity.NET</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/feature23/StringSimilarity.NET/master/logo.png</PackageIconUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>string similarity distance cosine damerau jaccard jaro-winkler levenshtein ngram qgram shingle sift4</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="logo.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.0\F23.StringSimilarity.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\F23.StringSimilarity.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
