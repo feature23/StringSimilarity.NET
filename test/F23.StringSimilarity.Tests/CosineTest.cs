@@ -99,9 +99,32 @@ namespace F23.StringSimilarity.Tests
         public void TestDistance()
         {
             var instance = new Cosine();
-            NullEmptyTests.TestDistance(instance);
 
-            // TODO: regular (non-null/empty) distance tests
+            double result = instance.Distance("ABC", "ABCE");
+            Assert.Equal(0.29, result, 2);
+
+            NullEmptyTests.TestDistance(instance);
+        }
+
+        [Fact]
+        public void TestDistanceSmallString()
+        {
+            var instance = new Cosine(3);
+            double result = instance.Distance("AB", "ABCE");
+            Assert.Equal(1, result, 5);
+        }
+
+        [Fact]
+        public async Task TestDistanceLargeString()
+        {
+            var cos = new Cosine();
+
+            // read from 2 text files
+            var string1 = await ReadResourceFileAsync("71816-2.txt");
+            var string2 = await ReadResourceFileAsync("11328-1.txt");
+            double similarity = cos.Distance(string1, string2);
+
+            Assert.Equal(0.1885, similarity, 3);
         }
 
         [Fact]

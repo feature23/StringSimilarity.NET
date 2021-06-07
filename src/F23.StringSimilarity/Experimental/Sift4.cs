@@ -32,7 +32,8 @@ namespace F23.StringSimilarity.Experimental
     /// Sift4 - a general purpose string distance algorithm inspired by JaroWinkler
     /// and Longest Common Subsequence.
     /// Original JavaScript algorithm by siderite, java port by Nathan Fischer 2016.
-    /// https://siderite.blogspot.com/2014/11/super-fast-and-accurate-string-distance.html
+    /// https://siderite.dev/blog/super-fast-and-accurate-string-distance.html
+    /// https://blackdoor.github.io/blog/sift4-java/
     /// </summary>
     public class Sift4 : IStringDistance
     {
@@ -69,7 +70,8 @@ namespace F23.StringSimilarity.Experimental
         /// Sift4 - a general purpose string distance algorithm inspired by JaroWinkler
         /// and Longest Common Subsequence.
         /// Original JavaScript algorithm by siderite, java port by Nathan Fischer 2016.
-        /// https://siderite.blogspot.com/2014/11/super-fast-and-accurate-string-distance.html
+        /// https://siderite.dev/blog/super-fast-and-accurate-string-distance.html
+        /// https://blackdoor.github.io/blog/sift4-java/
         /// </summary>
         /// <param name="s1"></param>
         /// <param name="s2"></param>
