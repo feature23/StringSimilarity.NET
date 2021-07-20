@@ -31,7 +31,7 @@ A library implementing different string similarity and distance measures. A doze
 * [License](#license)
 
 ## Download
-Using NuGet:
+Using [NuGet](https://www.nuget.org/packages/F23.StringSimilarity):
 ```
 Install-Package F23.StringSimilarity
 ```
