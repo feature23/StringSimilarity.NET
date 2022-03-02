@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/feature23/StringSimilarity.NET.svg?branch=master)](https://travis-ci.org/feature23/StringSimilarity.NET)
-<!--[![Coverage Status](https://coveralls.io/repos/github/feature23/StringSimilarity.NET/badge.svg?branch=master)](https://coveralls.io/github/feature23/StringSimilarity.NET?branch=master)-->
-
 # String Similarity .NET
+
+[![.NET](https://github.com/feature23/StringSimilarity.NET/actions/workflows/dotnet.yml/badge.svg)](https://github.com/feature23/StringSimilarity.NET/actions/workflows/dotnet.yml)
 
 A .NET port of java-string-similarity:
 <https://github.com/tdebatty/java-string-similarity>
