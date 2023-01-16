@@ -45,7 +45,7 @@ namespace F23.StringSimilarity
                 return 1.0d;
             }
 
-            var matches = GetMatchList(s1, s2);
+            var matches = GetMatchList(s1.AsSpan(), s2.AsSpan());
             int sumOfMatches = 0;
 
             foreach (var match in matches)
@@ -68,22 +68,22 @@ namespace F23.StringSimilarity
             return 1.0d - Similarity(s1, s2);
         }
 
-        private static IList<string> GetMatchList(string s1, string s2)
+        private static IList<string> GetMatchList(ReadOnlySpan<char> s1, ReadOnlySpan<char> s2)
         {
             var list = new List<string>();
             var match = FrontMaxMatch(s1, s2);
 
             if (match.Length > 0)
             {
-                var frontSource = s1.Substring(0, s1.IndexOf(match, StringComparison.Ordinal));
-                var frontTarget = s2.Substring(0, s2.IndexOf(match, StringComparison.Ordinal));
+                var frontSource = s1.Slice(0, s1.IndexOf(match, StringComparison.Ordinal));
+                var frontTarget = s2.Slice(0, s2.IndexOf(match, StringComparison.Ordinal));
                 var frontQueue = GetMatchList(frontSource, frontTarget);
 
-                var endSource = s1.Substring(s1.IndexOf(match, StringComparison.Ordinal) + match.Length);
-                var endTarget = s2.Substring(s2.IndexOf(match, StringComparison.Ordinal) + match.Length);
+                var endSource = s1.Slice(s1.IndexOf(match, StringComparison.Ordinal) + match.Length);
+                var endTarget = s2.Slice(s2.IndexOf(match, StringComparison.Ordinal) + match.Length);
                 var endQueue = GetMatchList(endSource, endTarget);
 
-                list.Add(match);
+                list.Add(match.ToString());
                 list.AddRange(frontQueue);
                 list.AddRange(endQueue);
             }
@@ -91,17 +91,17 @@ namespace F23.StringSimilarity
             return list;
         }
 
-        private static string FrontMaxMatch(string s1, string s2)
+        private static ReadOnlySpan<char> FrontMaxMatch(ReadOnlySpan<char> s1, ReadOnlySpan<char> s2)
         {
             int longest = 0;
-            var longestSubstring = "";
+            ReadOnlySpan<char> longestSubstring = ReadOnlySpan<char>.Empty;
 
             for (int i = 0; i < s1.Length; ++i)
             {
                 for (int j = i + 1; j <= s1.Length; ++j)
                 {
-                    var substring = s1.Substring(i, j - i);
-                    if (s2.Contains(substring) && substring.Length > longest)
+                    var substring = s1.Slice(i, j - i);
+                    if (s2.Contains(substring, StringComparison.Ordinal) && substring.Length > longest)
                     {
                         longest = substring.Length;
                         longestSubstring = substring;
