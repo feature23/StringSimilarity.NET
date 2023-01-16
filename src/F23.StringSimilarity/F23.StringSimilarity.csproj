@@ -1,9 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageId>F23.StringSimilarity</PackageId>
-    <PackageVersion>5.0.0</PackageVersion>
     <PackageTags>string;similarity;distance;levenshtein;jaro-winkler;lcs;cosine</PackageTags>
     <Title>StringSimilarity.NET</Title>
     <Authors>James Blair, Paul Irwin</Authors>
@@ -18,18 +16,16 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Version>5.1.0</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="logo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\F23.StringSimilarity.xml</DocumentationFile>
   </PropertyGroup>
-
 </Project>
