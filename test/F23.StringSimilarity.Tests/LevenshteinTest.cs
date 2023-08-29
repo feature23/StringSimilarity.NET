@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
@@ -33,20 +34,51 @@ namespace F23.StringSimilarity.Tests
     [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class LevenshteinTest
     {
-        [Fact]
-        public void TestDistance()
+        [InlineData("My string", "My tring", 1.0)]
+        [InlineData("My string", "M string2", 2.0)]
+        [InlineData("My string", "My $tring", 1.0)]
+        [Theory]
+        public void TestDistance(string s1, string s2, double expected)
         {
             var instance = new Levenshtein();
 
-            Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My tring"));
-            Assert.Equal(expected: 2.0, actual: instance.Distance("My string", "M string2"));
-            Assert.Equal(expected: 1.0, actual: instance.Distance("My string", "My $tring"));
+            // test string version
+            Assert.Equal(expected, actual: instance.Distance(s1, s2));
+            
+            // test char span version
+            Assert.Equal(expected, actual: instance.Distance(s1.AsSpan(), s2.AsSpan()));
+            
+            // test byte span version
+            Assert.Equal(expected, actual: instance.Distance<byte>(
+                System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(), 
+                System.Text.Encoding.Latin1.GetBytes(s2).AsSpan()));
+        }
 
-            // With limits.
-            Assert.Equal(2.0, instance.Distance("My string", "M string2", 4));
-            Assert.Equal(2.0, instance.Distance("My string", "M string2", 2));
-            Assert.Equal(1.0, instance.Distance("My string", "M string2", 1));
-
+        [InlineData("My string", "M string2", 4, 2.0)]
+        [InlineData("My string", "M string2", 2, 2.0)]
+        [InlineData("My string", "M string2", 1, 1.0)]
+        [Theory]
+        public void TestDistanceWithLimits(string s1, string s2, int limit, double expected)
+        {
+            var instance = new Levenshtein();
+            
+            // test string version
+            Assert.Equal(expected, actual: instance.Distance(s1, s2, limit));
+            
+            // test char span version
+            Assert.Equal(expected, actual: instance.Distance(s1.AsSpan(), s2.AsSpan(), limit));
+            
+            // test byte span version
+            Assert.Equal(expected, actual: instance.Distance<byte>(
+                System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(), 
+                System.Text.Encoding.Latin1.GetBytes(s2).AsSpan(), 
+                limit));
+        }
+        
+        [Fact]
+        public void NullEmptyDistanceTest()
+        {
+            var instance = new Levenshtein();
             NullEmptyTests.TestDistance(instance);
         }
     }

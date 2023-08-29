@@ -30,7 +30,7 @@ namespace F23.StringSimilarity.Tests
     public class MetricLCSTest
     {
         [Fact]
-        public void TestDistance()
+        public void NullEmptyDistanceTest()
         {
             var instance = new MetricLCS();
             NullEmptyTests.TestDistance(instance);
