@@ -31,10 +31,8 @@ namespace F23.StringSimilarity
     /// Distance metric based on Longest Common Subsequence, from the notes "An
     /// LCS-based string metric" by Daniel Bakkelund.
     /// </summary>
-    public class MetricLCS : IMetricStringDistance, INormalizedStringDistance
+    public class MetricLCS : IMetricStringDistance, INormalizedStringDistance, IMetricSpanDistance
     {
-        private readonly LongestCommonSubsequence lcs = new LongestCommonSubsequence();
-
         /// <summary>
         /// Distance metric based on Longest Common Subsequence, computed as
         /// 1 - |LCS(s1, s2)| / max(|s1|, |s2|).
@@ -44,6 +42,9 @@ namespace F23.StringSimilarity
         /// <returns>LCS distance metric</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+            => Distance(s1.AsSpan(), s2.AsSpan());
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
         {
             if (s1 == null)
             {
@@ -55,7 +56,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1 == s2)
             {
                 return 0;
             }
@@ -65,8 +66,8 @@ namespace F23.StringSimilarity
             if (m_len == 0) return 0.0;
 
             return 1.0
-                    - (1.0 * lcs.Length(s1, s2))
-                    / m_len;
+                   - (1.0 * LongestCommonSubsequence.Length(s1, s2))
+                   / m_len;
         }
     }
 }

@@ -29,7 +29,7 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
-    public sealed class OptimalStringAlignment : IStringDistance
+    public sealed class OptimalStringAlignment : IStringDistance, ISpanDistance
     {
         /// <summary>
         /// Compute the distance between strings: the minimum number of operations
@@ -42,6 +42,9 @@ namespace F23.StringSimilarity
         /// <returns>the OSA distance</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+            => Distance(s1.AsSpan(), s2.AsSpan());
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
         {
             if (s1 == null)
             {
@@ -53,7 +56,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1 == s2)
             {
                 return 0;
             }
@@ -93,7 +96,7 @@ namespace F23.StringSimilarity
                     //if s1[i - 1] = s2[j - 1] then cost = 0, else cost = 1
                     cost = 1;
 
-                    if (s1[i - 1] == s2[j - 1])
+                    if (s1[i - 1].Equals(s2[j - 1]))
                     {
                         cost = 0;
                     }
@@ -106,8 +109,8 @@ namespace F23.StringSimilarity
 
                     //transposition check
                     if (i > 1 && j > 1
-                            && s1[i - 1] == s2[j - 2]
-                            && s1[i - 2] == s2[j - 1]
+                            && s1[i - 1].Equals(s2[j - 2])
+                            && s1[i - 2].Equals(s2[j - 1])
                         )
                     {
                         d[i, j] = Math.Min(d[i, j], d[i - 2, j - 2] + cost);

@@ -41,7 +41,7 @@ namespace F23.StringSimilarity
     /// This is not to be confused with the optimal string alignment distance, which
     /// is an extension where no substring can be edited more than once.
     /// </summary>
-    public class Damerau : IMetricStringDistance
+    public class Damerau : IMetricStringDistance, IMetricSpanDistance
     {
         /// <summary>
         /// Compute the distance between strings: the minimum number of operations
@@ -54,6 +54,9 @@ namespace F23.StringSimilarity
         /// <returns>The computed distance.</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+            => Distance(s1.AsSpan(), s2.AsSpan());
+
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
         {
             if (s1 == null)
             {
@@ -65,7 +68,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1 == s2)
             {
                 return 0;
             }
@@ -74,7 +77,7 @@ namespace F23.StringSimilarity
             int inf = s1.Length + s2.Length;
 
             // Create and initialize the character array indices
-            var da = new Dictionary<char, int>();
+            var da = new Dictionary<T, int>();
 
             for (int d = 0; d < s1.Length; d++)
             {
@@ -115,7 +118,7 @@ namespace F23.StringSimilarity
                     int j1 = db;
 
                     int cost = 1;
-                    if (s1[i - 1] == s2[j - 1])
+                    if (s1[i - 1].Equals(s2[j - 1]))
                     {
                         cost = 0;
                         db = j;

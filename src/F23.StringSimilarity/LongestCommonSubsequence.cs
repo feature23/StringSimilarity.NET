@@ -44,7 +44,7 @@ namespace F23.StringSimilarity
     ///
     /// ! This class currently implements the dynamic programming approach, which has
     /// a space requirement O(m * n)!
-    public class LongestCommonSubsequence : IStringDistance
+    public class LongestCommonSubsequence : IStringDistance, ISpanDistance
     {
         /// <summary>
         /// Return the LCS distance between strings s1 and s2, computed as |s1| +
@@ -58,6 +58,9 @@ namespace F23.StringSimilarity
         /// </returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+            => Distance(s1.AsSpan(), s2.AsSpan());
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
         {
             if (s1 == null)
             {
@@ -69,7 +72,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1 == s2)
             {
                 return 0;
             }
@@ -86,6 +89,9 @@ namespace F23.StringSimilarity
         /// <returns>The length of LCS(s2, s2)</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public int Length(string s1, string s2)
+            => Length(s1.AsSpan(), s2.AsSpan());
+        
+        internal static int Length<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
         {
             if (s1 == null)
             {
@@ -113,8 +119,8 @@ namespace F23.StringSimilarity
              */
             int s1_length = s1.Length;
             int s2_length = s2.Length;
-            char[] x = s1.ToCharArray();
-            char[] y = s2.ToCharArray();
+            T[] x = s1.ToArray();
+            T[] y = s2.ToArray();
 
             int[,] c = new int[s1_length + 1, s2_length + 1];
 
@@ -132,10 +138,9 @@ namespace F23.StringSimilarity
             {
                 for (int j = 1; j <= s2_length; j++)
                 {
-                    if (x[i - 1] == y[j - 1])
+                    if (x[i - 1].Equals(y[j - 1]))
                     {
                         c[i, j] = c[i - 1, j - 1] + 1;
-
                     }
                     else
                     {

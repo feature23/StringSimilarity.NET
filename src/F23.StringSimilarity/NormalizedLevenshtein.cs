@@ -31,7 +31,7 @@ namespace F23.StringSimilarity
     /// the longest string. The resulting value is always in the interval [0.0 1.0]
     /// but it is not a metric anymore! The similarity is computed as 1 - normalized
     /// distance.
-    public class NormalizedLevenshtein : INormalizedStringDistance, INormalizedStringSimilarity
+    public class NormalizedLevenshtein : INormalizedStringDistance, INormalizedStringSimilarity, INormalizedSpanDistance, INormalizedSpanSimilarity
     {
         private readonly Levenshtein l = new Levenshtein();
 
@@ -43,6 +43,9 @@ namespace F23.StringSimilarity
         /// <returns>The computed distance in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+            => Distance(s1.AsSpan(), s2.AsSpan());
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
         {
             if (s1 == null)
             {
@@ -54,7 +57,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1 == s2)
             {
                 return 0.0;
             }
@@ -77,6 +80,9 @@ namespace F23.StringSimilarity
         /// <returns>1 - distance</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
+            => 1.0 - Distance(s1, s2);
+        
+        public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             => 1.0 - Distance(s1, s2);
     }
 }
