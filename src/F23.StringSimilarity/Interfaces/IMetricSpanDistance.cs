@@ -17,6 +17,7 @@ namespace F23.StringSimilarity.Interfaces
         /// <param name="b1">The first span.</param>
         /// <param name="b2">The second span.</param>
         /// <returns>The metric distance.</returns>
-        new double Distance<T>(ReadOnlySpan<T> b1, ReadOnlySpan<T> b2);
+        new double Distance<T>(ReadOnlySpan<T> b1, ReadOnlySpan<T> b2)
+            where T : IEquatable<T>;
     }
 }

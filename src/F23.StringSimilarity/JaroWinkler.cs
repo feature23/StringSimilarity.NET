@@ -79,6 +79,7 @@ namespace F23.StringSimilarity
             => Similarity(s1.AsSpan(), s2.AsSpan());
         
         public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
         {
             if (s1 == null)
             {
@@ -90,7 +91,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1 == s2)
+            if (s1.SequenceEqual(s2))
             {
                 return 1f;
             }
@@ -123,9 +124,11 @@ namespace F23.StringSimilarity
             => 1.0 - Similarity(s1, s2);
         
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
             => 1.0 - Similarity(s1, s2);
 
         private static int[] Matches<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
         {
             ReadOnlySpan<T> max, min;
             if (s1.Length > s2.Length)
