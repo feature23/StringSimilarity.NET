@@ -121,8 +121,6 @@ namespace F23.StringSimilarity
              */
             int s1_length = s1.Length;
             int s2_length = s2.Length;
-            T[] x = s1.ToArray();
-            T[] y = s2.ToArray();
 
             int[,] c = new int[s1_length + 1, s2_length + 1];
 
@@ -140,7 +138,7 @@ namespace F23.StringSimilarity
             {
                 for (int j = 1; j <= s2_length; j++)
                 {
-                    if (x[i - 1].Equals(y[j - 1]))
+                    if (s1[i - 1].Equals(s2[j - 1]))
                     {
                         c[i, j] = c[i - 1, j - 1] + 1;
                     }
