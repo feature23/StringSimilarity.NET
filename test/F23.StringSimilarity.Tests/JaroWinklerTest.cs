@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
@@ -33,33 +34,51 @@ namespace F23.StringSimilarity.Tests
     [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class JaroWinklerTest
     {
-        [Fact]
-        public void TestSimilarity()
+        [InlineData("My string", "My tsring", 0.974074)]
+        [InlineData("My string", "My ntrisg", 0.896296)]
+        [Theory]
+        public void TestSimilarity(string s1, string s2, double expected)
         {
             var instance = new JaroWinkler();
 
+            // test string version
             Assert.Equal(
-                expected: 0.974074,
-                actual: instance.Similarity("My string", "My tsring"),
+                expected,
+                actual: instance.Similarity(s1, s2),
                 precision: 6 // 0.000001
             );
-
+            
+            // test char span version
             Assert.Equal(
-                expected: 0.896296,
-                actual: instance.Similarity("My string", "My ntrisg"),
+                expected,
+                actual: instance.Similarity(s1.AsSpan(), s2.AsSpan()),
                 precision: 6 // 0.000001
             );
-
-            NullEmptyTests.TestSimilarity(instance);
+            
+            // test byte span version
+            Assert.Equal(
+                expected,
+                actual: instance.Similarity<byte>(
+                    System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(),
+                    System.Text.Encoding.Latin1.GetBytes(s2).AsSpan()),
+                precision: 6 // 0.000001
+            );
         }
 
         [Fact]
-        public void TestDistance()
+        public void NullEmptyDistanceTest()
         {
             var instance = new JaroWinkler();
             NullEmptyTests.TestDistance(instance);
 
             // TODO: regular (non-null/empty) distance tests
+        }
+        
+        [Fact]
+        public void NullEmptySimilarityTest()
+        {
+            var instance = new JaroWinkler();
+            NullEmptyTests.TestSimilarity(instance);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace F23.StringSimilarity
     /// The Levenshtein distance between two words is the Minimum number of
     /// single-character edits (insertions, deletions or substitutions) required to
     /// change one string into the other.
-    public class Levenshtein : IMetricStringDistance
+    public class Levenshtein : IMetricStringDistance, IMetricSpanDistance
     {
         /// <summary>
         /// Equivalent to Distance(s1, s2, Int32.MaxValue).
@@ -40,10 +40,7 @@ namespace F23.StringSimilarity
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
         /// <returns>The Levenshtein distance between strings</returns>
-        public double Distance(string s1, string s2)
-        {
-            return Distance(s1, s2, int.MaxValue);
-        }
+        public double Distance(string s1, string s2) => Distance(s1, s2, int.MaxValue);
 
         /// <summary>
         /// The Levenshtein distance, or edit distance, between two words is the
@@ -75,6 +72,14 @@ namespace F23.StringSimilarity
         /// <returns>The Levenshtein distance between strings</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2, int limit)
+            => Distance(s1.AsSpan(), s2.AsSpan(), limit);
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => Distance(s1, s2, int.MaxValue);
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2, int limit)
+            where T : IEquatable<T>
         {
             if (s1 == null)
             {
@@ -86,7 +91,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1.SequenceEqual(s2))
             {
                 return 0;
             }
@@ -127,15 +132,16 @@ namespace F23.StringSimilarity
                 for (int j = 0; j < s2.Length; j++)
                 {
                     int cost = 1;
-                    if (s1[i] == s2[j])
+                    if (s1[i].Equals(s2[j]))
                     {
                         cost = 0;
                     }
+
                     v1[j + 1] = Math.Min(
-                            v1[j] + 1,              // Cost of insertion
-                            Math.Min(
-                                    v0[j + 1] + 1,  // Cost of remove
-                                    v0[j] + cost)); // Cost of substitution
+                        v1[j] + 1, // Cost of insertion
+                        Math.Min(
+                            v0[j + 1] + 1, // Cost of remove
+                            v0[j] + cost)); // Cost of substitution
 
                     minv1 = Math.Min(minv1, v1[j + 1]);
                 }

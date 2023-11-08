@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
@@ -33,16 +34,31 @@ namespace F23.StringSimilarity.Tests
     [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class LongestCommonSubsequenceTest
     {
-        [Fact]
-        public void TestDistance()
+        [InlineData("AGCAT", "GAC", 4)]
+        [InlineData("AGCAT", "AGCT", 1)]
+        [Theory]
+        public void TestDistance(string s1, string s2, double expected)
         {
             var instance = new LongestCommonSubsequence();
 
             // LCS = GA or GC => distance = 4 (remove 3 letters and add 1)
 
-            Assert.Equal(expected: 4, actual: instance.Distance("AGCAT", "GAC"));
-            Assert.Equal(expected: 1, actual: instance.Distance("AGCAT", "AGCT"));
-
+            // test string version
+            Assert.Equal(expected, actual: instance.Distance(s1, s2));
+            
+            // test char span version
+            Assert.Equal(expected, actual: instance.Distance(s1.AsSpan(), s2.AsSpan()));
+            
+            // test byte span version
+            Assert.Equal(expected, actual: instance.Distance<byte>(
+                System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(), 
+                System.Text.Encoding.Latin1.GetBytes(s2).AsSpan()));
+        }
+        
+        [Fact]
+        public void NullEmptyDistanceTest()
+        {
+            var instance = new LongestCommonSubsequence();
             NullEmptyTests.TestDistance(instance);
         }
     }

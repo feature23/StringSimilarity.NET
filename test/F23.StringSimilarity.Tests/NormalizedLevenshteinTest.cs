@@ -30,7 +30,7 @@ namespace F23.StringSimilarity.Tests
     public class NormalizedLevenshteinTest
     {
         [Fact]
-        public void TestDistance()
+        public void NullEmptyDistanceTest()
         {
             var instance = new NormalizedLevenshtein();
             NullEmptyTests.TestDistance(instance);
@@ -39,7 +39,7 @@ namespace F23.StringSimilarity.Tests
         }
 
         [Fact]
-        public void TestSimilarity()
+        public void NullEmptySimilarityTest()
         {
             var instance = new NormalizedLevenshtein();
             NullEmptyTests.TestSimilarity(instance);

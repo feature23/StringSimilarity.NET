@@ -23,6 +23,7 @@
  */
 
 using System;
+using System.Data.SqlTypes;
 using System.Linq;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
@@ -38,7 +39,7 @@ namespace F23.StringSimilarity
     /// Jaro-Winkler was developed in the area of record linkage (duplicate
     /// detection) (Winkler, 1990). It returns a value in the interval [0.0, 1.0].
     /// The distance is computed as 1 - Jaro-Winkler similarity.
-    public class JaroWinkler : INormalizedStringSimilarity, INormalizedStringDistance
+    public class JaroWinkler : INormalizedStringSimilarity, INormalizedStringDistance, INormalizedSpanSimilarity, INormalizedSpanDistance
     {
         private const double DEFAULT_THRESHOLD = 0.7;
         private const int THREE = 3;
@@ -75,6 +76,10 @@ namespace F23.StringSimilarity
         /// <returns>The Jaro-Winkler similarity in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
+            => Similarity(s1.AsSpan(), s2.AsSpan());
+        
+        public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
         {
             if (s1 == null)
             {
@@ -86,7 +91,7 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
-            if (s1.Equals(s2))
+            if (s1.SequenceEqual(s2))
             {
                 return 1f;
             }
@@ -117,10 +122,15 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
+        
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => 1.0 - Similarity(s1, s2);
 
-        private static int[] Matches(string s1, string s2)
+        private static int[] Matches<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
         {
-            string max, min;
+            ReadOnlySpan<T> max, min;
             if (s1.Length > s2.Length)
             {
                 max = s1;
@@ -141,11 +151,11 @@ namespace F23.StringSimilarity
             int matches = 0;
             for (int mi = 0; mi < min.Length; mi++)
             {
-                char c1 = min[mi];
+                var c1 = min[mi];
                 for (int xi = Math.Max(mi - range, 0),
                         xn = Math.Min(mi + range + 1, max.Length); xi < xn; xi++)
                 {
-                    if (!match_flags[xi] && c1 == max[xi])
+                    if (!match_flags[xi] && c1.Equals(max[xi]))
                     {
                         match_indexes[mi] = xi;
                         match_flags[xi] = true;
@@ -154,8 +164,8 @@ namespace F23.StringSimilarity
                     }
                 }
             }
-            char[] ms1 = new char[matches];
-            char[] ms2 = new char[matches];
+            T[] ms1 = new T[matches];
+            T[] ms2 = new T[matches];
             for (int i = 0, si = 0; i < min.Length; i++)
             {
                 if (match_indexes[i] != -1)
@@ -175,7 +185,7 @@ namespace F23.StringSimilarity
             int transpositions = 0;
             for (int mi = 0; mi < ms1.Length; mi++)
             {
-                if (ms1[mi] != ms2[mi])
+                if (!ms1[mi].Equals(ms2[mi]))
                 {
                     transpositions++;
                 }
@@ -183,7 +193,7 @@ namespace F23.StringSimilarity
             int prefix = 0;
             for (int mi = 0; mi < min.Length; mi++)
             {
-                if (s1[mi] == s2[mi])
+                if (s1[mi].Equals(s2[mi]))
                 {
                     prefix++;
                 }

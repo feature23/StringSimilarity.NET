@@ -32,7 +32,7 @@ namespace F23.StringSimilarity
     public class Cosine : ShingleBased, INormalizedStringSimilarity, INormalizedStringDistance
     {
         /// <summary>
-        /// Implements Cosine Similarity between strings.The strings are first
+        /// Implements Cosine Similarity between strings. The strings are first
         /// transformed in vectors of occurrences of k-shingles(sequences of k
         /// characters). In this n-dimensional space, the similarity between the two
         /// strings is the cosine of their respective vectors.
@@ -41,7 +41,7 @@ namespace F23.StringSimilarity
         public Cosine(int k) : base(k) { }
 
         /// <summary>
-        /// Implements Cosine Similarity between strings.The strings are first
+        /// Implements Cosine Similarity between strings. The strings are first
         /// transformed in vectors of occurrences of k-shingles(sequences of k
         /// characters). In this n-dimensional space, the similarity between the two
         /// strings is the cosine of their respective vectors.

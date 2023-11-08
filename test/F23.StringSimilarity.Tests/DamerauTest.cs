@@ -22,7 +22,9 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 
@@ -33,15 +35,30 @@ namespace F23.StringSimilarity.Tests
     [SuppressMessage("ReSharper", "ArgumentsStyleOther")]
     public class DamerauTest
     {
-        [Fact]
-        public void TestDistance()
+        [InlineData("ABCDEF", "ABDCEF", 1.0)]
+        [InlineData("ABCDEF", "BACDFE", 2.0)]
+        [InlineData("ABCDEF", "ABCDE", 1.0)]
+        [Theory]
+        public void TestDistance(string s1, string s2, double expected)
         {
             var instance = new Damerau();
 
-            Assert.Equal(expected: 1.0, actual: instance.Distance("ABCDEF", "ABDCEF"));
-            Assert.Equal(expected: 2.0, actual: instance.Distance("ABCDEF", "BACDFE"));
-            Assert.Equal(expected: 1.0, actual: instance.Distance("ABCDEF", "ABCDE"));
-
+            // test string version
+            Assert.Equal(expected, actual: instance.Distance(s1, s2));
+            
+            // test char span version
+            Assert.Equal(expected, actual: instance.Distance(s1.AsSpan(), s2.AsSpan()));
+            
+            // test byte span version
+            Assert.Equal(expected, actual: instance.Distance<byte>(
+                Encoding.Latin1.GetBytes(s1).AsSpan(), 
+                Encoding.Latin1.GetBytes(s2).AsSpan()));
+        }
+        
+        [Fact]
+        public void NullEmptyDistanceTest()
+        {
+            var instance = new Damerau();
             NullEmptyTests.TestDistance(instance);
         }
     }

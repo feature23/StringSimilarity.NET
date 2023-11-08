@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>F23.StringSimilarity</PackageId>
     <PackageTags>string;similarity;distance;levenshtein;jaro-winkler;lcs;cosine</PackageTags>
     <Title>StringSimilarity.NET</Title>
