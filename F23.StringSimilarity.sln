@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F23.StringSimilarity", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F23.StringSimilarity.Tests", "test\F23.StringSimilarity.Tests\F23.StringSimilarity.Tests.csproj", "{68F339E6-278F-4B04-A6ED-422AAD30591F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F23.StringSimilarity.Benchmarks", "F23.StringSimilarity.Benchmarks\F23.StringSimilarity.Benchmarks.csproj", "{3A9605B1-820C-43C2-8F9B-72BCA5F5543B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{68F339E6-278F-4B04-A6ED-422AAD30591F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68F339E6-278F-4B04-A6ED-422AAD30591F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68F339E6-278F-4B04-A6ED-422AAD30591F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A9605B1-820C-43C2-8F9B-72BCA5F5543B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A9605B1-820C-43C2-8F9B-72BCA5F5543B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A9605B1-820C-43C2-8F9B-72BCA5F5543B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A9605B1-820C-43C2-8F9B-72BCA5F5543B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

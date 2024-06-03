@@ -23,6 +23,7 @@
  */
 
 using System;
+using System.Threading;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable TooWideLocalVariableScope
@@ -112,7 +113,7 @@ namespace F23.StringSimilarity
             // create two work vectors of floating point (i.e. weighted) distances
             double[] v0 = new double[s2.Length + 1];
             double[] v1 = new double[s2.Length + 1];
-            double[] vtemp;
+            // SSNET: removed unneeded double[] vtemp;
 
             // initialize v0 (the previous row of distances)
             // this row is A[0][i]: edit distance for an empty s1
@@ -166,9 +167,7 @@ namespace F23.StringSimilarity
                 // copy v1 (current row) to v0 (previous row) for next iteration
                 // System.arraycopy(v1, 0, v0, 0, v0.length);
                 // Flip references to current and previous row
-                vtemp = v0;
-                v0 = v1;
-                v1 = vtemp;
+                (v0, v1) = (v1, v0); // SSNET Specific: Swap references using tuples instead of temporary
             }
 
             return v0[s2.Length];
