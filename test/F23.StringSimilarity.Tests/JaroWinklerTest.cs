@@ -59,8 +59,8 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(
                 expected,
                 actual: instance.Similarity<byte>(
-                    System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(),
-                    System.Text.Encoding.Latin1.GetBytes(s2).AsSpan()),
+                    EncodingUtil.Latin1.GetBytes(s1).AsSpan(),
+                    EncodingUtil.Latin1.GetBytes(s2).AsSpan()),
                 precision: 6 // 0.000001
             );
         }

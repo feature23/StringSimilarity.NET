@@ -50,8 +50,8 @@ namespace F23.StringSimilarity.Tests
             
             // test byte span version
             Assert.Equal(expected, actual: instance.Distance<byte>(
-                System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(), 
-                System.Text.Encoding.Latin1.GetBytes(s2).AsSpan()));
+                EncodingUtil.Latin1.GetBytes(s1).AsSpan(), 
+                EncodingUtil.Latin1.GetBytes(s2).AsSpan()));
         }
 
         [InlineData("My string", "M string2", 4, 2.0)]
@@ -70,8 +70,8 @@ namespace F23.StringSimilarity.Tests
             
             // test byte span version
             Assert.Equal(expected, actual: instance.Distance<byte>(
-                System.Text.Encoding.Latin1.GetBytes(s1).AsSpan(), 
-                System.Text.Encoding.Latin1.GetBytes(s2).AsSpan(), 
+                EncodingUtil.Latin1.GetBytes(s1).AsSpan(), 
+                EncodingUtil.Latin1.GetBytes(s2).AsSpan(), 
                 limit));
         }
         
