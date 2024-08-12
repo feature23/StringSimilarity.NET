@@ -109,7 +109,7 @@ namespace F23.StringSimilarity
             // create two work vectors of integer distances
             int[] v0 = new int[s2.Length + 1];
             int[] v1 = new int[s2.Length + 1];
-            int[] vtemp;
+            // SSNET: removed unneeded int[] vtemp;
 
             // initialize v0 (the previous row of distances)
             // this row is A[0][i]: edit distance for an empty s
@@ -155,9 +155,7 @@ namespace F23.StringSimilarity
                 // System.arraycopy(v1, 0, v0, 0, v0.length);
 
                 // Flip references to current and previous row
-                vtemp = v0;
-                v0 = v1;
-                v1 = vtemp;
+                (v0, v1) = (v1, v0); // SSNET specific: Swap v0 and v1 using tuples
             }
 
             return v0[s2.Length];

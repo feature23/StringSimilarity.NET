@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using F23.StringSimilarity.Interfaces;
 
 // ReSharper disable LoopCanBeConvertedToQuery
@@ -83,14 +84,13 @@ namespace F23.StringSimilarity
             var profile1 = GetProfile(s1);
             var profile2 = GetProfile(s2);
 
-            var union = new HashSet<string>();
-            union.UnionWith(profile1.Keys);
-            union.UnionWith(profile2.Keys);
+            // SSNET Specific: use LINQ for more optimal distinct count
+            var unionCount = profile1.Keys.Concat(profile2.Keys).Distinct().Count();
 
             int inter = profile1.Keys.Count + profile2.Keys.Count
-                        - union.Count;
+                        - unionCount;
 
-            return 1.0 * inter / union.Count;
+            return 1.0 * inter / unionCount;
         }
 
 

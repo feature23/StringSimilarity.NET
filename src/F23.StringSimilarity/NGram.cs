@@ -103,7 +103,7 @@ namespace F23.StringSimilarity
             char[] sa = new char[sl + n - 1];
             float[] p; // 'previous' cost array, horizontally
             float[] d; // Cost array, horizontally
-            float[] d2; // Placeholder to assist in swapping p and d
+            // SSNET removed unneeded: float[] d2; // Placeholder to assist in swapping p and d
 
             // Construct sa with prefix
             for (int i1 = 0; i1 < sa.Length; i1++)
@@ -172,9 +172,7 @@ namespace F23.StringSimilarity
                     d[i] = Math.Min(Math.Min(d[i - 1] + 1, p[i] + 1), p[i - 1] + ec);
                 }
                 // Copy current distance counts to 'previous row' distance counts
-                d2 = p;
-                p = d;
-                d = d2;
+                (p, d) = (d, p); // SSNET specific: swap p and d using tuples
             }
 
             // Our last action in the above loop was to switch d and p, so p now
