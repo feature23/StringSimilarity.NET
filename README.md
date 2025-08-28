@@ -5,6 +5,13 @@
 A .NET port of java-string-similarity:
 <https://github.com/tdebatty/java-string-similarity>
 
+---
+
+**What if your day job was contributing to open-source projects and custom AI solutions &mdash; and you got paid for it?**<br />
+We're hiring remote engineers to contribute to cutting-edge AI and custom software projects. 100% remote, 100% real impact. https://www.feature23.com/careers
+
+## Overview
+
 A library implementing different string similarity and distance measures. A dozen of algorithms (including Levenshtein edit distance and sibblings, Jaro-Winkler, Longest Common Subsequence, cosine similarity etc.) are currently implemented. Check the summary table below for the complete list...
 
 * [Download](#download)
