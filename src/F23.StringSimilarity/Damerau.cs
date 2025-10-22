@@ -31,7 +31,7 @@ using F23.StringSimilarity.Interfaces;
 namespace F23.StringSimilarity
 {
     /// <summary>
-    /// Implementation of Damerau-Levenshtein distance with transposition (also
+    /// Implementation of Damerau-Levenshtein distance with transposition (also 
     /// sometimes calls unrestricted Damerau-Levenshtein distance).
     /// It is the minimum number of operations needed to transform one string into
     /// the other, where an operation is defined as an insertion, deletion, or
@@ -59,6 +59,16 @@ namespace F23.StringSimilarity
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
             if (s1.SequenceEqual(s2))
             {
                 return 0;
