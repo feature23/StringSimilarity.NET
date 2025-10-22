@@ -43,20 +43,10 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => Distance(s1.AsSpan(), s2.AsSpan());
-        
+
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
-            if (s1 == null)
-            {
-                throw new ArgumentNullException(nameof(s1));
-            }
-
-            if (s2 == null)
-            {
-                throw new ArgumentNullException(nameof(s2));
-            }
-
             if (s1.SequenceEqual(s2))
             {
                 return 0;
