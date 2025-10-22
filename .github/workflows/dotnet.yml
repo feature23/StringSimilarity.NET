@@ -29,3 +29,13 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Pack NuGet packages
+      if: github.event_name != 'pull_request' && matrix.os == 'windows-latest'
+      run: dotnet pack --no-build --output nupkgs
+    - name: Upload NuGet packages
+      if: github.event_name != 'pull_request' && matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages
+        path: nupkgs/
+        retention-days: 30
