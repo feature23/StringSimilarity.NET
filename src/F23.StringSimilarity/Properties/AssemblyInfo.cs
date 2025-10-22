@@ -1,3 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
+#if FEATURE_SIGNED_ASSEMBLY
 [assembly: InternalsVisibleTo("F23.StringSimilarity.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100b9a3cf7cbdb26a91b8a50d70ec052fe9f1edd3d1989e1079d0b0c1930e2030273a82629e18c7f2932a1e7957d48ec36b2703cda7bab46f3a0684cc86637e02dac24c857a43ef9a63a6459b147d11ec43b75b181de0aa326931ae13ba31c06977b309424c730d895144feab54da5ad84a604f90b2d672406177782027c8413caa")]
+#else
+[assembly: InternalsVisibleTo("F23.StringSimilarity.Tests")]
+#endif

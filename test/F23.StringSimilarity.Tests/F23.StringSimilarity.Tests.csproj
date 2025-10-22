@@ -7,6 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Label="Assembly signing" Condition=" '$(TargetFramework)' == 'net481' ">
+    <AssemblyOriginatorKeyFile>$(SolutionDir)StringSimilarity.NET.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="11328-1.txt" />
     <None Remove="71816-2.txt" />
