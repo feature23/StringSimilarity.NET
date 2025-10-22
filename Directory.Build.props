@@ -1,0 +1,6 @@
+<Project>
+    <PropertyGroup Label="Assembly signing">
+        <AssemblyOriginatorKeyFile>$(SolutionDir)StringSimilarity.NET.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+    </PropertyGroup>
+</Project>

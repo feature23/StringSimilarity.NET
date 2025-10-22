@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\F23.StringSimilarity\F23.StringSimilarity.csproj" />
+      <ProjectReference Include="..\..\src\F23.StringSimilarity\F23.StringSimilarity.csproj" />
     </ItemGroup>
 
 </Project>
