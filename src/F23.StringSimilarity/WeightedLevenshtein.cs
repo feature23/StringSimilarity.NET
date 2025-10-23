@@ -22,8 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Threading;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable TooWideLocalVariableScope
@@ -36,7 +34,7 @@ namespace F23.StringSimilarity
     public class WeightedLevenshtein : IStringDistance
     {
         private readonly ICharacterSubstitution _characterSubstitution;
-        private readonly ICharacterInsDel _characterInsDel;
+        private readonly ICharacterInsDel? _characterInsDel;
 
         /// <summary>
         /// Instantiate with provided character substitution.
@@ -54,7 +52,7 @@ namespace F23.StringSimilarity
         /// <param name="characterSubstitution">The strategy to determine character substitution weights.</param>
         /// <param name="characterInsDel">The strategy to determine character insertion/deletion weights.</param>
         public WeightedLevenshtein(ICharacterSubstitution characterSubstitution,
-            ICharacterInsDel characterInsDel)
+            ICharacterInsDel? characterInsDel)
         {
             _characterSubstitution = characterSubstitution;
             _characterInsDel = characterInsDel;
@@ -142,7 +140,7 @@ namespace F23.StringSimilarity
                 {
                     char s2j = s2[j];
                     double cost = 0;
-                    
+
                     if (s1i != s2j)
                     {
                         cost = _characterSubstitution.Cost(s1i, s2j);

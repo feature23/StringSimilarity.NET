@@ -1,5 +1,4 @@
-﻿using System;
-using F23.StringSimilarity.Experimental;
+﻿using F23.StringSimilarity.Experimental;
 using Xunit;
 
 namespace F23.StringSimilarity.Tests.Experimental

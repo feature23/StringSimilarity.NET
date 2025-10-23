@@ -1,5 +1,3 @@
-using System;
-
 namespace F23.StringSimilarity.Interfaces
 {
     /// <summary>

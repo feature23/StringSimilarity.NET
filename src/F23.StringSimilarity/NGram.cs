@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable ConvertIfStatementToReturnStatement
 // ReSharper disable SuggestVarOrType_Elsewhere

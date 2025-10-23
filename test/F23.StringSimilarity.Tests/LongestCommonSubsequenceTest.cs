@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;

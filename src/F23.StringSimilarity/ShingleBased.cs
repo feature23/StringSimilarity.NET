@@ -22,9 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
 namespace F23.StringSimilarity
@@ -43,7 +40,7 @@ namespace F23.StringSimilarity
         /// </summary>
         private static readonly Regex SPACE_REG = new Regex("\\s+", RegexOptions.Compiled);
 
-        /// <summary> 
+        /// <summary>
         /// </summary>
         /// <param name="k"></param>
         /// <exception cref="ArgumentOutOfRangeException">If k is less than or equal to 0.</exception>
@@ -56,7 +53,7 @@ namespace F23.StringSimilarity
 
             this.k = k;
         }
-        
+
         protected ShingleBased() : this(DEFAULT_K) { }
 
         protected internal Dictionary<string, int> GetProfile(string s)

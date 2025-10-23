@@ -22,8 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity

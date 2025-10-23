@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
@@ -44,16 +43,16 @@ namespace F23.StringSimilarity.Tests
 
             // test string version
             Assert.Equal(expected, actual: instance.Distance(s1, s2));
-            
+
             // test char span version
             Assert.Equal(expected, actual: instance.Distance(s1.AsSpan(), s2.AsSpan()));
 
             // test byte span version
             Assert.Equal(expected, actual: instance.Distance<byte>(
-                EncodingUtil.Latin1.GetBytes(s1).AsSpan(), 
+                EncodingUtil.Latin1.GetBytes(s1).AsSpan(),
                 EncodingUtil.Latin1.GetBytes(s2).AsSpan()));
         }
-        
+
         [Fact]
         public void NullEmptyDistanceTest()
         {

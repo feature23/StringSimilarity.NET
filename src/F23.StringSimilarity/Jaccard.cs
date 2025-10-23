@@ -22,9 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using F23.StringSimilarity.Interfaces;
 
 // ReSharper disable LoopCanBeConvertedToQuery

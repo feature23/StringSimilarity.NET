@@ -12,8 +12,13 @@
       <PackageReference Include="BenchmarkDotNet" Version="0.15.4" />
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition=" '$(Configuration)' == 'LocalBuild' ">
       <ProjectReference Include="..\..\src\F23.StringSimilarity\F23.StringSimilarity.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' != 'LocalBuild' ">
+      <!-- Baseline version to make it compile -->
+      <PackageReference Include="F23.StringSimilarity" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

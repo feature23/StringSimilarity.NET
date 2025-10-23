@@ -17,6 +17,10 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>8.0.0-alpha</Version>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Label="Assembly signing" Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <DefineConstants>FEATURE_SIGNED_ASSEMBLY;$(DefineConstants)</DefineConstants>

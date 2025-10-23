@@ -22,9 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Data.SqlTypes;
-using System.Linq;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable LoopCanBeConvertedToQuery
@@ -49,7 +46,7 @@ namespace F23.StringSimilarity
         /// The current value of the threshold used for adding the Winkler bonus. The default value is 0.7.
         /// </summary>
         private double Threshold { get; }
-        
+
         /// <summary>
         /// Creates a new instance with default threshold (0.7)
         /// </summary>
@@ -57,7 +54,7 @@ namespace F23.StringSimilarity
         {
             Threshold = DEFAULT_THRESHOLD;
         }
-        
+
         /// <summary>
         /// Creates a new instance with given threshold to determine when Winkler bonus should
         /// be used. Set threshold to a negative value to get the Jaro distance.
@@ -76,14 +73,10 @@ namespace F23.StringSimilarity
         /// <returns>The Jaro-Winkler similarity in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
-            => Similarity(s1.AsSpan(), s2.AsSpan());
-        
-        public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
-            where T : IEquatable<T>
         {
             if (s1 == null)
             {
-                throw new ArgumentNullException(nameof(s1));    
+                throw new ArgumentNullException(nameof(s1));
             }
 
             if (s2 == null)
@@ -91,6 +84,12 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
+            return Similarity(s1.AsSpan(), s2.AsSpan());
+        }
+
+        public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+        {
             if (s1.SequenceEqual(s2))
             {
                 return 1f;
@@ -121,8 +120,20 @@ namespace F23.StringSimilarity
         /// <returns>1 - similarity</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => 1.0 - Similarity(s1, s2);
-        
+        {
+            if (s1 == null)
+            {
+                throw new ArgumentNullException(nameof(s1));
+            }
+
+            if (s2 == null)
+            {
+                throw new ArgumentNullException(nameof(s2));
+            }
+
+            return 1.0 - Similarity(s1.AsSpan(), s2.AsSpan());
+        }
+
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
             => 1.0 - Similarity(s1, s2);
@@ -202,7 +213,7 @@ namespace F23.StringSimilarity
                     break;
                 }
             }
-            return new[] { matches, transpositions / 2, prefix, max.Length };
+            return [matches, transpositions / 2, prefix, max.Length];
         }
     }
 }

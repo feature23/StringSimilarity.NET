@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable SuggestVarOrType_Elsewhere
 
@@ -58,10 +57,6 @@ namespace F23.StringSimilarity
         /// </returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => Distance(s1.AsSpan(), s2.AsSpan());
-        
-        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
-            where T : IEquatable<T>
         {
             if (s1 == null)
             {
@@ -73,6 +68,12 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
+            return Distance(s1.AsSpan(), s2.AsSpan());
+        }
+
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+        {
             if (s1.SequenceEqual(s2))
             {
                 return 0;
@@ -90,10 +91,6 @@ namespace F23.StringSimilarity
         /// <returns>The length of LCS(s2, s2)</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public int Length(string s1, string s2)
-            => Length(s1.AsSpan(), s2.AsSpan());
-        
-        internal static int Length<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
-            where T : IEquatable<T>
         {
             if (s1 == null)
             {
@@ -105,6 +102,12 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
+            return Length(s1.AsSpan(), s2.AsSpan());
+        }
+
+        internal static int Length<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+        {
             /* function LCSLength(X[1..m], Y[1..n])
              C = array(0..m, 0..n)
              for i := 0..m

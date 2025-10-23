@@ -1,10 +1,37 @@
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Jobs;
 
 namespace F23.StringSimilarity.Benchmarks;
 
 [MemoryDiagnoser]
+[Config(typeof(Config))]
 public class Benchmarks
 {
+    private class Config : ManualConfig
+    {
+        public Config()
+        {
+            var baseJob = Job.MediumRun;
+            var configs = BuildConfiguration.BuildConfigurations.ToList();
+
+            for (int i = 0; i < configs.Count; i++)
+            {
+                var config = configs[i];
+                if (string.IsNullOrEmpty(config.Configuration))
+                {
+                    AddJob(baseJob
+                        .WithNuGet("F23.StringSimilarity", config.PackageVersion)
+                        .WithId($"{i:000}-{config.Id}"));
+                }
+                else
+                {
+                    AddJob(baseJob.WithCustomBuildConfiguration(config.Configuration).WithId($"{i:000}-{config.Id}"));
+                }
+            }
+        }
+    }
+
     [Benchmark]
     public void Cosine()
     {

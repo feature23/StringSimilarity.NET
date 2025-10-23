@@ -22,14 +22,9 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.CodeDom;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
 using Xunit.Abstractions;
@@ -55,8 +50,8 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity("ABC", "ABCE");
 
             Assert.Equal(
-                expected: 0.71, 
-                actual: result, 
+                expected: 0.71,
+                actual: result,
                 precision: 2 // 0.01
             );
 
@@ -71,8 +66,8 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity("AB", "ABCE");
 
             Assert.Equal(
-                expected: 0.0, 
-                actual: result, 
+                expected: 0.0,
+                actual: result,
                 precision: 5 //0.00001
             );
         }
@@ -89,7 +84,7 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity(string1, string2);
 
             Assert.Equal(
-                expected: 0.8115, 
+                expected: 0.8115,
                 actual: result,
                 precision: 3 //0.001
             );

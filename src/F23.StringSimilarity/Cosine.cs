@@ -22,8 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Collections.Generic;
 using F23.StringSimilarity.Interfaces;
 // ReSharper disable LoopCanBeConvertedToQuery
 
@@ -45,11 +43,11 @@ namespace F23.StringSimilarity
         /// transformed in vectors of occurrences of k-shingles(sequences of k
         /// characters). In this n-dimensional space, the similarity between the two
         /// strings is the cosine of their respective vectors.
-        /// 
+        ///
         /// Default k is 3.
         /// </summary>
         public Cosine() { }
-        
+
         /// <summary>
         /// Compute the cosine similarity between strings.
         /// </summary>
@@ -135,9 +133,9 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="profile1"></param>
         /// <param name="profile2"></param>

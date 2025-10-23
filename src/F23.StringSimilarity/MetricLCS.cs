@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
@@ -42,10 +41,6 @@ namespace F23.StringSimilarity
         /// <returns>LCS distance metric</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => Distance(s1.AsSpan(), s2.AsSpan());
-        
-        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
-            where T : IEquatable<T>
         {
             if (s1 == null)
             {
@@ -57,6 +52,12 @@ namespace F23.StringSimilarity
                 throw new ArgumentNullException(nameof(s2));
             }
 
+            return Distance(s1.AsSpan(), s2.AsSpan());
+        }
+
+        public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+        {
             if (s1.SequenceEqual(s2))
             {
                 return 0;

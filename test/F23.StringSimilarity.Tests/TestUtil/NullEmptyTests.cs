@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using F23.StringSimilarity.Interfaces;
 using Xunit;
 
@@ -54,16 +53,16 @@ namespace F23.StringSimilarity.Tests.TestUtil
             Assert.Equal(0.0, instance.Similarity("", "foo"), 1);
             Assert.Equal(0.0, instance.Similarity("foo", ""), 1);
 
-            Assert.Throws<ArgumentNullException>(() => instance.Similarity(null, null));
-            Assert.Throws<ArgumentNullException>(() => instance.Similarity(null, ""));
-            Assert.Throws<ArgumentNullException>(() => instance.Similarity("", null));
+            Assert.Throws<ArgumentNullException>(() => instance.Similarity(null!, null!));
+            Assert.Throws<ArgumentNullException>(() => instance.Similarity(null!, ""));
+            Assert.Throws<ArgumentNullException>(() => instance.Similarity("", null!));
         }
 
         public static void AssertArgumentNullExceptions(IStringDistance instance)
         {
-            Assert.Throws<ArgumentNullException>(() => instance.Distance(null, null));
-            Assert.Throws<ArgumentNullException>(() => instance.Distance(null, ""));
-            Assert.Throws<ArgumentNullException>(() => instance.Distance("", null));
+            Assert.Throws<ArgumentNullException>(() => instance.Distance(null!, null!));
+            Assert.Throws<ArgumentNullException>(() => instance.Distance(null!, ""));
+            Assert.Throws<ArgumentNullException>(() => instance.Distance("", null!));
         }
     }
 }
