@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="benchmarks/F23.StringSimilarity.Benchmarks/F23.StringSimilarity.Benchmarks.csproj" />
+  <Project Path="src/F23.StringSimilarity/F23.StringSimilarity.csproj" />
+  <Project Path="test/F23.StringSimilarity.Tests/F23.StringSimilarity.Tests.csproj" />
+</Solution>
