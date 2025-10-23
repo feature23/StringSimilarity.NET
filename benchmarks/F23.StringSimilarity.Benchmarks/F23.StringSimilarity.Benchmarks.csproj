@@ -8,6 +8,11 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <!-- Baseline version to make it compile -->
+        <SSNetVersion Condition=" '$(SSNetVersion)' == '' ">6.0.0</SSNetVersion>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="BenchmarkDotNet" Version="0.15.4" />
     </ItemGroup>
@@ -17,8 +22,7 @@
     </ItemGroup>
 
     <ItemGroup Condition=" '$(Configuration)' != 'LocalBuild' ">
-      <!-- Baseline version to make it compile -->
-      <PackageReference Include="F23.StringSimilarity" Version="6.0.0" />
+      <PackageReference Include="F23.StringSimilarity" Version="$(SSNetVersion)" />
     </ItemGroup>
 
 </Project>

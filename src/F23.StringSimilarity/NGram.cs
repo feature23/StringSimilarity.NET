@@ -23,6 +23,8 @@
  */
 
 using F23.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Support;
+
 // ReSharper disable ConvertIfStatementToReturnStatement
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable JoinDeclarationAndInitializer
@@ -34,11 +36,11 @@ namespace F23.StringSimilarity
     /// N-Gram Similarity as defined by Kondrak, "N-Gram Similarity and Distance",
     /// String Processing and Information Retrieval, Lecture Notes in Computer
     /// Science Volume 3772, 2005, pp 115-126.
-    /// 
+    ///
     /// The algorithm uses affixing with special character '\n' to increase the
     /// weight of first characters. The normalization is achieved by dividing the
     /// total similarity score the original length of the longest word.
-    /// 
+    ///
     /// total similarity score the original length of the longest word.
     /// </summary>
     public class NGram : INormalizedStringDistance
@@ -99,9 +101,9 @@ namespace F23.StringSimilarity
                 return (float)cost / Math.Max(sl, tl);
             }
 
-            char[] sa = new char[sl + n - 1];
-            float[] p; // 'previous' cost array, horizontally
-            float[] d; // Cost array, horizontally
+            Span<char> sa = (sl + n - 1) * sizeof(char) > StackHelper.MaxStackAllocSize ? new char[sl + n - 1] : stackalloc char[sl + n - 1];
+            // Span<float> p; // 'previous' cost array, horizontally - SSNET: declared inline below
+            // Span<float> d; // Cost array, horizontally - SSNET: declared inline below
             // SSNET removed unneeded: float[] d2; // Placeholder to assist in swapping p and d
 
             // Construct sa with prefix
@@ -116,14 +118,16 @@ namespace F23.StringSimilarity
                     sa[i1] = s0[i1 - n + 1];
                 }
             }
-            p = new float[sl + 1];
-            d = new float[sl + 1];
+
+            bool heapAllocate = (sl + 1) * sizeof(float) > StackHelper.MaxStackAllocSize;
+            Span<float> p = heapAllocate ? new float[sl + 1] : stackalloc float[sl + 1];
+            Span<float> d = heapAllocate ? new float[sl + 1] : stackalloc float[sl + 1];
 
             // Indexes into strings s and t
             int i; // Iterates through source
             int j; // Iterates through target
 
-            char[] t_j = new char[n]; // jth n-gram of t
+            Span<char> t_j = n * sizeof(char) > StackHelper.MaxStackAllocSize ? new char[n] : stackalloc char[n]; // jth n-gram of t
 
             for (i = 0; i <= sl; i++)
             {
@@ -132,7 +136,7 @@ namespace F23.StringSimilarity
 
             for (j = 1; j <= tl; j++)
             {
-                // Construct t_j n-gram 
+                // Construct t_j n-gram
                 if (j < n)
                 {
                     for (int ti = 0; ti < n - j; ti++)
@@ -146,7 +150,7 @@ namespace F23.StringSimilarity
                 }
                 else
                 {
-                    t_j = s1.Substring(j - n, n).ToCharArray();
+                    t_j = s1.Substring(j - n, n).ToCharArray(); // SSNET note: this allocates, not sure if we can avoid it
                 }
                 d[0] = j;
                 for (i = 1; i <= sl; i++)
@@ -161,7 +165,7 @@ namespace F23.StringSimilarity
                             cost++;
                         }
                         else if (sa[i - 1 + ni] == special)
-                        { 
+                        {
                             // Discount matches on prefix
                             tn--;
                         }
@@ -171,7 +175,9 @@ namespace F23.StringSimilarity
                     d[i] = Math.Min(Math.Min(d[i - 1] + 1, p[i] + 1), p[i - 1] + ec);
                 }
                 // Copy current distance counts to 'previous row' distance counts
-                (p, d) = (d, p); // SSNET specific: swap p and d using tuples
+                Span<float> temp = p;
+                p = d;
+                d = temp;
             }
 
             // Our last action in the above loop was to switch d and p, so p now

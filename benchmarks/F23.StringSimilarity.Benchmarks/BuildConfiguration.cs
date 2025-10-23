@@ -12,7 +12,7 @@ public record BuildConfiguration(string? Configuration = null, string? PackageVe
             yield return new BuildConfiguration(Configuration: "LocalBuild");
 
             // Different package versions
-            yield return new BuildConfiguration(PackageVersion: "6.0.0");
+            //yield return new BuildConfiguration(PackageVersion: "6.0.0");
             yield return new BuildConfiguration(PackageVersion: "7.0.0");
         }
     }

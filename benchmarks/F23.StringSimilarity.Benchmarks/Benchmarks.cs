@@ -13,20 +13,18 @@ public class Benchmarks
         public Config()
         {
             var baseJob = Job.MediumRun;
-            var configs = BuildConfiguration.BuildConfigurations.ToList();
 
-            for (int i = 0; i < configs.Count; i++)
+            foreach (var config in BuildConfiguration.BuildConfigurations)
             {
-                var config = configs[i];
                 if (string.IsNullOrEmpty(config.Configuration))
                 {
                     AddJob(baseJob
-                        .WithNuGet("F23.StringSimilarity", config.PackageVersion)
-                        .WithId($"{i:000}-{config.Id}"));
+                        .WithMsBuildArguments($"/p:SSNetVersion={config.PackageVersion}")
+                        .WithId(config.Id));
                 }
                 else
                 {
-                    AddJob(baseJob.WithCustomBuildConfiguration(config.Configuration).WithId($"{i:000}-{config.Id}"));
+                    AddJob(baseJob.WithCustomBuildConfiguration(config.Configuration).WithId(config.Id));
                 }
             }
         }

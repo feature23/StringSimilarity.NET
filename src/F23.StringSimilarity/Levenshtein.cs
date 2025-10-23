@@ -23,6 +23,8 @@
  */
 
 using F23.StringSimilarity.Interfaces;
+using F23.StringSimilarity.Support;
+
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable TooWideLocalVariableScope
 
@@ -108,8 +110,10 @@ namespace F23.StringSimilarity
             }
 
             // create two work vectors of integer distances
-            int[] v0 = new int[s2.Length + 1];
-            int[] v1 = new int[s2.Length + 1];
+            // SSNET specific: stack alloc small arrays if we can
+            bool heapAllocate = (s2.Length + 1) * sizeof(int) > StackHelper.MaxStackAllocSize;
+            Span<int> v0 = heapAllocate ? new int[s2.Length + 1] : stackalloc int[s2.Length + 1];
+            Span<int> v1 = heapAllocate ? new int[s2.Length + 1] : stackalloc int[s2.Length + 1];
             // SSNET: removed unneeded int[] vtemp;
 
             // initialize v0 (the previous row of distances)
@@ -156,7 +160,9 @@ namespace F23.StringSimilarity
                 // System.arraycopy(v1, 0, v0, 0, v0.length);
 
                 // Flip references to current and previous row
-                (v0, v1) = (v1, v0); // SSNET specific: Swap v0 and v1 using tuples
+                Span<int> temp = v0;
+                v0 = v1;
+                v1 = temp;
             }
 
             return v0[s2.Length];
