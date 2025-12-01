@@ -22,31 +22,20 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.CodeDom;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace F23.StringSimilarity.Tests
 {
     [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
     [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
-    public class CosineTest
+    public class CosineTest()
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public CosineTest(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         public void TestSimilarity()
         {
@@ -55,8 +44,8 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity("ABC", "ABCE");
 
             Assert.Equal(
-                expected: 0.71, 
-                actual: result, 
+                expected: 0.71,
+                actual: result,
                 precision: 2 // 0.01
             );
 
@@ -71,8 +60,8 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity("AB", "ABCE");
 
             Assert.Equal(
-                expected: 0.0, 
-                actual: result, 
+                expected: 0.0,
+                actual: result,
                 precision: 5 //0.00001
             );
         }
@@ -89,7 +78,7 @@ namespace F23.StringSimilarity.Tests
             var result = instance.Similarity(string1, string2);
 
             Assert.Equal(
-                expected: 0.8115, 
+                expected: 0.8115,
                 actual: result,
                 precision: 3 //0.001
             );
@@ -144,19 +133,33 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(0.516185, cosine.Similarity(profile1, profile2), 6);
         }
 
+        /// <summary>
+        /// StringSimilarity.NET specific. Ensures that GetProfile is public.
+        /// </summary>
+        /// <remarks>
+        /// https://github.com/feature23/StringSimilarity.NET/issues/21
+        /// </remarks>
+        [Fact]
+        public void GetProfile_IsPublic()
+        {
+            var cosine = new Cosine(k: 2);
+            var profile = cosine.GetProfile("test string");
+
+            Assert.NotNull(profile);
+        }
+
         private static async Task<string> ReadResourceFileAsync(string file)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = $"{typeof(CosineTest).Namespace}.{file}";
 
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                Debug.Assert(stream != null, "stream != null");
-                using (var reader = new StreamReader(stream))
-                {
-                    return await reader.ReadToEndAsync();
-                }
-            }
+            await using var stream = assembly.GetManifestResourceStream(resourceName);
+
+            Debug.Assert(stream != null, "stream != null");
+
+            using var reader = new StreamReader(stream);
+
+            return await reader.ReadToEndAsync();
         }
     }
 }

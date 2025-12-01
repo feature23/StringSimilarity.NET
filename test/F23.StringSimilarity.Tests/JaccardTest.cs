@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 using System.Diagnostics.CodeAnalysis;
 using F23.StringSimilarity.Tests.TestUtil;
 using Xunit;
@@ -58,6 +58,21 @@ namespace F23.StringSimilarity.Tests
             Assert.Equal(expected: 0.4, actual: result);
 
             NullEmptyTests.TestDistance(instance);
+        }
+
+        /// <summary>
+        /// StringSimilarity.NET specific. Ensures that GetProfile is public.
+        /// </summary>
+        /// <remarks>
+        /// https://github.com/feature23/StringSimilarity.NET/issues/21
+        /// </remarks>
+        [Fact]
+        public void GetProfile_IsPublic()
+        {
+            var cosine = new Jaccard(k: 2);
+            var profile = cosine.GetProfile("test string");
+
+            Assert.NotNull(profile);
         }
     }
 }
