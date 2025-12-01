@@ -68,8 +68,8 @@ namespace F23.StringSimilarity.Tests
         [Fact]
         public void GetProfile_IsPublic()
         {
-            var cosine = new SorensenDice(k: 2);
-            var profile = cosine.GetProfile("test string");
+            var dice = new SorensenDice(k: 2);
+            var profile = dice.GetProfile("test string");
 
             Assert.NotNull(profile);
         }

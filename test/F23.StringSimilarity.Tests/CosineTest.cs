@@ -34,7 +34,7 @@ namespace F23.StringSimilarity.Tests
 {
     [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
     [SuppressMessage("ReSharper", "ArgumentsStyleNamedExpression")]
-    public class CosineTest()
+    public class CosineTest
     {
         [Fact]
         public void TestSimilarity()

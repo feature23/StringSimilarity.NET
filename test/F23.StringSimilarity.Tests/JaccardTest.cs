@@ -69,8 +69,8 @@ namespace F23.StringSimilarity.Tests
         [Fact]
         public void GetProfile_IsPublic()
         {
-            var cosine = new Jaccard(k: 2);
-            var profile = cosine.GetProfile("test string");
+            var jaccard = new Jaccard(k: 2);
+            var profile = jaccard.GetProfile("test string");
 
             Assert.NotNull(profile);
         }

@@ -73,8 +73,8 @@ namespace F23.StringSimilarity.Tests
         [Fact]
         public void GetProfile_IsPublic()
         {
-            var cosine = new QGram(k: 2);
-            var profile = cosine.GetProfile("test string");
+            var qgram = new QGram(k: 2);
+            var profile = qgram.GetProfile("test string");
 
             Assert.NotNull(profile);
         }
