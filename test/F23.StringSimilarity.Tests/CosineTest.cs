@@ -153,7 +153,8 @@ namespace F23.StringSimilarity.Tests
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = $"{typeof(CosineTest).Namespace}.{file}";
 
-            await using var stream = assembly.GetManifestResourceStream(resourceName);
+            // ReSharper disable once UseAwaitUsing - not supported on netstandard2.0
+            using var stream = assembly.GetManifestResourceStream(resourceName);
 
             Debug.Assert(stream != null, "stream != null");
 
