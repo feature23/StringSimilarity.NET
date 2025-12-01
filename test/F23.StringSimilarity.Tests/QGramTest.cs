@@ -63,5 +63,20 @@ namespace F23.StringSimilarity.Tests
 
             NullEmptyTests.AssertArgumentNullExceptions(instance);
         }
+
+        /// <summary>
+        /// StringSimilarity.NET specific. Ensures that GetProfile is public.
+        /// </summary>
+        /// <remarks>
+        /// https://github.com/feature23/StringSimilarity.NET/issues/21
+        /// </remarks>
+        [Fact]
+        public void GetProfile_IsPublic()
+        {
+            var qgram = new QGram(k: 2);
+            var profile = qgram.GetProfile("test string");
+
+            Assert.NotNull(profile);
+        }
     }
 }

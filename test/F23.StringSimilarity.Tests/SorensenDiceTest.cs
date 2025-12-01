@@ -58,5 +58,20 @@ namespace F23.StringSimilarity.Tests
             var instance = new SorensenDice();
             NullEmptyTests.TestDistance(instance);
         }
+
+        /// <summary>
+        /// StringSimilarity.NET specific. Ensures that GetProfile is public.
+        /// </summary>
+        /// <remarks>
+        /// https://github.com/feature23/StringSimilarity.NET/issues/21
+        /// </remarks>
+        [Fact]
+        public void GetProfile_IsPublic()
+        {
+            var dice = new SorensenDice(k: 2);
+            var profile = dice.GetProfile("test string");
+
+            Assert.NotNull(profile);
+        }
     }
 }
