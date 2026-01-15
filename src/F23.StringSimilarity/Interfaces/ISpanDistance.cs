@@ -2,6 +2,9 @@ using System;
 
 namespace F23.StringSimilarity.Interfaces
 {
+    /// <summary>
+    /// An interface for distance measures that operate on spans.
+    /// </summary>
     public interface ISpanDistance
     {
         /// <summary>

@@ -29,9 +29,11 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
     /// The Levenshtein distance between two words is the Minimum number of
     /// single-character edits (insertions, deletions or substitutions) required to
     /// change one string into the other.
+    /// </summary>
     public class Levenshtein : IMetricStringDistance, IMetricSpanDistance
     {
         /// <summary>
@@ -73,11 +75,36 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2, int limit)
             => Distance(s1.AsSpan(), s2.AsSpan(), limit);
-        
+
+        /// <summary>
+        /// Calculates the distance between two sequences of elements.
+        /// </summary>
+        /// <remarks>This method uses a default maximum threshold for the distance calculation. For custom
+        /// thresholds, use an overload that accepts a threshold parameter.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare.</param>
+        /// <param name="s2">The second sequence to compare.</param>
+        /// <returns>A <see cref="double"/> representing the distance between the two sequences. The specific meaning of the
+        /// distance depends on the implementation of the comparison logic.</returns>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
             => Distance(s1, s2, int.MaxValue);
-        
+
+        /// <summary>
+        /// Calculates the edit distance (Levenshtein distance) between two sequences, with an optional upper limit.
+        /// </summary>
+        /// <remarks>The edit distance is a measure of the minimum number of single-element edits
+        /// (insertions, deletions, or substitutions) required to transform one sequence into the other. This method is
+        /// optimized to stop processing early if the distance exceeds the specified <paramref name="limit"/>.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. The type must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare. Cannot be null.</param>
+        /// <param name="s2">The second sequence to compare. Cannot be null.</param>
+        /// <param name="limit">The maximum distance to calculate. If the edit distance exceeds this value, the method returns <paramref
+        /// name="limit"/>.</param>
+        /// <returns>The edit distance between <paramref name="s1"/> and <paramref name="s2"/>. If the sequences are identical,
+        /// the result is 0. If the distance exceeds <paramref name="limit"/>, the method returns <paramref
+        /// name="limit"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2, int limit)
             where T : IEquatable<T>
         {

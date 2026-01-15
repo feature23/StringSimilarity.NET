@@ -29,6 +29,17 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
+    /// Provides an implementation of the Optimal String Alignment (OSA) distance algorithm,  which calculates the
+    /// minimum number of operations required to transform one string  into another. Supported operations include
+    /// insertion, deletion, substitution of a  single character, and transposition of two adjacent characters, with the
+    /// constraint  that no substring is edited more than once.
+    /// </summary>
+    /// <remarks>This class is designed for use in scenarios where a measure of similarity or difference 
+    /// between two strings or spans is required. It supports both string and span-based inputs,  making it suitable for
+    /// high-performance applications where memory efficiency is important.  The OSA distance is particularly useful in
+    /// applications such as spell checking,  approximate string matching, and natural language processing, where
+    /// transpositions  (e.g., swapping two adjacent characters) are common errors.</remarks>
     public sealed class OptimalStringAlignment : IStringDistance, ISpanDistance
     {
         /// <summary>
@@ -44,6 +55,19 @@ namespace F23.StringSimilarity
         public double Distance(string s1, string s2)
             => Distance(s1.AsSpan(), s2.AsSpan());
         
+        /// <summary>
+        /// Calculates the Damerau-Levenshtein distance between two sequences.
+        /// </summary>
+        /// <remarks>The Damerau-Levenshtein distance is a metric for measuring the difference between two
+        /// sequences. It  extends the Levenshtein distance by allowing transpositions of adjacent characters as a
+        /// single edit  operation. This method is case-sensitive for sequences of characters.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. The type must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare. Cannot be null.</param>
+        /// <param name="s2">The second sequence to compare. Cannot be null.</param>
+        /// <returns>The Damerau-Levenshtein distance between the two sequences, which represents the minimum number of 
+        /// single-character edits (insertions, deletions, substitutions, or transpositions) required to transform  one
+        /// sequence into the other.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {

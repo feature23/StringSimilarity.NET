@@ -31,8 +31,10 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
     /// Implementation of Levenshtein that allows to define different weights for
     /// different character substitutions.
+    /// </summary>
     public class WeightedLevenshtein : IStringDistance
     {
         private readonly ICharacterSubstitution _characterSubstitution;

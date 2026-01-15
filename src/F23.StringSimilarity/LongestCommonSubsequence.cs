@@ -28,6 +28,7 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
     /// The longest common subsequence (LCS) problem consists in finding the longest
     /// subsequence common to two (or more) sequences. It differs from problems of
     /// finding common substrings: unlike substrings, subsequences are not required
@@ -44,6 +45,7 @@ namespace F23.StringSimilarity
     ///
     /// ! This class currently implements the dynamic programming approach, which has
     /// a space requirement O(m * n)!
+    /// </summary>
     public class LongestCommonSubsequence : IStringDistance, ISpanDistance
     {
         /// <summary>
@@ -59,7 +61,18 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => Distance(s1.AsSpan(), s2.AsSpan());
-        
+
+        /// <summary>
+        /// Calculates the distance between two sequences based on their similarity.
+        /// </summary>
+        /// <remarks>The distance is calculated as the sum of the lengths of the two sequences minus twice
+        /// the length of their longest common subsequence.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare. Cannot be empty or null.</param>
+        /// <param name="s2">The second sequence to compare. Cannot be empty or null.</param>
+        /// <returns>A non-negative <see cref="double"/> representing the distance between the two sequences.  Returns 0 if the
+        /// sequences are identical.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is <see langword="null"/>.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
@@ -91,7 +104,7 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public int Length(string s1, string s2)
             => Length(s1.AsSpan(), s2.AsSpan());
-        
+
         internal static int Length<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {

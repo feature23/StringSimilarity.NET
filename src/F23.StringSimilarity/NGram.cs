@@ -47,8 +47,18 @@ namespace F23.StringSimilarity
         private const int DEFAULT_N = 2;
         private readonly int n;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NGram"/> class with the default value for N.
+        /// </summary>
+        /// <remarks>This constructor sets the N-gram size to the default value defined by <see
+        /// cref="DEFAULT_N"/>. Use this constructor when you want to create an NGram instance with the default
+        /// configuration.</remarks>
         public NGram() : this(DEFAULT_N) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NGram"/> class with the specified size.
+        /// </summary>
+        /// <param name="n">The size of the n-gram. Must be a positive integer.</param>
         public NGram(int n)
         {
             this.n = n;

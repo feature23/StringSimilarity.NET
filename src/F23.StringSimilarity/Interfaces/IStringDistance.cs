@@ -24,6 +24,9 @@
 
 namespace F23.StringSimilarity.Interfaces
 {
+    /// <summary>
+    /// Interface for string distance algorithms.
+    /// </summary>
     public interface IStringDistance
     {
         /// <summary>

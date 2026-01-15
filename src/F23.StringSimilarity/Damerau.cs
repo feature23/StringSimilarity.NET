@@ -56,6 +56,22 @@ namespace F23.StringSimilarity
         public double Distance(string s1, string s2)
             => Distance(s1.AsSpan(), s2.AsSpan());
 
+       /// <summary>
+       /// Calculates the Damerau-Levenshtein distance between two sequences.
+       /// </summary>
+       /// <remarks>The Damerau-Levenshtein distance is a metric for measuring the edit distance between
+       /// two sequences, allowing for the following operations: <list type="bullet"> <item><description>Insertion of a
+       /// single element.</description></item> <item><description>Deletion of a single element.</description></item>
+       /// <item><description>Substitution of one element for another.</description></item>
+       /// <item><description>Transposition of two adjacent elements.</description></item> </list> This method is
+       /// case-sensitive for sequences of strings or characters.</remarks>
+       /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+       /// <param name="s1">The first sequence to compare. Cannot be <see langword="null"/>.</param>
+       /// <param name="s2">The second sequence to compare. Cannot be <see langword="null"/>.</param>
+       /// <returns>The Damerau-Levenshtein distance between the two sequences, which represents the minimum number of operations
+       /// (insertions, deletions, substitutions, or transpositions) required to transform one sequence into the other.
+       /// Returns 0 if the sequences are equal.</returns>
+       /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is <see langword="null"/>.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {

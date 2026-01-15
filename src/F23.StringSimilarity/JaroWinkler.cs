@@ -31,6 +31,7 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
     /// The Jaro–Winkler distance metric is designed and best suited for short
     /// strings such as person names, and to detect typos; it is (roughly) a
     /// variation of Damerau-Levenshtein, where the substitution of 2 close
@@ -39,6 +40,7 @@ namespace F23.StringSimilarity
     /// Jaro-Winkler was developed in the area of record linkage (duplicate
     /// detection) (Winkler, 1990). It returns a value in the interval [0.0, 1.0].
     /// The distance is computed as 1 - Jaro-Winkler similarity.
+    /// </summary>
     public class JaroWinkler : INormalizedStringSimilarity, INormalizedStringDistance, INormalizedSpanSimilarity, INormalizedSpanDistance
     {
         private const double DEFAULT_THRESHOLD = 0.7;
@@ -49,7 +51,7 @@ namespace F23.StringSimilarity
         /// The current value of the threshold used for adding the Winkler bonus. The default value is 0.7.
         /// </summary>
         private double Threshold { get; }
-        
+
         /// <summary>
         /// Creates a new instance with default threshold (0.7)
         /// </summary>
@@ -57,7 +59,7 @@ namespace F23.StringSimilarity
         {
             Threshold = DEFAULT_THRESHOLD;
         }
-        
+
         /// <summary>
         /// Creates a new instance with given threshold to determine when Winkler bonus should
         /// be used. Set threshold to a negative value to get the Jaro distance.
@@ -77,13 +79,25 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
             => Similarity(s1.AsSpan(), s2.AsSpan());
-        
+
+        /// <summary>
+        /// Calculates the similarity between two sequences using the Jaro-Winkler distance metric.
+        /// </summary>
+        /// <remarks>The similarity is calculated using the Jaro-Winkler distance, which is a measure of
+        /// similarity between two sequences. The result is adjusted based on common prefixes to give higher scores to
+        /// sequences that share a common prefix.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare. Cannot be null.</param>
+        /// <param name="s2">The second sequence to compare. Cannot be null.</param>
+        /// <returns>A value between 0 and 1 representing the similarity between the two sequences, where 1 indicates identical
+        /// sequences and 0 indicates no similarity.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
             if (s1 == null)
             {
-                throw new ArgumentNullException(nameof(s1));    
+                throw new ArgumentNullException(nameof(s1));
             }
 
             if (s2 == null)
@@ -122,7 +136,17 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => 1.0 - Similarity(s1, s2);
-        
+
+        /// <summary>
+        /// Calculates the distance between two sequences based on their similarity.
+        /// </summary>
+        /// <remarks>The distance is calculated as the complement of the similarity between the two
+        /// sequences.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare.</param>
+        /// <param name="s2">The second sequence to compare.</param>
+        /// <returns>A double value representing the distance between the two sequences. The value ranges from 0.0 to 1.0, where
+        /// 0.0 indicates identical sequences and 1.0 indicates completely dissimilar sequences.</returns>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
             => 1.0 - Similarity(s1, s2);

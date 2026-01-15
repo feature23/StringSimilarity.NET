@@ -28,6 +28,9 @@ using System.Text.RegularExpressions;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
+    /// Base class for shingle based algorithms.
+    /// </summary>
     public abstract class ShingleBased
     {
         private const int DEFAULT_K = 3;
@@ -56,8 +59,21 @@ namespace F23.StringSimilarity
             this.k = k;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShingleBased"/> class with the default shingle size.
+        /// </summary>
         protected ShingleBased() : this(DEFAULT_K) { }
 
+        /// <summary>
+        /// Generates a profile of k-length substrings (shingles) from the specified string, along with their frequency
+        /// of occurrence.
+        /// </summary>
+        /// <remarks>This method processes the input string by normalizing spaces and then extracting
+        /// overlapping substrings of length k. The resulting dictionary provides a frequency count for each unique
+        /// shingle.</remarks>
+        /// <param name="s">The input string from which to generate the shingle profile. Cannot be null.</param>
+        /// <returns>A dictionary where the keys are k-length substrings (shingles) extracted from the input string, and the
+        /// values are the number of times each shingle appears.</returns>
         public Dictionary<string, int> GetProfile(string s)
         {
             var shingles = new Dictionary<string, int>();

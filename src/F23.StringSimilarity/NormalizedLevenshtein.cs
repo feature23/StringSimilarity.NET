@@ -27,10 +27,12 @@ using F23.StringSimilarity.Interfaces;
 
 namespace F23.StringSimilarity
 {
+    /// <summary>
     /// This distance is computed as levenshtein distance divided by the length of
     /// the longest string. The resulting value is always in the interval [0.0 1.0]
     /// but it is not a metric anymore! The similarity is computed as 1 - normalized
     /// distance.
+    /// </summary>
     public class NormalizedLevenshtein : INormalizedStringDistance, INormalizedStringSimilarity, INormalizedSpanDistance, INormalizedSpanSimilarity
     {
         private readonly Levenshtein l = new Levenshtein();
@@ -44,7 +46,19 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
             => Distance(s1.AsSpan(), s2.AsSpan());
-        
+
+        /// <summary>
+        /// Calculates the normalized distance between two sequences of elements.
+        /// </summary>
+        /// <remarks>The distance is normalized by the length of the longer sequence. This ensures the
+        /// result is always in the range [0.0, 1.0], where 0.0 indicates identical sequences and 1.0 indicates
+        /// maximum dissimilarity.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare. Cannot be empty or null.</param>
+        /// <param name="s2">The second sequence to compare. Cannot be empty or null.</param>
+        /// <returns>A double value representing the normalized distance between the two sequences.  Returns 0.0 if the sequences
+        /// are equal or both are empty.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
@@ -82,7 +96,17 @@ namespace F23.StringSimilarity
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
             => 1.0 - Distance(s1, s2);
-        
+
+        /// <summary>
+        /// Calculates the similarity between two sequences based on their distance.
+        /// </summary>
+        /// <remarks>The similarity is calculated as 1.0 minus the distance between the two
+        /// sequences.</remarks>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare.</param>
+        /// <param name="s2">The second sequence to compare.</param>
+        /// <returns>A value between 0.0 and 1.0 representing the similarity of the two sequences,  where 1.0 indicates identical
+        /// sequences and 0.0 indicates completely dissimilar sequences.</returns>
         public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
             => 1.0 - Distance(s1, s2);

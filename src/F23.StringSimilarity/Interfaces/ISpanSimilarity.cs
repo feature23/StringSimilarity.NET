@@ -2,6 +2,9 @@ using System;
 
 namespace F23.StringSimilarity.Interfaces
 {
+    /// <summary>
+    /// Interface for span similarity algorithms.
+    /// </summary>
     public interface ISpanSimilarity
     {
         /// <summary>
