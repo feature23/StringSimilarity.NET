@@ -35,8 +35,6 @@ namespace F23.StringSimilarity
     /// </summary>
     public class NormalizedLevenshtein : INormalizedStringDistance, INormalizedStringSimilarity, INormalizedSpanDistance, INormalizedSpanSimilarity
     {
-        private readonly Levenshtein l = new Levenshtein();
-
         /// <summary>
         /// Compute distance as Levenshtein(s1, s2) / max(|s1|, |s2|).
         /// </summary>
@@ -45,7 +43,11 @@ namespace F23.StringSimilarity
         /// <returns>The computed distance in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => Distance(s1.AsSpan(), s2.AsSpan());
+            => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance(string, string)"/>
+        public static double GetDistance(string s1, string s2)
+            => GetDistance(s1.AsSpan(), s2.AsSpan());
 
         /// <summary>
         /// Calculates the normalized distance between two sequences of elements.
@@ -60,6 +62,11 @@ namespace F23.StringSimilarity
         /// are equal or both are empty.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance{T}(ReadOnlySpan{T}, ReadOnlySpan{T})"/>
+        public static double GetDistance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
             if (s1 == null)
@@ -84,7 +91,7 @@ namespace F23.StringSimilarity
                 return 0.0;
             }
 
-            return l.Distance(s1, s2) / m_len;
+            return Levenshtein.GetDistance(s1, s2) / m_len;
         }
 
         /// <summary>
@@ -95,7 +102,11 @@ namespace F23.StringSimilarity
         /// <returns>1 - distance</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
-            => 1.0 - Distance(s1, s2);
+            => GetSimilarity(s1, s2);
+
+        /// <inheritdoc cref="Similarity(string, string)"/>
+        public static double GetSimilarity(string s1, string s2)
+            => 1.0 - GetDistance(s1, s2);
 
         /// <summary>
         /// Calculates the similarity between two sequences based on their distance.
@@ -109,6 +120,11 @@ namespace F23.StringSimilarity
         /// sequences and 0.0 indicates completely dissimilar sequences.</returns>
         public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
-            => 1.0 - Distance(s1, s2);
+            => GetSimilarity(s1, s2);
+
+        /// <inheritdoc cref="Similarity{T}(ReadOnlySpan{T}, ReadOnlySpan{T})"/>
+        public static double GetSimilarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => 1.0 - GetDistance(s1, s2);
     }
 }

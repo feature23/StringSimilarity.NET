@@ -33,7 +33,10 @@ namespace F23.StringSimilarity
     /// </summary>
     public abstract class ShingleBased
     {
-        private const int DEFAULT_K = 3;
+        /// <summary>
+        /// The default length of k-shingles (aka n-grams), used when no value of k is given.
+        /// </summary>
+        public const int DEFAULT_K = 3;
 
         /// <summary>
         /// Return k, the length of k-shingles (aka n-grams).
@@ -75,7 +78,24 @@ namespace F23.StringSimilarity
         /// <returns>A dictionary where the keys are k-length substrings (shingles) extracted from the input string, and the
         /// values are the number of times each shingle appears.</returns>
         public Dictionary<string, int> GetProfile(string s)
+            => GetProfile(s, k);
+
+        /// <summary>
+        /// Generates a profile of k-length substrings (shingles) from the specified string, along with their frequency
+        /// of occurrence.
+        /// </summary>
+        /// <param name="s">The input string from which to generate the shingle profile. Cannot be null.</param>
+        /// <param name="k">The length of the k-shingles (aka n-grams) to extract.</param>
+        /// <returns>A dictionary where the keys are k-length substrings (shingles) extracted from the input string, and the
+        /// values are the number of times each shingle appears.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If k is less than or equal to 0.</exception>
+        public static Dictionary<string, int> GetProfile(string s, int k)
         {
+            if (k <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(k), "k should be positive!");
+            }
+
             var shingles = new Dictionary<string, int>();
 
             var string_no_space = SPACE_REG.Replace(s, " ");

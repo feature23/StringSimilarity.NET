@@ -29,6 +29,10 @@ namespace F23.StringSimilarity
         /// <returns>The RatcliffObershelp similarity in the range [0, 1]</returns>
         /// <exception cref="System.ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
+            => GetSimilarity(s1, s2);
+
+        /// <inheritdoc cref="Similarity(string, string)"/>
+        public static double GetSimilarity(string s1, string s2)
         {
             if (s1 == null)
             {
@@ -64,9 +68,11 @@ namespace F23.StringSimilarity
         /// <returns>1 - similarity</returns>
         /// <exception cref="System.ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-        {
-            return 1.0d - Similarity(s1, s2);
-        }
+            => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance(string, string)"/>
+        public static double GetDistance(string s1, string s2)
+            => 1.0d - GetSimilarity(s1, s2);
 
         private static IList<string> GetMatchList(ReadOnlySpan<char> s1, ReadOnlySpan<char> s2)
         {

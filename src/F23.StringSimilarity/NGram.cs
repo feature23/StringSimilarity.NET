@@ -44,7 +44,11 @@ namespace F23.StringSimilarity
     /// </summary>
     public class NGram : INormalizedStringDistance
     {
-        private const int DEFAULT_N = 2;
+        /// <summary>
+        /// The default size of the n-grams, used when no value of n is given.
+        /// </summary>
+        public const int DEFAULT_N = 2;
+
         private readonly int n;
 
         /// <summary>
@@ -72,6 +76,17 @@ namespace F23.StringSimilarity
         /// <returns>The computed n-gram distance in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s0 or s1 is null.</exception>
         public double Distance(string s0, string s1)
+            => GetDistance(s0, s1, n);
+
+        /// <summary>
+        /// Compute n-gram distance.
+        /// </summary>
+        /// <param name="s0">The first string to compare.</param>
+        /// <param name="s1">The second string to compare.</param>
+        /// <param name="n">The size of the n-grams to compare.</param>
+        /// <returns>The computed n-gram distance in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s0 or s1 is null.</exception>
+        public static double GetDistance(string s0, string s1, int n = DEFAULT_N)
         {
             if (s0 == null)
             {

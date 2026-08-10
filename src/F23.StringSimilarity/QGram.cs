@@ -71,6 +71,18 @@ namespace F23.StringSimilarity
         /// <returns>The computed Q-gram distance.</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
+            => GetDistance(s1, s2, k);
+
+        /// <summary>
+        /// The distance between two strings is defined as the L1 norm of the
+        /// difference of their profiles (the number of occurence of each k-shingle).
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="k">The length of the k-shingles (sequences of k characters) to compare.</param>
+        /// <returns>The computed Q-gram distance.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetDistance(string s1, string s2, int k = DEFAULT_K)
         {
             if (s1 == null)
             {
@@ -87,10 +99,10 @@ namespace F23.StringSimilarity
                 return 0;
             }
 
-            var profile1 = GetProfile(s1);
-            var profile2 = GetProfile(s2);
+            var profile1 = GetProfile(s1, k);
+            var profile2 = GetProfile(s2, k);
 
-            return Distance(profile1, profile2);
+            return GetDistance(profile1, profile2);
         }
 
         /// <summary>
@@ -100,6 +112,10 @@ namespace F23.StringSimilarity
         /// <param name="profile2"></param>
         /// <returns></returns>
         public double Distance(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
+            => GetDistance(profile1, profile2);
+
+        /// <inheritdoc cref="Distance(IDictionary{string, int}, IDictionary{string, int})"/>
+        public static double GetDistance(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
         {
             var union = new HashSet<string>();
             union.UnionWith(profile1.Keys);

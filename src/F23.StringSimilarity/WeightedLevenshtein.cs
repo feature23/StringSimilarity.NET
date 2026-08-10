@@ -69,9 +69,7 @@ namespace F23.StringSimilarity
         /// <param name="s2">The second string to compare.</param>
         /// <returns>The computed weighted Levenshtein distance.</returns>
         public double Distance(string s1, string s2)
-        {
-            return Distance(s1, s2, double.MaxValue);
-        }
+            => GetDistance(s1, s2, _characterSubstitution, _characterInsDel);
 
         /// <summary>
         /// Compute Levenshtein distance using provided weights for substitution.
@@ -86,6 +84,27 @@ namespace F23.StringSimilarity
         /// <returns>The computed weighted Levenshtein distance.</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2, double limit)
+            => GetDistance(s1, s2, _characterSubstitution, _characterInsDel, limit);
+
+        /// <summary>
+        /// Compute Levenshtein distance using provided weights for substitution.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="characterSubstitution">The strategy to determine character substitution weights.</param>
+        /// <param name="characterInsDel">The strategy to determine character insertion/deletion weights,
+        /// or null to use a weight of 1.0 for every insertion and deletion.</param>
+        /// <param name="limit">The maximum result to compute before stopping. This
+        /// means that the calculation can terminate early if you
+        /// only care about strings with a certain similarity.
+        /// Set this to Double.MaxValue if you want to run the
+        /// calculation to completion in every case.</param>
+        /// <returns>The computed weighted Levenshtein distance.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetDistance(string s1, string s2,
+            ICharacterSubstitution characterSubstitution,
+            ICharacterInsDel characterInsDel = null,
+            double limit = double.MaxValue)
         {
             if (s1 == null)
             {
@@ -123,13 +142,13 @@ namespace F23.StringSimilarity
             v0[0] = 0;
             for (int i = 1; i < v0.Length; i++)
             {
-                v0[i] = v0[i - 1] + InsertionCost(s2[i - 1]);
+                v0[i] = v0[i - 1] + InsertionCost(characterInsDel, s2[i - 1]);
             }
 
             for (int i = 0; i < s1.Length; i++)
             {
                 char s1i = s1[i];
-                double deletionCost = DeletionCost(s1i);
+                double deletionCost = DeletionCost(characterInsDel, s1i);
 
                 // calculate v1 (current row distances) from the previous row v0
                 // first element of v1 is A[i+1][0]
@@ -147,10 +166,10 @@ namespace F23.StringSimilarity
                     
                     if (s1i != s2j)
                     {
-                        cost = _characterSubstitution.Cost(s1i, s2j);
+                        cost = characterSubstitution.Cost(s1i, s2j);
                     }
 
-                    double insertionCost = InsertionCost(s2j);
+                    double insertionCost = InsertionCost(characterInsDel, s2j);
 
                     v1[j + 1] = Math.Min(
                             v1[j] + insertionCost, // Cost of insertion
@@ -175,14 +194,14 @@ namespace F23.StringSimilarity
             return v0[s2.Length];
         }
 
-        private double InsertionCost(char c)
+        private static double InsertionCost(ICharacterInsDel characterInsDel, char c)
         {
-            return _characterInsDel?.InsertionCost(c) ?? 1.0;
+            return characterInsDel?.InsertionCost(c) ?? 1.0;
         }
 
-        private double DeletionCost(char c)
+        private static double DeletionCost(ICharacterInsDel characterInsDel, char c)
         {
-            return _characterInsDel?.DeletionCost(c) ?? 1.0;
+            return characterInsDel?.DeletionCost(c) ?? 1.0;
         }
     }
 }

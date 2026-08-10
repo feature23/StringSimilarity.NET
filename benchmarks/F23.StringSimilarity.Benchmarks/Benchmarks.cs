@@ -1,4 +1,5 @@
 using BenchmarkDotNet.Attributes;
+using F23.StringSimilarity.Experimental;
 
 namespace F23.StringSimilarity.Benchmarks;
 
@@ -90,6 +91,13 @@ public class Benchmarks
     }
 
     [Benchmark]
+    public void Sift4()
+    {
+        var sift4 = new Sift4();
+        _ = sift4.Distance("hello", "world");
+    }
+
+    [Benchmark]
     public void SorensenDice()
     {
         var sorensenDice = new SorensenDice();
@@ -102,6 +110,53 @@ public class Benchmarks
         var weightedLevenshtein = new WeightedLevenshtein(new ExampleCharSub());
         _ = weightedLevenshtein.Distance("hello", "world");
     }
+
+#if STATIC_METHODS
+    [Benchmark]
+    public void CosineStatic() => _ = F23.StringSimilarity.Cosine.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void DamerauStatic() => _ = F23.StringSimilarity.Damerau.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void JaccardStatic() => _ = F23.StringSimilarity.Jaccard.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void JaroWinklerStatic() => _ = F23.StringSimilarity.JaroWinkler.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void LevenshteinStatic() => _ = F23.StringSimilarity.Levenshtein.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void LongestCommonSubsequenceStatic() => _ = F23.StringSimilarity.LongestCommonSubsequence.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void MetricLCSStatic() => _ = F23.StringSimilarity.MetricLCS.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void NGramStatic() => _ = F23.StringSimilarity.NGram.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void NormalizedLevenshteinStatic() => _ = F23.StringSimilarity.NormalizedLevenshtein.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void OptimalStringAlignmentStatic() => _ = F23.StringSimilarity.OptimalStringAlignment.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void QGramStatic() => _ = F23.StringSimilarity.QGram.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void RatcliffObershelpStatic() => _ = F23.StringSimilarity.RatcliffObershelp.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void Sift4Static() => _ = F23.StringSimilarity.Experimental.Sift4.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void SorensenDiceStatic() => _ = F23.StringSimilarity.SorensenDice.GetDistance("hello", "world");
+
+    [Benchmark]
+    public void WeightedLevenshteinStatic() => _ = F23.StringSimilarity.WeightedLevenshtein.GetDistance("hello", "world", new ExampleCharSub());
+#endif
 
     private class ExampleCharSub : ICharacterSubstitution
     {

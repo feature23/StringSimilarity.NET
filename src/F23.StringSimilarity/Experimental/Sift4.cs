@@ -37,7 +37,10 @@ namespace F23.StringSimilarity.Experimental
     /// </summary>
     public class Sift4 : IStringDistance
     {
-        private const int DEFAULT_MAX_OFFSET = 10;
+        /// <summary>
+        /// The default maximum distance to search for character transposition.
+        /// </summary>
+        public const int DEFAULT_MAX_OFFSET = 10;
 
         /// <summary>
         /// Gets or sets the maximum distance to search for character transposition.
@@ -77,6 +80,20 @@ namespace F23.StringSimilarity.Experimental
         /// <param name="s2"></param>
         /// <returns></returns>
         public double Distance(string s1, string s2)
+            => GetDistance(s1, s2, MaxOffset);
+
+        /// <summary>
+        /// Sift4 - a general purpose string distance algorithm inspired by JaroWinkler
+        /// and Longest Common Subsequence.
+        /// Original JavaScript algorithm by siderite, java port by Nathan Fischer 2016.
+        /// https://siderite.dev/blog/super-fast-and-accurate-string-distance.html
+        /// https://blackdoor.github.io/blog/sift4-java/
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <param name="maxOffset">The maximum distance to search for character transposition.</param>
+        /// <returns></returns>
+        public static double GetDistance(string s1, string s2, int maxOffset = DEFAULT_MAX_OFFSET)
         {
             if (string.IsNullOrEmpty(s1))
             {
@@ -169,7 +186,7 @@ namespace F23.StringSimilarity.Experimental
                     // (they get incremented at the end of the loop)
                     // so that we can have only one code block handling matches
                     for (int i = 0;
-                         i < MaxOffset && (c1 + i < l1 || c2 + i < l2);
+                         i < maxOffset && (c1 + i < l1 || c2 + i < l2);
                          i++)
                     {
                         if ((c1 + i < l1) && (s1[c1 + i] == s2[c2]))

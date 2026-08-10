@@ -78,7 +78,19 @@ namespace F23.StringSimilarity
         /// <returns>The Jaro-Winkler similarity in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
-            => Similarity(s1.AsSpan(), s2.AsSpan());
+            => GetSimilarity(s1, s2, Threshold);
+
+        /// <summary>
+        /// Compute Jaro-Winkler similarity.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="threshold">The threshold used for adding the Winkler bonus. Set to a
+        /// negative value to get the Jaro similarity.</param>
+        /// <returns>The Jaro-Winkler similarity in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetSimilarity(string s1, string s2, double threshold = DEFAULT_THRESHOLD)
+            => GetSimilarity(s1.AsSpan(), s2.AsSpan(), threshold);
 
         /// <summary>
         /// Calculates the similarity between two sequences using the Jaro-Winkler distance metric.
@@ -93,6 +105,21 @@ namespace F23.StringSimilarity
         /// sequences and 0 indicates no similarity.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Similarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => GetSimilarity(s1, s2, Threshold);
+
+        /// <summary>
+        /// Calculates the similarity between two sequences using the Jaro-Winkler distance metric.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare. Cannot be null.</param>
+        /// <param name="s2">The second sequence to compare. Cannot be null.</param>
+        /// <param name="threshold">The threshold used for adding the Winkler bonus. Set to a
+        /// negative value to get the Jaro similarity.</param>
+        /// <returns>A value between 0 and 1 representing the similarity between the two sequences, where 1 indicates identical
+        /// sequences and 0 indicates no similarity.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
+        public static double GetSimilarity<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2, double threshold = DEFAULT_THRESHOLD)
             where T : IEquatable<T>
         {
             if (s1 == null)
@@ -120,7 +147,7 @@ namespace F23.StringSimilarity
                     / THREE;
             double jw = j;
 
-            if (j > Threshold)
+            if (j > threshold)
             {
                 jw = j + Math.Min(JW_COEF, 1.0 / mtp[THREE]) * mtp[2] * (1 - j);
             }
@@ -135,7 +162,19 @@ namespace F23.StringSimilarity
         /// <returns>1 - similarity</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => 1.0 - Similarity(s1, s2);
+            => GetDistance(s1, s2, Threshold);
+
+        /// <summary>
+        /// Return 1 - similarity.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="threshold">The threshold used for adding the Winkler bonus. Set to a
+        /// negative value to get the Jaro distance.</param>
+        /// <returns>1 - similarity</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetDistance(string s1, string s2, double threshold = DEFAULT_THRESHOLD)
+            => 1.0 - GetSimilarity(s1, s2, threshold);
 
         /// <summary>
         /// Calculates the distance between two sequences based on their similarity.
@@ -149,7 +188,21 @@ namespace F23.StringSimilarity
         /// 0.0 indicates identical sequences and 1.0 indicates completely dissimilar sequences.</returns>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
-            => 1.0 - Similarity(s1, s2);
+            => GetDistance(s1, s2, Threshold);
+
+        /// <summary>
+        /// Calculates the distance between two sequences based on their similarity.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the sequences. Must implement <see cref="IEquatable{T}"/>.</typeparam>
+        /// <param name="s1">The first sequence to compare.</param>
+        /// <param name="s2">The second sequence to compare.</param>
+        /// <param name="threshold">The threshold used for adding the Winkler bonus. Set to a
+        /// negative value to get the Jaro distance.</param>
+        /// <returns>A double value representing the distance between the two sequences. The value ranges from 0.0 to 1.0, where
+        /// 0.0 indicates identical sequences and 1.0 indicates completely dissimilar sequences.</returns>
+        public static double GetDistance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2, double threshold = DEFAULT_THRESHOLD)
+            where T : IEquatable<T>
+            => 1.0 - GetSimilarity(s1, s2, threshold);
 
         private static int[] Matches<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
