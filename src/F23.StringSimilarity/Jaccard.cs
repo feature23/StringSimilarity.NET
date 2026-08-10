@@ -65,6 +65,17 @@ namespace F23.StringSimilarity
         /// <returns>The Jaccard index in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
+            => GetSimilarity(s1, s2, k);
+
+        /// <summary>
+        /// Compute jaccard index: |A inter B| / |A union B|.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="k">The length of the k-shingles (sequences of k characters) to compare.</param>
+        /// <returns>The Jaccard index in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetSimilarity(string s1, string s2, int k = DEFAULT_K)
         {
             if (s1 == null)
             {
@@ -81,8 +92,8 @@ namespace F23.StringSimilarity
                 return 1;
             }
 
-            var profile1 = GetProfile(s1);
-            var profile2 = GetProfile(s2);
+            var profile1 = GetProfile(s1, k);
+            var profile2 = GetProfile(s2, k);
 
             // SSNET Specific: use LINQ for more optimal distinct count
             var unionCount = profile1.Keys.Concat(profile2.Keys).Distinct().Count();
@@ -102,6 +113,17 @@ namespace F23.StringSimilarity
         /// <returns>1 - the Jaccard similarity.</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => 1.0 - Similarity(s1, s2);
+            => GetDistance(s1, s2, k);
+
+        /// <summary>
+        /// Distance is computed as 1 - similarity.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="k">The length of the k-shingles (sequences of k characters) to compare.</param>
+        /// <returns>1 - the Jaccard similarity.</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetDistance(string s1, string s2, int k = DEFAULT_K)
+            => 1.0 - GetSimilarity(s1, s2, k);
     }
 }

@@ -58,6 +58,17 @@ namespace F23.StringSimilarity
         /// <returns>The cosine similarity in the range [0, 1]</returns>
         /// <exception cref="T:System.ArgumentNullException">If s1 or s2 is null.</exception>
         public double Similarity(string s1, string s2)
+            => GetSimilarity(s1, s2, k);
+
+        /// <summary>
+        /// Compute the cosine similarity between strings.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="k">The length of the k-shingles (sequences of k characters) to compare.</param>
+        /// <returns>The cosine similarity in the range [0, 1]</returns>
+        /// <exception cref="T:System.ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetSimilarity(string s1, string s2, int k = DEFAULT_K)
         {
             if (s1 == null)
             {
@@ -79,8 +90,8 @@ namespace F23.StringSimilarity
                 return 0;
             }
 
-            var profile1 = GetProfile(s1);
-            var profile2 = GetProfile(s2);
+            var profile1 = GetProfile(s1, k);
+            var profile2 = GetProfile(s2, k);
 
             return DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
         }
@@ -134,15 +145,30 @@ namespace F23.StringSimilarity
         /// <returns>1.0 - the cosine similarity in the range [0, 1]</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => 1.0 - Similarity(s1, s2);
-        
+            => GetDistance(s1, s2, k);
+
         /// <summary>
-        /// 
+        /// Returns 1.0 - similarity.
+        /// </summary>
+        /// <param name="s1">The first string to compare.</param>
+        /// <param name="s2">The second string to compare.</param>
+        /// <param name="k">The length of the k-shingles (sequences of k characters) to compare.</param>
+        /// <returns>1.0 - the cosine similarity in the range [0, 1]</returns>
+        /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
+        public static double GetDistance(string s1, string s2, int k = DEFAULT_K)
+            => 1.0 - GetSimilarity(s1, s2, k);
+
+        /// <summary>
+        ///
         /// </summary>
         /// <param name="profile1"></param>
         /// <param name="profile2"></param>
         /// <returns></returns>
         public double Similarity(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
+            => GetSimilarity(profile1, profile2);
+
+        /// <inheritdoc cref="Similarity(IDictionary{string, int}, IDictionary{string, int})"/>
+        public static double GetSimilarity(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
             => DotProduct(profile1, profile2)
             / (Norm(profile1) * Norm(profile2));
     }

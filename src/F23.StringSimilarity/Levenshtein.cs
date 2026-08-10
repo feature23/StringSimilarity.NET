@@ -42,7 +42,10 @@ namespace F23.StringSimilarity
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
         /// <returns>The Levenshtein distance between strings</returns>
-        public double Distance(string s1, string s2) => Distance(s1, s2, int.MaxValue);
+        public double Distance(string s1, string s2) => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance(string, string)"/>
+        public static double GetDistance(string s1, string s2) => GetDistance(s1, s2, int.MaxValue);
 
         /// <summary>
         /// The Levenshtein distance, or edit distance, between two words is the
@@ -74,7 +77,11 @@ namespace F23.StringSimilarity
         /// <returns>The Levenshtein distance between strings</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2, int limit)
-            => Distance(s1.AsSpan(), s2.AsSpan(), limit);
+            => GetDistance(s1, s2, limit);
+
+        /// <inheritdoc cref="Distance(string, string, int)"/>
+        public static double GetDistance(string s1, string s2, int limit)
+            => GetDistance(s1.AsSpan(), s2.AsSpan(), limit);
 
         /// <summary>
         /// Calculates the distance between two sequences of elements.
@@ -88,7 +95,12 @@ namespace F23.StringSimilarity
         /// distance depends on the implementation of the comparison logic.</returns>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
-            => Distance(s1, s2, int.MaxValue);
+            => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance{T}(ReadOnlySpan{T}, ReadOnlySpan{T})"/>
+        public static double GetDistance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => GetDistance(s1, s2, int.MaxValue);
 
         /// <summary>
         /// Calculates the edit distance (Levenshtein distance) between two sequences, with an optional upper limit.
@@ -106,6 +118,11 @@ namespace F23.StringSimilarity
         /// name="limit"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is null.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2, int limit)
+            where T : IEquatable<T>
+            => GetDistance(s1, s2, limit);
+
+        /// <inheritdoc cref="Distance{T}(ReadOnlySpan{T}, ReadOnlySpan{T}, int)"/>
+        public static double GetDistance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2, int limit)
             where T : IEquatable<T>
         {
             if (s1 == null)

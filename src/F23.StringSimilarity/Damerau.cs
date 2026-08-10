@@ -54,7 +54,11 @@ namespace F23.StringSimilarity
         /// <returns>The computed distance.</returns>
         /// <exception cref="ArgumentNullException">If s1 or s2 is null.</exception>
         public double Distance(string s1, string s2)
-            => Distance(s1.AsSpan(), s2.AsSpan());
+            => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance(string, string)"/>
+        public static double GetDistance(string s1, string s2)
+            => GetDistance(s1.AsSpan(), s2.AsSpan());
 
        /// <summary>
        /// Calculates the Damerau-Levenshtein distance between two sequences.
@@ -73,6 +77,11 @@ namespace F23.StringSimilarity
        /// Returns 0 if the sequences are equal.</returns>
        /// <exception cref="ArgumentNullException">Thrown if <paramref name="s1"/> or <paramref name="s2"/> is <see langword="null"/>.</exception>
         public double Distance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
+            where T : IEquatable<T>
+            => GetDistance(s1, s2);
+
+        /// <inheritdoc cref="Distance{T}(ReadOnlySpan{T}, ReadOnlySpan{T})"/>
+        public static double GetDistance<T>(ReadOnlySpan<T> s1, ReadOnlySpan<T> s2)
             where T : IEquatable<T>
         {
             if (s1 == null)

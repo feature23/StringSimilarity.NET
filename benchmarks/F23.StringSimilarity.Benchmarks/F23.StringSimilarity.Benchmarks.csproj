@@ -6,6 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <!-- The static methods are only available in F23.StringSimilarity 8.0.0 and later,
+             so the benchmarks that use them are conditionally compiled. Remove this constant
+             when benchmarking against an older version of the library. -->
+        <DefineConstants>$(DefineConstants);STATIC_METHODS</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
