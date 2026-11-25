@@ -66,6 +66,19 @@ namespace F23.StringSimilarity.Tests
             );
         }
 
+        /// <summary>
+        /// Multiple spaces count as one, so there can be no shingles although the strings are not smaller than k.
+        /// </summary>
+        [Fact]
+        public void TestNoShingles()
+        {
+            var instance = new Cosine(3);
+
+            Assert.Equal(expected: 0.0, actual: instance.Similarity("A   ", "B   "));
+            Assert.Equal(expected: 0.0, actual: instance.Similarity("A   ", "ABCE"));
+            Assert.Equal(expected: 1.0, actual: instance.Distance("A   ", "ABCE"));
+        }
+
         [Fact]
         public async Task TestLargeString()
         {

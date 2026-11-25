@@ -62,6 +62,7 @@ namespace F23.StringSimilarity
 
         /// <summary>
         /// Similarity is computed as 2 * |A inter B| / (|A| + |B|).
+        /// If both strings are smaller than k, the similarity is 0 (unless they are equal).
         /// </summary>
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
@@ -90,6 +91,11 @@ namespace F23.StringSimilarity
             var union = new HashSet<string>();
             union.UnionWith(profile1.Keys);
             union.UnionWith(profile2.Keys);
+
+            if (union.Count == 0)
+            {
+                return 0;
+            }
 
             int inter = 0;
 

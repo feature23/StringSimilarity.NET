@@ -52,6 +52,21 @@ namespace F23.StringSimilarity.Tests
             NullEmptyTests.TestSimilarity(instance);
         }
 
+        /// <summary>
+        /// If both strings are smaller than k, there are no shingles.
+        /// </summary>
+        [Fact]
+        public void TestSmallStrings()
+        {
+            var instance = new SorensenDice(3);
+
+            Assert.Equal(expected: 0.0, actual: instance.Similarity("AB", "CD"));
+            Assert.Equal(expected: 1.0, actual: instance.Distance("AB", "CD"));
+            Assert.Equal(expected: 0.0, actual: instance.Similarity("", "AB"));
+            Assert.Equal(expected: 0.0, actual: instance.Similarity("AB", "ABCE"));
+            Assert.Equal(expected: 1.0, actual: instance.Similarity("AB", "AB"));
+        }
+
         [Fact]
         public void TestDistance()
         {
