@@ -59,6 +59,7 @@ namespace F23.StringSimilarity
 
         /// <summary>
         /// Compute jaccard index: |A inter B| / |A union B|.
+        /// If both strings are smaller than k, the similarity is 0 (unless they are equal).
         /// </summary>
         /// <param name="s1">The first string to compare.</param>
         /// <param name="s2">The second string to compare.</param>
@@ -86,6 +87,11 @@ namespace F23.StringSimilarity
 
             // SSNET Specific: use LINQ for more optimal distinct count
             var unionCount = profile1.Keys.Concat(profile2.Keys).Distinct().Count();
+
+            if (unionCount == 0)
+            {
+                return 0;
+            }
 
             int inter = profile1.Keys.Count + profile2.Keys.Count
                         - unionCount;

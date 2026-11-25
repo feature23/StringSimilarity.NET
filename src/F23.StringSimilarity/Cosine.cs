@@ -79,10 +79,7 @@ namespace F23.StringSimilarity
                 return 0;
             }
 
-            var profile1 = GetProfile(s1);
-            var profile2 = GetProfile(s2);
-
-            return DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
+            return Similarity(GetProfile(s1), GetProfile(s2));
         }
 
         /// <summary>
@@ -137,13 +134,19 @@ namespace F23.StringSimilarity
             => 1.0 - Similarity(s1, s2);
         
         /// <summary>
-        /// 
+        /// Compute similarity between precomputed profiles. If one of them is empty, the similarity is 0.
         /// </summary>
         /// <param name="profile1"></param>
         /// <param name="profile2"></param>
         /// <returns></returns>
         public double Similarity(IDictionary<string, int> profile1, IDictionary<string, int> profile2)
-            => DotProduct(profile1, profile2)
-            / (Norm(profile1) * Norm(profile2));
+        {
+            if (profile1.Count == 0 || profile2.Count == 0)
+            {
+                return 0;
+            }
+
+            return DotProduct(profile1, profile2) / (Norm(profile1) * Norm(profile2));
+        }
     }
 }
